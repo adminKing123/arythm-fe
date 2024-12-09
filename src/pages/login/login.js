@@ -31,7 +31,12 @@ const Form = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = useLoginMutation({
     onSuccess: (data) => {
-      console.log(data);
+      const values = formik.values;
+      if (values.remember) localStorage.setItem("token", data.token);
+      else sessionStorage.setItem("token", data.token);
+
+      if (data.__c__) alert(`Welcome ${data.user.username}!`);
+      alert("Logged In Successfully");
     },
     onError: (error) => {
       if (error.response && error.response.data) {
