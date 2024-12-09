@@ -7,6 +7,8 @@ import Button from "../../components/buttons/buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRegisterMutation } from "../../api/accounts/queryHooks";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
 const formSchema = {
   initialValues: {
@@ -34,9 +36,14 @@ const formSchema = {
 };
 
 const Form = () => {
+  const navigate = useNavigate();
   const { mutate, isLoading } = useRegisterMutation({
     onSuccess: (data) => {
-      console.log(data);
+      navigate(ROUTES.VERIFYEMAIL, {
+        state: {
+          email: data.email,
+        },
+      });
     },
     onError: (error) => {
       if (error.response && error.response.data) {
@@ -127,7 +134,7 @@ const Form = () => {
       )}
 
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        SIGN UP
+        NEXT
       </Button>
     </form>
   );

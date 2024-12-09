@@ -1,9 +1,12 @@
-const A = ({ className, ...props }) => {
+import { Link } from "react-router-dom";
+
+const A = ({ href, className, ...props }) => {
   return (
-    <a
+    <Link
       {...props}
-      className={`text-[#25a564] ${className ?? ""} hover:underline`}
-    ></a>
+      to={href}
+      className={`text-[#25a564] hover:underline ${className ?? ""}`}
+    ></Link>
   );
 };
 
