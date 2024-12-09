@@ -92,9 +92,9 @@ const Form = () => {
         <p className="text-red-500 text-xs mt-1">{formik.errors.remember}</p>
       )}
 
-      {/* <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        NEXT
-      </Button> */}
+      <Button className="mt-6 w-full" type="submit">
+        SIGN IN
+      </Button>
     </form>
   );
 };
