@@ -155,7 +155,7 @@ const Register = () => {
         <Form />
         <div className="mt-8">
           <p className="text-sm text-center">
-            Already have an account? <A>Sign In!</A>
+            Already have an account? <A href={ROUTES.LOGIN}>Sign In!</A>
           </p>
         </div>
       </div>
