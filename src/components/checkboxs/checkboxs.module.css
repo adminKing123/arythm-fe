@@ -1,0 +1,26 @@
+.checkbox {
+  height: 22px;
+  width: 22px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 6px;
+  outline: none;
+  transition-duration: 0.3s;
+  cursor: pointer;
+
+  position: relative;
+  background-color: #222227;
+}
+
+.checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background-image: url("/src/assets/svg/checkmark.svg");
+}
