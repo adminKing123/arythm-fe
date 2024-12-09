@@ -6,7 +6,7 @@ import A from "../../components/links/links";
 import Button from "../../components/buttons/buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import { useLoginMutation } from "../../api/accounts/queryHooks";
+import { useLoginMutation } from "../../api/accounts/queryHooks";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
 
@@ -29,30 +29,26 @@ const formSchema = {
 
 const Form = () => {
   const navigate = useNavigate();
-  //   const { mutate, isLoading } = useLoginMutation({
-  //     onSuccess: (data) => {
-  //       navigate(ROUTES.VERIFYEMAIL, {
-  //         state: {
-  //           email: data.email,
-  //         },
-  //       });
-  //     },
-  //     onError: (error) => {
-  //       if (error.response && error.response.data) {
-  //         const errorData = error.response.data;
-  //         Object.keys(errorData).forEach((field) => {
-  //           formik.setFieldError(field, errorData[field].join(", "));
-  //         });
-  //       }
-  //     },
-  //   });
+  const { mutate, isLoading } = useLoginMutation({
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        Object.keys(errorData).forEach((field) => {
+          formik.setFieldError(field, errorData[field].join(", "));
+        });
+      }
+    },
+  });
 
   const formik = useFormik({
     ...formSchema,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values) => {
-      //   mutate(values);
+      mutate(values);
     },
   });
 
@@ -92,7 +88,7 @@ const Form = () => {
         <p className="text-red-500 text-xs mt-1">{formik.errors.remember}</p>
       )}
 
-      <Button className="mt-6 w-full" type="submit">
+      <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
         SIGN IN
       </Button>
     </form>

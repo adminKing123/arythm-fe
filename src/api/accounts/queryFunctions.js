@@ -30,3 +30,13 @@ export const verifyEmail = async (data) => {
 
   return response.data;
 };
+
+export const login = async (data) => {
+  const response = await api({
+    method: "POST",
+    url: API_ENDPOINTS.LOGIN,
+    data: data,
+  });
+
+  return response.data;
+};
