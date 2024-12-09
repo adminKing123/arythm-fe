@@ -32,6 +32,9 @@ const Form = () => {
   const { mutate, isLoading } = useLoginMutation({
     onSuccess: (data) => {
       const values = formik.values;
+
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       if (values.remember) localStorage.setItem("token", data.token);
       else sessionStorage.setItem("token", data.token);
 
