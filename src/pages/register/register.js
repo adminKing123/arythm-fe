@@ -6,19 +6,20 @@ import A from "../../components/links/links";
 import Button from "../../components/buttons/buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useRegisterMutation } from "../../api/accounts/queryHooks";
 
 const formSchema = {
   initialValues: {
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
     password: "",
     agreeTerms: false,
   },
   validationSchema: Yup.object({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
+    first_name: Yup.string().required("First name is required"),
+    last_name: Yup.string().required("Last name is required"),
     username: Yup.string()
       .required("Username is required")
       .min(3, "Username must be at least 3 characters"),
@@ -33,12 +34,21 @@ const formSchema = {
 };
 
 const Form = () => {
+  const { mutate } = useRegisterMutation({
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log("wow", error);
+    },
+  });
+
   const formik = useFormik({
     ...formSchema,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values) => {
-      console.log("Form Submitted", values);
+      mutate(values);
     },
   });
 
@@ -48,23 +58,23 @@ const Form = () => {
         <div>
           <Input
             placeholder="First Name"
-            {...formik.getFieldProps("firstName")}
+            {...formik.getFieldProps("first_name")}
             autoFocus
           />
-          {formik.touched.firstName && formik.errors.firstName && (
+          {formik.touched.first_name && formik.errors.first_name && (
             <p className="text-red-500 text-xs mt-1">
-              {formik.errors.firstName}
+              {formik.errors.first_name}
             </p>
           )}
         </div>
         <div>
           <Input
             placeholder="Last Name"
-            {...formik.getFieldProps("lastName")}
+            {...formik.getFieldProps("last_name")}
           />
-          {formik.touched.lastName && formik.errors.lastName && (
+          {formik.touched.last_name && formik.errors.last_name && (
             <p className="text-red-500 text-xs mt-1">
-              {formik.errors.lastName}
+              {formik.errors.last_name}
             </p>
           )}
         </div>
