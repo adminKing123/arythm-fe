@@ -34,7 +34,7 @@ const formSchema = {
 };
 
 const Form = () => {
-  const { mutate } = useRegisterMutation({
+  const { mutate, isLoading } = useRegisterMutation({
     onSuccess: (data) => {
       console.log(data);
     },
@@ -126,7 +126,7 @@ const Form = () => {
         <p className="text-red-500 text-xs mt-1">{formik.errors.agreeTerms}</p>
       )}
 
-      <Button className="mt-6 w-full" type="submit">
+      <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
         SIGN UP
       </Button>
     </form>
