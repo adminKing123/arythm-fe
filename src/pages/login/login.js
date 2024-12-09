@@ -39,7 +39,7 @@ const Form = () => {
       else sessionStorage.setItem("token", data.token);
 
       if (data.__c__) alert(`Welcome ${data.user.username}!`);
-      alert("Logged In Successfully");
+      navigate(ROUTES.HOME);
     },
     onError: (error) => {
       if (error.response && error.response.data) {
