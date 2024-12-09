@@ -79,18 +79,23 @@ const Form = () => {
       {formik.touched.password && formik.errors.password && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.password}</p>
       )}
-      <div className="mt-4 flex items-center">
-        <Checkbox
-          id="agree-terms-n-conditions"
-          {...formik.getFieldProps("remember")}
-          checked={formik.values.remember}
-        />
-        <label
-          htmlFor="agree-terms-n-conditions"
-          className="select-none cursor-pointer text-sm ml-2"
-        >
-          Remember Me
-        </label>
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center">
+          <Checkbox
+            id="agree-terms-n-conditions"
+            {...formik.getFieldProps("remember")}
+            checked={formik.values.remember}
+          />
+          <label
+            htmlFor="agree-terms-n-conditions"
+            className="select-none cursor-pointer text-sm ml-2"
+          >
+            Remember Me
+          </label>
+        </div>
+        <div>
+          <A className={"text-sm"}>Forgot Password?</A>
+        </div>
       </div>
       {formik.touched.remember && formik.errors.remember && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.remember}</p>
