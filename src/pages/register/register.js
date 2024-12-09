@@ -39,7 +39,12 @@ const Form = () => {
       console.log(data);
     },
     onError: (error) => {
-      console.log("wow", error);
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        Object.keys(errorData).forEach((field) => {
+          formik.setFieldError(field, errorData[field].join(", "));
+        });
+      }
     },
   });
 
