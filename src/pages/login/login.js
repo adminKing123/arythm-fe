@@ -44,9 +44,18 @@ const Form = () => {
     onError: (error) => {
       if (error.response && error.response.data) {
         const errorData = error.response.data;
-        Object.keys(errorData).forEach((field) => {
-          formik.setFieldError(field, errorData[field].join(", "));
-        });
+        if (errorData.email) {
+          alert(`Please verify email & try login again!`);
+          navigate(ROUTES.VERIFYEMAIL, {
+            state: {
+              email: errorData.email,
+            },
+          });
+        } else {
+          Object.keys(errorData).forEach((field) => {
+            formik.setFieldError(field, errorData[field].join(", "));
+          });
+        }
       }
     },
   });

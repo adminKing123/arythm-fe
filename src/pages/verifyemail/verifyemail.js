@@ -120,9 +120,6 @@ const Form = ({ email }) => {
       {formik.touched.OTP && formik.errors.OTP && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.OTP}</p>
       )}
-      {formik.touched.email && formik.errors.email && (
-        <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
-      )}
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
         SIGN UP
       </Button>
