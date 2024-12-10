@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
+import { useResetPasswordWithEmailMutation } from "../../api/accounts/queryHooks";
 
 const formSchema = {
   initialValues: {
@@ -26,29 +27,31 @@ const formSchema = {
 
 const Form = ({ email }) => {
   const navigate = useNavigate();
-  //   const { mutate, isLoading } = useRequestPasswordChangeEmailOtpMutation({
-  //     onSuccess: () => handleSuccess("OTP Sent"),
-  //     onError: (error) => {
-  //       if (error.response && error.response.data) {
-  //         const errorData = error.response.data;
+  const { mutate, isLoading } = useResetPasswordWithEmailMutation({
+    onSuccess: () => {
+      alert("Password Changed");
+      navigate(ROUTES.LOGIN);
+    },
+    onError: (error) => {
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
 
-  //         if (errorData?.OTP) {
-  //           handleSuccess("OTP Already Sent");
-  //         } else {
-  //           Object.keys(errorData).forEach((field) => {
-  //             formik.setFieldError(field, errorData[field].join(", "));
-  //           });
-  //         }
-  //       }
-  //     },
-  //   });
+        Object.keys(errorData).forEach((field) => {
+          formik.setFieldError(field, errorData[field].join(", "));
+        });
+      }
+    },
+  });
 
   const formik = useFormik({
     ...formSchema,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values) => {
-      //   mutate(values);
+      mutate({
+        email: email,
+        ...values,
+      });
     },
   });
 
@@ -76,7 +79,7 @@ const Form = ({ email }) => {
       {formik.touched.OTP && formik.errors.OTP && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.OTP}</p>
       )}
-      <Button className="mt-6 w-full" type="submit">
+      <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
         RESET PASSWORD
       </Button>
     </form>

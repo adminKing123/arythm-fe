@@ -50,3 +50,13 @@ export const requestPasswordChangeEmailOtp = async (data) => {
 
   return response.data;
 };
+
+export const resetPasswordWithEmail = async (data) => {
+  const response = await api({
+    method: "POST",
+    url: API_ENDPOINTS.RESET_PASSWORD_WITH_EMAIL,
+    data: data,
+  });
+
+  return response.data;
+};

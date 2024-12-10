@@ -4,6 +4,7 @@ import {
   register,
   requestPasswordChangeEmailOtp,
   resendEmailOTP,
+  resetPasswordWithEmail,
   verifyEmail,
 } from "./queryFunctions";
 import QUERY_KEYS from "../querykeys";
@@ -40,5 +41,12 @@ export const useRequestPasswordChangeEmailOtpMutation = (config = {}) =>
   useMutation({
     mutationFn: (payload) => requestPasswordChangeEmailOtp(payload),
     mutationKey: [QUERY_KEYS.REQUEST_PASSWORD_CHANGE_EMAIL_OTP],
+    ...config,
+  });
+
+export const useResetPasswordWithEmailMutation = (config = {}) =>
+  useMutation({
+    mutationFn: (payload) => resetPasswordWithEmail(payload),
+    mutationKey: [QUERY_KEYS.RESET_PASSWORD_WITH_EMAIL],
     ...config,
   });
