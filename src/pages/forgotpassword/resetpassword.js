@@ -73,7 +73,6 @@ const Form = ({ email }) => {
       <Input
         className="mt-4"
         placeholder="OTP"
-        autoFocus
         {...formik.getFieldProps("OTP")}
       />
       {formik.touched.OTP && formik.errors.OTP && (
