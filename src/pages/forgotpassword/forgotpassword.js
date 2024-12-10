@@ -23,19 +23,30 @@ const formSchema = {
 const Form = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = useRequestPasswordChangeEmailOtpMutation({
-    onSuccess: (data) => {
-      navigate(ROUTES.HOME);
-      alert("OTP Sent");
-    },
+    onSuccess: () => handleSuccess("OTP Sent"),
     onError: (error) => {
       if (error.response && error.response.data) {
         const errorData = error.response.data;
-        Object.keys(errorData).forEach((field) => {
-          formik.setFieldError(field, errorData[field].join(", "));
-        });
+
+        if (errorData?.OTP) {
+          handleSuccess("OTP Already Sent");
+        } else {
+          Object.keys(errorData).forEach((field) => {
+            formik.setFieldError(field, errorData[field].join(", "));
+          });
+        }
       }
     },
   });
+
+  const handleSuccess = (data) => {
+    navigate(ROUTES.RESETPASSWORD, {
+      state: {
+        email: formik.values.email,
+      },
+    });
+    alert(data);
+  };
 
   const formik = useFormik({
     ...formSchema,
@@ -75,6 +86,10 @@ const ForgotPassword = () => {
         <div className="mt-8">
           <p className="text-sm text-center">
             Need any help? <A>Contact Info.</A>
+          </p>
+          <p className="text-sm text-center my-2">or</p>
+          <p className="text-sm text-center">
+            <A href={ROUTES.LOGIN}>Try Login?</A>
           </p>
         </div>
       </div>
