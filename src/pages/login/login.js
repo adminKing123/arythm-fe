@@ -44,9 +44,18 @@ const Form = () => {
     onError: (error) => {
       if (error.response && error.response.data) {
         const errorData = error.response.data;
-        Object.keys(errorData).forEach((field) => {
-          formik.setFieldError(field, errorData[field].join(", "));
-        });
+        if (errorData.email) {
+          alert(`Please verify email & try login again!`);
+          navigate(ROUTES.VERIFYEMAIL, {
+            state: {
+              email: errorData.email,
+            },
+          });
+        } else {
+          Object.keys(errorData).forEach((field) => {
+            formik.setFieldError(field, errorData[field].join(", "));
+          });
+        }
       }
     },
   });
@@ -94,7 +103,9 @@ const Form = () => {
           </label>
         </div>
         <div>
-          <A className={"text-sm"}>Forgot Password?</A>
+          <A className={"text-sm"} href={ROUTES.FORGOTPASSWORD}>
+            Forgot Password?
+          </A>
         </div>
       </div>
       {formik.touched.remember && formik.errors.remember && (

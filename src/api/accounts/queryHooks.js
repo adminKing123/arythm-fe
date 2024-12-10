@@ -1,5 +1,12 @@
 import { useMutation } from "react-query";
-import { login, register, resendEmailOTP, verifyEmail } from "./queryFunctions";
+import {
+  login,
+  register,
+  requestPasswordChangeEmailOtp,
+  resendEmailOTP,
+  resetPasswordWithEmail,
+  verifyEmail,
+} from "./queryFunctions";
 import QUERY_KEYS from "../querykeys";
 
 export const useRegisterMutation = (config = {}) =>
@@ -12,7 +19,7 @@ export const useRegisterMutation = (config = {}) =>
 export const useResendEmailOTPMutation = (config = {}) =>
   useMutation({
     mutationFn: (payload) => resendEmailOTP(payload),
-    mutationKey: [QUERY_KEYS.REGISTER],
+    mutationKey: [QUERY_KEYS.RESEND_EMAIL_OTP],
     ...config,
   });
 
@@ -27,5 +34,19 @@ export const useLoginMutation = (config = {}) =>
   useMutation({
     mutationFn: (payload) => login(payload),
     mutationKey: [QUERY_KEYS.LOGIN],
+    ...config,
+  });
+
+export const useRequestPasswordChangeEmailOtpMutation = (config = {}) =>
+  useMutation({
+    mutationFn: (payload) => requestPasswordChangeEmailOtp(payload),
+    mutationKey: [QUERY_KEYS.REQUEST_PASSWORD_CHANGE_EMAIL_OTP],
+    ...config,
+  });
+
+export const useResetPasswordWithEmailMutation = (config = {}) =>
+  useMutation({
+    mutationFn: (payload) => resetPasswordWithEmail(payload),
+    mutationKey: [QUERY_KEYS.RESET_PASSWORD_WITH_EMAIL],
     ...config,
   });
