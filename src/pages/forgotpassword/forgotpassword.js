@@ -77,7 +77,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
-      <div className="border border-[#222227] w-[420px] rounded-xl p-10">
+      <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
         <div className="flex justify-center items-center flex-col">
           <img src={Logo} alt="logo" className="w-14" />
           <p className="text-center text-white">Reset Password With Email</p>
