@@ -12,7 +12,7 @@ export const useRegisterMutation = (config = {}) =>
 export const useResendEmailOTPMutation = (config = {}) =>
   useMutation({
     mutationFn: (payload) => resendEmailOTP(payload),
-    mutationKey: [QUERY_KEYS.REGISTER],
+    mutationKey: [QUERY_KEYS.RESEND_EMAIL_OTP],
     ...config,
   });
 
