@@ -6,8 +6,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Open Sans"', 'sans-serif'],
-        inter: ['"Inter"', 'sans-serif'],
+        sans: ['"Open Sans"', "sans-serif"],
+        inter: ['"Inter"', "sans-serif"],
+      },
+      screens: {
+        mxs: { max: "420px" },
       },
     },
   },
