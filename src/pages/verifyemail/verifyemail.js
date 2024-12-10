@@ -12,8 +12,17 @@ import {
 import ROUTES from "../../router/routes";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-const ResendOTP = ({ email }) => {
-  const { mutate } = useResendEmailOTPMutation();
+const ResendOTP = ({ email, formik }) => {
+  const { mutate, isLoading } = useResendEmailOTPMutation({
+    onError: (error) => {
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        Object.keys(errorData).forEach((field) => {
+          formik.setFieldError(field, errorData[field].join(", "));
+        });
+      }
+    },
+  });
   const DURATION = 2;
   const [timeLeft, setTimeLeft] = useState(DURATION);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
@@ -47,7 +56,11 @@ const ResendOTP = ({ email }) => {
         "mt-1 text-sm cursor-pointer select-none text-[#25a564] hover:underline"
       }
     >
-      {isResendEnabled ? "Resend OTP" : `Wait ${timeLeft} to resend OTP!`}
+      {isLoading
+        ? "Sending OTP..."
+        : isResendEnabled
+        ? "Resend OTP"
+        : `Wait ${timeLeft} to resend OTP!`}
     </p>
   );
 };
@@ -114,7 +127,7 @@ const Form = ({ email }) => {
         SIGN UP
       </Button>
 
-      <ResendOTP email={email} />
+      <ResendOTP email={email} formik={formik} />
     </form>
   );
 };
