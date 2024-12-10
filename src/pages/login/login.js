@@ -103,7 +103,9 @@ const Form = () => {
           </label>
         </div>
         <div>
-          <A className={"text-sm"}>Forgot Password?</A>
+          <A className={"text-sm"} href={ROUTES.FORGOTPASSWORD}>
+            Forgot Password?
+          </A>
         </div>
       </div>
       {formik.touched.remember && formik.errors.remember && (

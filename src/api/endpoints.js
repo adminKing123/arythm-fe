@@ -3,6 +3,7 @@ const API_ENDPOINTS = {
   RESEND_EMAIL_OTP: "/auth/resend-email-otp",
   VERIFY_EMAIL: "/auth/verify-email-and-activate-account",
   LOGIN: "/auth/username/login",
+  REQUEST_PASSWORD_CHANGE_EMAIL_OTP: "/auth/request-password-change-email-otp",
 };
 
 export default API_ENDPOINTS;

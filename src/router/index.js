@@ -4,6 +4,7 @@ import Register from "../pages/register/register";
 import VerifyEmail from "../pages/verifyemail/verifyemail";
 import Login from "../pages/login/login";
 import Home from "../pages/home/home";
+import ForgotPassword from "../pages/forgotpassword/forgotpassword";
 
 const Router = () => {
   return (
@@ -12,6 +13,10 @@ const Router = () => {
         <Route path={ROUTES.REGISTER} element={<Register />}></Route>
         <Route path={ROUTES.VERIFYEMAIL} element={<VerifyEmail />}></Route>
         <Route path={ROUTES.LOGIN} element={<Login />}></Route>
+        <Route
+          path={ROUTES.FORGOTPASSWORD}
+          element={<ForgotPassword />}
+        ></Route>
 
         <Route path={ROUTES.HOME} element={<Home />}></Route>
       </Routes>
