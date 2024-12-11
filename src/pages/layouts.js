@@ -8,7 +8,7 @@ import Header from "../components/header/header";
 
 export const CheckLogin = () => {
   const setConfig = authConfigStore((state) => state.setConfig);
-  const { mutate } = useAuthConfigMutation({
+  const { mutate, isLoading } = useAuthConfigMutation({
     onSuccess: setConfig,
     onError: () => tokenManager.removeToken(),
   });
@@ -16,6 +16,11 @@ export const CheckLogin = () => {
   useEffect(() => {
     mutate();
   }, [mutate]);
+
+  if (isLoading)
+    return (
+      <div className="w-screen h-screen bg-[#16151A] flex items-center justify-center"></div>
+    );
 
   return <Outlet />;
 };
