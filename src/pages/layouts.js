@@ -3,6 +3,8 @@ import { useAuthConfigMutation } from "../api/accounts/queryHooks";
 import { useEffect } from "react";
 import authConfigStore from "../zstore/authConfigStore";
 import tokenManager from "../api/utils";
+import SideNavbar from "../components/sidenavbar/sidenavbar";
+import Header from "../components/header/header";
 
 export const CheckLogin = () => {
   const setConfig = authConfigStore((state) => state.setConfig);
@@ -21,11 +23,9 @@ export const CheckLogin = () => {
 export const Main = ({ children }) => {
   return (
     <div className="w-screen h-screen bg-[#16151A] flex">
-      <div className="h-screen w-[280px] border-[#222227] border-r">
-        <div className="h-[70px] border-[#222227] border-b"></div>
-      </div>
+      <SideNavbar />
       <div className="h-screen flex-grow overflow-y-auto">
-        <div className="h-[70px] border-[#222227] border-b"></div>
+        <Header />
         <div>{children}</div>
       </div>
     </div>
