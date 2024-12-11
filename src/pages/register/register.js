@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useRegisterMutation } from "../../api/accounts/queryHooks";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
+import { CheckToken } from "../login/login";
 
 const formSchema = {
   initialValues: {
@@ -144,22 +145,23 @@ const Register = () => {
   useEffect(() => {
     document.title = "Create Your Account";
   }, []);
-
   return (
-    <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
-      <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
-        <div className="flex justify-center items-center flex-col">
-          <img src={Logo} alt="logo" className="w-14" />
-          <p className="text-center text-white">Sign Up for ARythm</p>
-        </div>
-        <Form />
-        <div className="mt-8">
-          <p className="text-sm text-center">
-            Already have an account? <A href={ROUTES.LOGIN}>Sign In!</A>
-          </p>
+    <CheckToken>
+      <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
+        <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
+          <div className="flex justify-center items-center flex-col">
+            <img src={Logo} alt="logo" className="w-14" />
+            <p className="text-center text-white">Sign Up for ARythm</p>
+          </div>
+          <Form />
+          <div className="mt-8">
+            <p className="text-sm text-center">
+              Already have an account? <A href={ROUTES.LOGIN}>Sign In!</A>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </CheckToken>
   );
 };
 

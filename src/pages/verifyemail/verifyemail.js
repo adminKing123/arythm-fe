@@ -11,6 +11,7 @@ import {
 } from "../../api/accounts/queryHooks";
 import ROUTES from "../../router/routes";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { CheckToken } from "../login/login";
 
 const ResendOTP = ({ email, formik }) => {
   const { mutate, isLoading } = useResendEmailOTPMutation({
@@ -139,20 +140,22 @@ const VerifyEmail = () => {
   if (!email) return <Navigate to={ROUTES.REGISTER} />;
 
   return (
-    <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
-      <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
-        <div className="flex justify-center items-center flex-col">
-          <img src={Logo} alt="logo" className="w-14" />
-          <p className="text-center text-white">Verify Email</p>
-        </div>
-        <Form email={email} />
-        <div className="mt-8">
-          <p className="text-sm text-center">
-            Wrong email entered? <A href={ROUTES.REGISTER}>Sign Up Again!</A>
-          </p>
+    <CheckToken>
+      <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
+        <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
+          <div className="flex justify-center items-center flex-col">
+            <img src={Logo} alt="logo" className="w-14" />
+            <p className="text-center text-white">Verify Email</p>
+          </div>
+          <Form email={email} />
+          <div className="mt-8">
+            <p className="text-sm text-center">
+              Wrong email entered? <A href={ROUTES.REGISTER}>Sign Up Again!</A>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </CheckToken>
   );
 };
 
