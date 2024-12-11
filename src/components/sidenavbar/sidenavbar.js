@@ -24,7 +24,7 @@ const SideNavbar = () => {
   const user = authConfigStore((state) => state.user);
 
   return (
-    <div className="h-screen w-[280px] border-[#222227] border-r flex flex-col">
+    <div className="h-screen w-[280px] border-[#222227] border-r flex flex-col shrink-0">
       <div className="border-[#222227] border-b h-[70px] px-[30px] flex items-center">
         <img src={Logo} alt="logo" className="w-12" />
       </div>
