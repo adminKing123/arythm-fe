@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ROUTES from "./routes";
 import Register from "../pages/register/register";
 import VerifyEmail from "../pages/verifyemail/verifyemail";
@@ -22,7 +22,7 @@ const Router = () => {
         <Route path={ROUTES.RESETPASSWORD} element={<Resetpassword />}></Route>
 
         <Route element={<CheckLogin />}>
-          <Route index element={<Home />}></Route>
+          <Route index element={<Navigate to={ROUTES.HOME} replace />} />
           <Route path={ROUTES.HOME} element={<Home />}></Route>
         </Route>
       </Routes>
