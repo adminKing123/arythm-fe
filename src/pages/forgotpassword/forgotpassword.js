@@ -64,7 +64,7 @@ const Form = () => {
         <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
       )}
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        SEND OTP
+        {isLoading ? "PLEASE WAIT..." : "SEND OTP"}
       </Button>
     </form>
   );

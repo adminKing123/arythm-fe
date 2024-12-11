@@ -113,7 +113,7 @@ const Form = () => {
       )}
 
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        SIGN IN
+        {isLoading ? "PLEASE WAIT..." :"SIGN IN"}
       </Button>
     </form>
   );
