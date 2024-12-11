@@ -19,5 +19,15 @@ export const CheckLogin = () => {
 };
 
 export const Main = ({ children }) => {
-  return <div className="w-screen h-screen bg-[#16151A]">{children}</div>;
+  return (
+    <div className="w-screen h-screen bg-[#16151A] flex">
+      <div className="h-screen w-[280px] border-[#222227] border-r">
+        <div className="h-[70px] border-[#222227] border-b"></div>
+      </div>
+      <div className="h-screen flex-grow overflow-y-auto">
+        <div className="h-[70px] border-[#222227] border-b"></div>
+        <div>{children}</div>
+      </div>
+    </div>
+  );
 };
