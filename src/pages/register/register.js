@@ -134,7 +134,7 @@ const Form = () => {
       )}
 
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        NEXT
+        {isLoading ? "PLEASE WAIT..." : "NEXT"}
       </Button>
     </form>
   );
