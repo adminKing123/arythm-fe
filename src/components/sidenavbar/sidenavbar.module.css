@@ -1,0 +1,30 @@
+.NavbarTab span {
+  color: #c0c0c0;
+  transition: 300ms color ease;
+}
+
+.NavbarTab svg {
+  fill: #c0c0c0;
+  transition: 300ms fill ease;
+}
+
+.NavbarTab:global.active svg {
+  fill: #25a56a;
+}
+
+.NavbarTab:global.active span {
+  color: white;
+}
+
+.NavbarTab {
+  display: flex;
+  gap: 12px;
+}
+
+.NavbarTab:hover svg {
+  fill: #25a56a;
+}
+
+.NavbarTab:hover span {
+  color: white;
+}
