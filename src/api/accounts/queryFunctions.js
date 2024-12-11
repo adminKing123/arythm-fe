@@ -63,7 +63,7 @@ export const resetPasswordWithEmail = async (data) => {
 
 export const authConfig = async () => {
   const response = await api({
-    method: "GET",
+    method: "POST",
     url: API_ENDPOINTS.AUTH_CONFIG,
   });
 

@@ -6,6 +6,7 @@ import Login from "../pages/login/login";
 import Home from "../pages/home/home";
 import ForgotPassword from "../pages/forgotpassword/forgotpassword";
 import Resetpassword from "../pages/forgotpassword/resetpassword";
+import { CheckLogin } from "../pages/layouts";
 
 const Router = () => {
   return (
@@ -20,8 +21,10 @@ const Router = () => {
         ></Route>
         <Route path={ROUTES.RESETPASSWORD} element={<Resetpassword />}></Route>
 
-        <Route index element={<Home />}></Route>
-        <Route path={ROUTES.HOME} element={<Home />}></Route>
+        <Route element={<CheckLogin />}>
+          <Route index element={<Home />}></Route>
+          <Route path={ROUTES.HOME} element={<Home />}></Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
