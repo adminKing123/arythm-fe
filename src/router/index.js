@@ -20,6 +20,7 @@ const Router = () => {
         ></Route>
         <Route path={ROUTES.RESETPASSWORD} element={<Resetpassword />}></Route>
 
+        <Route index element={<Home />}></Route>
         <Route path={ROUTES.HOME} element={<Home />}></Route>
       </Routes>
     </BrowserRouter>

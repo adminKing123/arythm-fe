@@ -1,5 +1,6 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import {
+  authConfig,
   login,
   register,
   requestPasswordChangeEmailOtp,
@@ -48,5 +49,14 @@ export const useResetPasswordWithEmailMutation = (config = {}) =>
   useMutation({
     mutationFn: (payload) => resetPasswordWithEmail(payload),
     mutationKey: [QUERY_KEYS.RESET_PASSWORD_WITH_EMAIL],
+    ...config,
+  });
+
+export const useAuthConfig = (config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.AUTH_CONFIG],
+    queryFn: authConfig,
+    retry: false,
+    refetchOnWindowFocus: false,
     ...config,
   });

@@ -7,8 +7,14 @@ import Button from "../../components/buttons/buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLoginMutation } from "../../api/accounts/queryHooks";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
+import tokenManager from "../../api/utils";
+
+export const CheckToken = ({ children }) => {
+  if (tokenManager.getToken()) return <Navigate to={ROUTES.HOME} />;
+  return children;
+};
 
 const formSchema = {
   initialValues: {
@@ -32,12 +38,7 @@ const Form = () => {
   const { mutate, isLoading } = useLoginMutation({
     onSuccess: (data) => {
       const values = formik.values;
-
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-      if (values.remember) localStorage.setItem("token", data.token);
-      else sessionStorage.setItem("token", data.token);
-
+      tokenManager.setToken(data.token, values.remember);
       if (data.__c__) alert(`Welcome ${data.user.username}!`);
       navigate(ROUTES.HOME);
     },
@@ -113,7 +114,7 @@ const Form = () => {
       )}
 
       <Button className="mt-6 w-full" type="submit" disabled={isLoading}>
-        {isLoading ? "PLEASE WAIT..." :"SIGN IN"}
+        {isLoading ? "PLEASE WAIT..." : "SIGN IN"}
       </Button>
     </form>
   );
@@ -125,20 +126,22 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
-      <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
-        <div className="flex justify-center items-center flex-col">
-          <img src={Logo} alt="logo" className="w-14" />
-          <p className="text-center text-white">Sign In for ARythm</p>
-        </div>
-        <Form />
-        <div className="mt-8">
-          <p className="text-sm text-center">
-            New to ARythm? <A href={ROUTES.REGISTER}>Sign Up!</A>
-          </p>
+    <CheckToken>
+      <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
+        <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
+          <div className="flex justify-center items-center flex-col">
+            <img src={Logo} alt="logo" className="w-14" />
+            <p className="text-center text-white">Sign In for ARythm</p>
+          </div>
+          <Form />
+          <div className="mt-8">
+            <p className="text-sm text-center">
+              New to ARythm? <A href={ROUTES.REGISTER}>Sign Up!</A>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </CheckToken>
   );
 };
 
