@@ -1,14 +1,5 @@
 import { useAuthConfig } from "../../api/accounts/queryHooks";
-
-const CheckLogin = ({ children }) => {
-  const { isLoading } = useAuthConfig();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  return children;
-};
+import { CheckLogin } from "../layouts";
 
 const Home = () => {
   const { data } = useAuthConfig();
