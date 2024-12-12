@@ -55,7 +55,7 @@ const Header = () => {
   const user = authConfigStore((state) => state.user);
 
   return (
-    <div className="h-[70px] border-[#222227] border-b px-[30px] flex">
+    <div className="h-[70px] border-[#222227] border-b px-[30px] bg-[#16151A] flex m2lg:sticky m2lg:top-0">
       <div className="flex h-full items-center gap-[30px] flex-grow">
         {user && <Tab>Profile</Tab>}
         <Tab>About</Tab>
