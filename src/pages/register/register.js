@@ -151,7 +151,7 @@ const Register = () => {
         <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
           <div className="flex justify-center items-center flex-col">
             <img src={Logo} alt="logo" className="w-14" />
-            <p className="text-center text-white">Sign Up for ARythm</p>
+            <p className="text-center text-white">Sign Up for ARhythm</p>
           </div>
           <Form />
           <div className="mt-8">

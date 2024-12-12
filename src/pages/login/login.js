@@ -131,12 +131,12 @@ const Login = () => {
         <div className="border border-[#222227] w-[420px] rounded-xl p-10 m-10">
           <div className="flex justify-center items-center flex-col">
             <img src={Logo} alt="logo" className="w-14" />
-            <p className="text-center text-white">Sign In for ARythm</p>
+            <p className="text-center text-white">Sign In for ARhythm</p>
           </div>
           <Form />
           <div className="mt-8">
             <p className="text-sm text-center">
-              New to ARythm? <A href={ROUTES.REGISTER}>Sign Up!</A>
+              New to ARhythm? <A href={ROUTES.REGISTER}>Sign Up!</A>
             </p>
           </div>
         </div>
