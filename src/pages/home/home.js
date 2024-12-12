@@ -475,7 +475,7 @@ const NewRelesese = () => {
 
 const Home = () => {
   useEffect(() => {
-    document.title = "ARythm";
+    document.title = "ARhythm";
   }, []);
 
   return (
