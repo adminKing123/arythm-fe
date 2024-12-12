@@ -1,11 +1,15 @@
 import tokenManager from "../../api/utils";
-import { SearchSvg, SignSvg } from "../../assets/svg";
+import { MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
 import A from "../links/links";
 
 const Tab = ({ children }) => {
-  return <A className="text-[#c0c0c0] hover:no-underline">{children}</A>;
+  return (
+    <A className="text-[#c0c0c0] hover:no-underline hidden md:inline-block">
+      {children}
+    </A>
+  );
 };
 
 const OptionSignLogout = ({ user }) => {
@@ -37,7 +41,7 @@ const SearchInput = () => {
   return (
     <div className="relative">
       <input
-        className="h-10 w-[320px] bg-[#222227] rounded-xl pl-5 pr-11 focus:outline-none text-white placeholder:text-[#c0c0c0]"
+        className="h-10 md:w-[320px] w-full bg-[#222227] rounded-xl pl-5 pr-11 focus:outline-none text-white placeholder:text-[#c0c0c0]"
         placeholder="Artist, track or podcast"
       ></input>
       <div className="absolute top-0 right-0 h-full flex items-center mr-5">
@@ -51,19 +55,20 @@ const Header = () => {
   const user = authConfigStore((state) => state.user);
 
   return (
-    <div className="h-[70px] border-[#222227] border-b px-[30px]">
-      <div className="flex h-full">
-        <div className="flex items-center gap-[30px] flex-grow">
-          {user && <Tab>Profile</Tab>}
-          <Tab>About</Tab>
-          <Tab>Contacts</Tab>
-          <div className="ml-[30px]">
-            <SearchInput />
-          </div>
+    <div className="h-[70px] border-[#222227] border-b px-[30px] flex">
+      <div className="flex h-full items-center gap-[30px] flex-grow">
+        {user && <Tab>Profile</Tab>}
+        <Tab>About</Tab>
+        <Tab>Contacts</Tab>
+        <div className="lg:ml-[30px] md:w-fit w-full">
+          <SearchInput />
         </div>
-        <div className="flex items-center">
-          <OptionSignLogout user={user} />
-        </div>
+      </div>
+      <div className="hidden items-center sm:flex md:ml-0 ml-8">
+        <OptionSignLogout user={user} />
+      </div>
+      <div className="items-center ml-4 m2lg:flex hidden">
+        <MenuSvg className="w-6 h-6" />
       </div>
     </div>
   );

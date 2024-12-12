@@ -1,3 +1,5 @@
+import authConfigStore from "../zstore/authConfigStore";
+
 const tokenManager = {
   getToken: () =>
     localStorage.getItem("token") || sessionStorage.getItem("token") || null,
@@ -11,6 +13,10 @@ const tokenManager = {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
   },
+};
+
+export const get_src_uri = (path) => {
+  return `${authConfigStore.getState().SRC_URI}${path}`;
 };
 
 export default tokenManager;

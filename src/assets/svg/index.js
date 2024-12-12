@@ -4,5 +4,16 @@ import { ReactComponent as HomeSvg } from "./home.svg";
 import { ReactComponent as ArtistsSvg } from "./artists.svg";
 import { ReactComponent as ReleasesSvg } from "./releases.svg";
 import { ReactComponent as PlaylistsSvg } from "./playlist.svg";
+import { ReactComponent as NextlinksSvg } from "./nextlink.svg";
+import { ReactComponent as MenuSvg } from "./menu.svg";
 
-export { SignSvg, SearchSvg, HomeSvg, ArtistsSvg, ReleasesSvg, PlaylistsSvg };
+export {
+  SignSvg,
+  SearchSvg,
+  HomeSvg,
+  ArtistsSvg,
+  ReleasesSvg,
+  PlaylistsSvg,
+  NextlinksSvg,
+  MenuSvg,
+};
