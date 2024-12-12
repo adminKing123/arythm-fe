@@ -25,31 +25,29 @@ const SideNavbar = () => {
 
   return (
     <div className="h-screen w-[280px] border-[#222227] border-r flex flex-col shrink-0">
-      <div className="border-[#222227] border-b h-[70px] px-[30px] flex items-center">
+      <div className="flex-shrink-0 border-[#222227] border-b h-[70px] px-[30px] flex items-center">
         <img src={Logo} alt="logo" className="w-12" />
       </div>
-      <div className="flex flex-col flex-grow">
-        <div className="flex-grow overflow-y-auto p-[30px] flex flex-col gap-5">
-          <NavbarTab to={ROUTES.HOME} Icon={HomeSvg}>
-            Home
+      <div className="flex-grow overflow-y-auto p-[30px] flex flex-col gap-5">
+        <NavbarTab to={ROUTES.HOME} Icon={HomeSvg}>
+          Home
+        </NavbarTab>
+        <NavbarTab to={"search"} Icon={SearchSvg}>
+          Search
+        </NavbarTab>
+        <NavbarTab to={"releases"} Icon={ReleasesSvg}>
+          Releases
+        </NavbarTab>
+        <NavbarTab to={"artists"} Icon={ArtistsSvg}>
+          Artists
+        </NavbarTab>
+        {user && (
+          <NavbarTab to={"playlists"} Icon={PlaylistsSvg}>
+            Playlists
           </NavbarTab>
-          <NavbarTab to={"search"} Icon={SearchSvg}>
-            Search
-          </NavbarTab>
-          <NavbarTab to={"releases"} Icon={ReleasesSvg}>
-            Releases
-          </NavbarTab>
-          <NavbarTab to={"artists"} Icon={ArtistsSvg}>
-            Artists
-          </NavbarTab>
-          {user && (
-            <NavbarTab to={"playlists"} Icon={PlaylistsSvg}>
-              Playlists
-            </NavbarTab>
-          )}
-        </div>
-        <div className="border-t border-[#222227] h-[260px]"></div>
+        )}
       </div>
+      <div className="border border-[#222227] h-[260px] flex-shrink-0"></div>
     </div>
   );
 };
