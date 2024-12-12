@@ -11,6 +11,7 @@ module.exports = {
       },
       screens: {
         mxs: { max: "420px" },
+        m2lg: { max: "1200px" },
       },
     },
   },
