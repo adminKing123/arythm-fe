@@ -487,7 +487,9 @@ const OwlCarouselCard = ({ slide }) => {
           <Button className="w-[160px] mr-[30px]">{slide.btns[0]}</Button>
         )}
         {slide.btns?.[1] && (
-          <Button className="w-[160px]">{slide.btns[1]}</Button>
+          <Button varient="secondary" className="w-[160px]">
+            {slide.btns[1]}
+          </Button>
         )}
       </div>
     </div>
