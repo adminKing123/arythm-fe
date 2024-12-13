@@ -2,6 +2,13 @@ import { useEffect } from "react";
 import { Main } from "../layouts";
 import { ALink, ArtistsLinks, NextLink } from "../../components/links/links";
 import { get_src_uri } from "../../api/utils";
+import { Swiper, SwiperSlide } from "swiper/react";
+// import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import Button from "../../components/buttons/buttons";
 
 const songs = [
   {
@@ -433,8 +440,78 @@ const songs = [
   },
 ];
 
+const slides = [
+  {
+    id: 1,
+    title: "Record Label & Music streaming",
+    description:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable",
+    img: "https://volna.volkovdesign.com/img/home/slide1.jpg",
+    btns: ["BUY NOW", "LEARN MORE"],
+  },
+  {
+    id: 2,
+    title:
+      "Metallica and Slipknot feature in trailer for ‘Long Live Rock’ documentary",
+    description:
+      "It also features Rage Against The Machine, Guns N' Roses and a number of others",
+    img: "https://volna.volkovdesign.com/img/home/slide2.jpg",
+    btns: ["LEARN MORE", "WATCH VIDEO"],
+  },
+  {
+    id: 3,
+    title: "New Artist of Our Label",
+    description:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable",
+    img: "https://volna.volkovdesign.com/img/home/slide3.jpg",
+    btns: [null, "LEARN MORE"],
+  },
+];
+
+const OwlCarouselCard = ({ slide }) => {
+  return (
+    <div
+      className="md:pr-[10%] lg:pr[25%] xl:pr-[50%] p-[60px] flex flex-col justify-center items-start w-full h-full relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-gradient-to-br before:from-black/70 before:to-black/0"
+      style={{
+        background: `url("${slide.img}") center center / cover no-repeat`,
+      }}
+    >
+      <h2 className="text-white relative text-[44px] leading-[130%]">
+        {slide.title}
+      </h2>
+      <p className="relative mt-[15px] leading-7 text-[17px]">
+        {slide.description}
+      </p>
+      <div className="relative mt-10">
+        {slide.btns?.[0] && (
+          <Button className="w-[160px] mr-[30px]">{slide.btns[0]}</Button>
+        )}
+        {slide.btns?.[1] && (
+          <Button className="w-[160px]">{slide.btns[1]}</Button>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const OwlCarousel = () => {
-  return <div className="h-[460px] rounded-xl border"></div>;
+  return (
+    <Swiper
+      // modules={[Navigation, Pagination, Autoplay]}
+      spaceBetween={30}
+      slidesPerView={1}
+      // navigation
+      // pagination={{ clickable: true }}
+      loop={true}
+      className="h-[460px] w-full rounded-xl"
+    >
+      {slides.map((slide) => (
+        <SwiperSlide key={slide.id}>
+          <OwlCarouselCard slide={slide} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
 };
 
 const SongCard = ({ song }) => {
@@ -466,7 +543,7 @@ const NewRelesese = () => {
       </div>
       <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {songs.map((song) => (
-          <SongCard song={song} />
+          <SongCard key={song.id} song={song} />
         ))}
       </div>
     </>
