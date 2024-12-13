@@ -560,12 +560,12 @@ const OwlCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="absolute bottom-[12px] right-0 z-[1] pr-[60px] flex items-center">
+      <div className="z-[1] pr-[60px] flex items-center justify-center mt-[20px] 2lg:absolute 2lg:bottom-[12px] 2lg:right-0">
         <Dots swiperRef={swiperRef} slideLength={slides.length} />
-        <button onClick={handlePrev}>
+        <button onClick={handlePrev} className="hidden 2lg:inline-block">
           <PrevSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
         </button>
-        <button onClick={handleNext}>
+        <button onClick={handleNext} className="hidden 2lg:inline-block">
           <NextSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
         </button>
       </div>
