@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Main } from "../layouts";
 import { ALink, ArtistsLinks, NextLink } from "../../components/links/links";
 import { get_src_uri } from "../../api/utils";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/autoplay";
+// import "swiper/css/navigation";
+// import "swiper/css/pagination";
+// import "swiper/css/autoplay";
 import Button from "../../components/buttons/buttons";
+import { NextSvg, PrevSvg } from "../../assets/svg";
 
 const songs = [
   {
@@ -496,23 +498,78 @@ const OwlCarouselCard = ({ slide }) => {
   );
 };
 
-const OwlCarousel = () => {
+const Dots = ({ swiperRef, slideLength }) => {
+  const [index, setIndex] = useState(0);
+
+  const changeSlide = (index) => {
+    swiperRef.current?.slideToLoop(index);
+  };
+
+  useEffect(() => {
+    const swiperEle = swiperRef.current;
+
+    const handleChange = () => {
+      setIndex(swiperEle.realIndex);
+    };
+
+    if (swiperEle) swiperEle.on("slideChange", handleChange);
+
+    return () => {
+      if (swiperEle) swiperEle.off("slideChange", handleChange);
+    };
+  }, [swiperRef]);
+
   return (
-    <Swiper
-      // modules={[Navigation, Pagination, Autoplay]}
-      spaceBetween={30}
-      slidesPerView={1}
-      // navigation
-      // pagination={{ clickable: true }}
-      loop={true}
-      className="h-[460px] w-full rounded-xl"
-    >
-      {slides.map((slide) => (
-        <SwiperSlide key={slide.id}>
-          <OwlCarouselCard slide={slide} />
-        </SwiperSlide>
+    <>
+      {Array.from({ length: slideLength }).map((_, dotIndex) => (
+        <span
+          key={dotIndex}
+          className={`${dotIndex} cursor-pointer h-[4px] inline-block mr-[10px] rounded-sm transition-all duration-300 ${
+            dotIndex === index ? "w-5 bg-white" : "w-[10px] bg-[#c0c0c0]"
+          }`}
+          onClick={() => changeSlide(dotIndex)}
+        ></span>
       ))}
-    </Swiper>
+    </>
+  );
+};
+
+const OwlCarousel = () => {
+  const swiperRef = useRef(null);
+
+  const handleNext = () => swiperRef.current && swiperRef.current.slideNext();
+  const handlePrev = () => swiperRef.current && swiperRef.current.slidePrev();
+
+  return (
+    <div className="relative">
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={30}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        loop={true}
+        onSwiper={(swiperInstance) => {
+          swiperRef.current = swiperInstance;
+        }}
+        className="h-[460px] w-full rounded-xl"
+      >
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <OwlCarouselCard slide={slide} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className="absolute bottom-[12px] right-0 z-[1] pr-[60px] flex items-center">
+        <Dots swiperRef={swiperRef} slideLength={slides.length} />
+        <button onClick={handlePrev}>
+          <PrevSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
+        </button>
+        <button onClick={handleNext}>
+          <NextSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
+        </button>
+      </div>
+    </div>
   );
 };
 
