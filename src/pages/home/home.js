@@ -552,7 +552,7 @@ const OwlCarousel = () => {
         onSwiper={(swiperInstance) => {
           swiperRef.current = swiperInstance;
         }}
-        className="min-h-[460px] h-fit w-full rounded-xl"
+        className="h-[460px] w-full rounded-xl"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
