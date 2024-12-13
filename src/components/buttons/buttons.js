@@ -1,11 +1,11 @@
-const Button = ({ children, className, ...props }) => {
+const Button = ({ children, varient = "primary", className, ...props }) => {
+  const varients = {
+    primary:
+      "text-white bg-[#25a56a] hover:bg-[#222227] disabled:bg-[#222227] disabled:hover:bg-[#222227] rounded-xl text-center text-sm transition-colors duration-300 p-3",
+  };
+
   return (
-    <button
-      className={`bg-[#25a56a] text-white p-3 rounded-xl hover:bg-[#222227] text-center text-sm transition-colors duration-300 disabled:bg-[#222227] disabled:hover:bg-[#222227] ${
-        className ?? ""
-      }`}
-      {...props}
-    >
+    <button className={`${varients[varient]} ${className ?? ""}`} {...props}>
       {children}
     </button>
   );
