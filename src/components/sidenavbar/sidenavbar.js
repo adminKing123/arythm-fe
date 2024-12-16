@@ -76,7 +76,7 @@ const MusicPlayer = () => {
   return (
     <div
       ref={musicPlayerContainerRef}
-      className="sticky p-5 border border-[#222227] bg-[#16151a] h-[260px] m2lg:w-screen m2lg:z-20 m2lg:absolute m2lg:left-[280px] m2lg:bottom-[-260px]"
+      className="sticky p-5 border border-[#222227] bg-[#16151a] h-[260px] m2lg:w-screen m2lg:z-20 m2lg:fixed m2lg:left-0 m2lg:bottom-[-260px]"
     >
       <button
         onClick={toggle}
