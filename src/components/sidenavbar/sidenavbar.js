@@ -76,11 +76,11 @@ const MusicPlayer = () => {
   return (
     <div
       ref={musicPlayerContainerRef}
-      className="sticky p-5 border border-[#222227] bg-[#16151a] h-[260px] m2lg:w-screen m2lg:z-20 m2lg:absolute m2lg:left-[280px] m2lg:bottom-[-260px]"
+      className="sticky p-5 border border-[#222227] bg-[#16151a] h-[260px] m2lg:w-screen m2lg:z-20 m2lg:fixed m2lg:left-0 m2lg:bottom-[-260px]"
     >
       <button
         onClick={toggle}
-        className="hidden m2lg:flex absolute -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] -top-10 items-center justify-center text-sm border border-[#222227]"
+        className="hidden m2lg:flex fixed -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] bottom-0 items-center justify-center text-sm border border-[#222227]"
       >
         <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" /> Player
       </button>

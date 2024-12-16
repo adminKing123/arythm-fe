@@ -10,9 +10,9 @@ import {
 import SongCard, { SongCardLoading } from "../../components/songcards/songcard";
 
 const OwlCarousel = () => {
-  const { isLoading, data } = useGetSlides();
+  const { isLoading, isError, data } = useGetSlides();
 
-  if (isLoading)
+  if (isLoading || isError)
     return (
       <div className="skeleton h-[360px] sm:h-[360px] md:h-[460px] w-full rounded-xl"></div>
     );
@@ -20,7 +20,7 @@ const OwlCarousel = () => {
 };
 
 const NewRelesese = () => {
-  const { isLoading, data } = useGetSongsLatestRelease();
+  const { isLoading, isError, data } = useGetSongsLatestRelease();
 
   return (
     <>
@@ -28,7 +28,7 @@ const NewRelesese = () => {
         <h2 className="text-white text-2xl">New Releases</h2>
         <NextLink>See All</NextLink>
       </div>
-      {isLoading ? (
+      {isLoading || isError ? (
         <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
           {Array.from({ length: 12 }, (_, index) => (
             <SongCardLoading key={index} />
