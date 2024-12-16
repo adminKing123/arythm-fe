@@ -7,6 +7,7 @@ const API_ENDPOINTS = {
   RESET_PASSWORD_WITH_EMAIL: "/auth/reset-password-with-email",
   AUTH_CONFIG: "/auth/config",
   GET_SLIDES: "/content/get-slides",
+  GET_SONGS: "/content/songs",
 };
 
 export default API_ENDPOINTS;
