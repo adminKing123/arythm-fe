@@ -5,7 +5,7 @@ import { getSlides } from "./queryFunctions";
 export const useGetSlides = (config = {}) =>
   useQuery({
     queryKey: [QUERY_KEYS.GET_SLIDES],
-    queryFn: getSlides,
+    queryFn: () => getSlides(),
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: false,

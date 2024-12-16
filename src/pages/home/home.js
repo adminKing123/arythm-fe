@@ -437,9 +437,7 @@ const songs = [
 ];
 
 const OwlCarousel = () => {
-  const { isLoading, data } = useGetSlides({
-    // refetchOnMount: false,
-  });
+  const { isLoading, data } = useGetSlides();
 
   if (isLoading)
     return (
