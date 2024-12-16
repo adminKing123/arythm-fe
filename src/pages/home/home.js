@@ -473,20 +473,20 @@ const slides = [
 const OwlCarouselCard = ({ slide }) => {
   return (
     <div
-      className="md:pr-[10%] lg:pr[25%] xl:pr-[50%] p-[60px] flex flex-col justify-center items-start w-full h-full relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-gradient-to-br before:from-black/70 before:to-black/0"
+      className="md:pr-[10%] lg:pr[25%] xl:pr-[50%] p-[30px] md:p-[60px] flex flex-col justify-center items-start w-full h-full relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-gradient-to-br before:from-black/70 before:to-black/0"
       style={{
         background: `url("${slide.img}") center center / cover no-repeat`,
       }}
     >
-      <h2 className="text-white relative text-[44px] leading-[130%]">
+      <h2 className="text-white relative text-[22px] md:text-[44px] md:leading-[130%]">
         {slide.title}
       </h2>
-      <p className="relative mt-[15px] leading-7 text-[17px]">
+      <p className="relative mt-[15px] md:leading-7 text-[12px] md:text-[17px]">
         {slide.description}
       </p>
-      <div className="relative mt-10">
+      <div className="relative flex items-center gap-[30px] mt-[40px] flex-wrap">
         {slide.btns?.[0] && (
-          <Button className="w-[160px] mr-[30px]">{slide.btns[0]}</Button>
+          <Button className="w-[160px]">{slide.btns[0]}</Button>
         )}
         {slide.btns?.[1] && (
           <Button varient="secondary" className="w-[160px]">
@@ -524,9 +524,9 @@ const Dots = ({ swiperRef, slideLength }) => {
       {Array.from({ length: slideLength }).map((_, dotIndex) => (
         <span
           key={dotIndex}
-          className={`${dotIndex} cursor-pointer h-[4px] inline-block mr-[10px] rounded-sm transition-all duration-300 ${
+          className={`${dotIndex} cursor-pointer h-[4px] inline-block rounded-sm transition-all duration-300 ${
             dotIndex === index ? "w-5 bg-white" : "w-[10px] bg-[#c0c0c0]"
-          }`}
+          } ${dotIndex === slideLength - 1 ? "" : "mr-[10px]"}`}
           onClick={() => changeSlide(dotIndex)}
         ></span>
       ))}
@@ -552,7 +552,7 @@ const OwlCarousel = () => {
         onSwiper={(swiperInstance) => {
           swiperRef.current = swiperInstance;
         }}
-        className="h-[460px] w-full rounded-xl"
+        className="h-fit sm:h-[360px] md:h-[460px] w-full rounded-xl"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -560,9 +560,12 @@ const OwlCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="z-[1] pr-[60px] flex items-center justify-center mt-[20px] 2lg:absolute 2lg:bottom-[12px] 2lg:right-0">
+      <div className="z-[1] flex items-center justify-center mt-[20px] 2lg:absolute 2lg:bottom-[12px] 2lg:right-0 2lg:pr-[60px]">
         <Dots swiperRef={swiperRef} slideLength={slides.length} />
-        <button onClick={handlePrev} className="hidden 2lg:inline-block">
+        <button
+          onClick={handlePrev}
+          className="hidden 2lg:inline-block ml-[10px]"
+        >
           <PrevSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
         </button>
         <button onClick={handleNext} className="hidden 2lg:inline-block">
