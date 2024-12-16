@@ -6,6 +6,7 @@ const API_ENDPOINTS = {
   REQUEST_PASSWORD_CHANGE_EMAIL_OTP: "/auth/request-password-change-email-otp",
   RESET_PASSWORD_WITH_EMAIL: "/auth/reset-password-with-email",
   AUTH_CONFIG: "/auth/config",
+  GET_SLIDES: "/content/get-slides",
 };
 
 export default API_ENDPOINTS;
