@@ -8,6 +8,7 @@ import { ReactComponent as NextlinksSvg } from "./nextlink.svg";
 import { ReactComponent as MenuSvg } from "./menu.svg";
 import { ReactComponent as NextSvg } from "./next.svg";
 import { ReactComponent as PrevSvg } from "./prev.svg";
+import { ReactComponent as PlaySvg } from "./play.svg";
 
 export {
   SignSvg,
@@ -20,4 +21,5 @@ export {
   MenuSvg,
   NextSvg,
   PrevSvg,
+  PlaySvg,
 };
