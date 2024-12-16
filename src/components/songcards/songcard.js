@@ -12,10 +12,10 @@ const SongCard = ({ song }) => {
           alt={song.album.id}
           src={get_src_uri(song.album.thumbnail300x300)}
         />
-        <Link className="flex justify-center items-center w-14 h-14 bg-[#222227] rounded-xl relative scale-[0.8] opacity-0 group-hover:scale-[1] group-hover:opacity-100 transition-all duration-500">
-          <PlaySvg className="w-6 h-6 fill-white" />
+        <Link className="flex justify-center items-center w-10 h-10 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl bg-[#222227] relative scale-[0.8] opacity-0 group-hover:scale-[1] group-hover:opacity-100 transition-all duration-500">
+          <PlaySvg className="w-5 h-5 fill-white sm:w-6 sm:h-6" />
         </Link>
-        <span className="absolute flex items-center justify-center w-full bottom-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        <span className="absolute flex items-center justify-center w-full bottom-1 sm:bottom-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <Link className="text-white fill-white text-[13px] mr-[15px] flex items-center gap-1">
             <PlaylistsSvg className="w-[13px] h-[13px]" />
             {song?.playlists_count || 0}
