@@ -8,3 +8,7 @@
   color: #c0c0c0;
   font-family: "Inter", sans-serif;
 }
+
+body {
+  overflow: hidden;
+}

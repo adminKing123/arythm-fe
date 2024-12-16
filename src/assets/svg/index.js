@@ -10,6 +10,8 @@ import { ReactComponent as NextSvg } from "./next.svg";
 import { ReactComponent as PrevSvg } from "./prev.svg";
 import { ReactComponent as PlaySvg } from "./play.svg";
 import { ReactComponent as HeadphoneSvg } from "./headphone.svg";
+import { ReactComponent as PlayerNextSvg } from "./playerNext.svg";
+import { ReactComponent as PlayerPrevSvg } from "./playerPrev.svg";
 
 export {
   SignSvg,
@@ -24,4 +26,6 @@ export {
   PrevSvg,
   PlaySvg,
   HeadphoneSvg,
+  PlayerNextSvg,
+  PlayerPrevSvg,
 };
