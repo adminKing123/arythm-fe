@@ -80,7 +80,7 @@ const MusicPlayer = () => {
     >
       <button
         onClick={toggle}
-        className="hidden m2lg:flex absolute -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] -top-10 items-center justify-center text-sm border border-[#222227]"
+        className="hidden m2lg:flex fixed -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] bottom-0 items-center justify-center text-sm border border-[#222227]"
       >
         <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" /> Player
       </button>
