@@ -39,9 +39,9 @@ const SongCard = ({ song }) => {
 export const SongCardLoading = () => {
   return (
     <div>
-      <div className="w-full aspect-square rounded-xl react-loading-skeleton"></div>
-      <div className="h-[16px] mt-2 react-loading-skeleton"></div>
-      <div className="react-loading-skeleton h-[10px]"></div>
+      <div className="w-full aspect-square rounded-xl skeleton"></div>
+      <div className="w-1/2 rounded h-[16px] mt-2 skeleton"></div>
+      <div className="w-3/4 rounded skeleton h-[10px]"></div>
     </div>
   );
 };

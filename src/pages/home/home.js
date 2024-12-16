@@ -14,7 +14,7 @@ const OwlCarousel = () => {
 
   if (isLoading)
     return (
-      <div className="react-loading-skeleton h-[360px] sm:h-[360px] md:h-[460px] w-full rounded-xl"></div>
+      <div className="skeleton h-[360px] sm:h-[360px] md:h-[460px] w-full rounded-xl"></div>
     );
   return <HeroCarousel slides={data} />;
 };
