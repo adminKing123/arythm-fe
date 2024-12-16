@@ -1,16 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Main } from "../layouts";
 import { ALink, ArtistsLinks, NextLink } from "../../components/links/links";
 import { get_src_uri } from "../../api/utils";
-import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Navigation } from "swiper/modules";
 import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/autoplay";
-import Button from "../../components/buttons/buttons";
-import { NextSvg, PrevSvg } from "../../assets/svg";
+import HeroCarousel from "../../components/carousals/herocarousal";
+import { useGetSlides } from "../../api/songs/queryHooks";
 
 const songs = [
   {
@@ -442,138 +436,16 @@ const songs = [
   },
 ];
 
-const slides = [
-  {
-    id: 1,
-    title: "Record Label & Music streaming",
-    description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable",
-    img: "https://volna.volkovdesign.com/img/home/slide1.jpg",
-    btns: ["BUY NOW", "LEARN MORE"],
-  },
-  {
-    id: 2,
-    title:
-      "Metallica and Slipknot feature in trailer for ‘Long Live Rock’ documentary",
-    description:
-      "It also features Rage Against The Machine, Guns N' Roses and a number of others",
-    img: "https://volna.volkovdesign.com/img/home/slide2.jpg",
-    btns: ["LEARN MORE", "WATCH VIDEO"],
-  },
-  {
-    id: 3,
-    title: "New Artist of Our Label",
-    description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable",
-    img: "https://volna.volkovdesign.com/img/home/slide3.jpg",
-    btns: [null, "LEARN MORE"],
-  },
-];
-
-const OwlCarouselCard = ({ slide }) => {
-  return (
-    <div
-      className="md:pr-[10%] lg:pr[25%] xl:pr-[50%] p-[30px] md:p-[60px] flex flex-col justify-center items-start w-full h-full relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-gradient-to-br before:from-black/70 before:to-black/0"
-      style={{
-        background: `url("${slide.img}") center center / cover no-repeat`,
-      }}
-    >
-      <h2 className="text-white relative text-[22px] md:text-[44px] md:leading-[130%]">
-        {slide.title}
-      </h2>
-      <p className="relative mt-[15px] md:leading-7 text-[12px] md:text-[17px]">
-        {slide.description}
-      </p>
-      <div className="relative flex items-center gap-[30px] mt-[40px] flex-wrap">
-        {slide.btns?.[0] && (
-          <Button className="w-[160px]">{slide.btns[0]}</Button>
-        )}
-        {slide.btns?.[1] && (
-          <Button varient="secondary" className="w-[160px]">
-            {slide.btns[1]}
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const Dots = ({ swiperRef, slideLength }) => {
-  const [index, setIndex] = useState(0);
-
-  const changeSlide = (index) => {
-    swiperRef.current?.slideToLoop(index);
-  };
-
-  useEffect(() => {
-    const swiperEle = swiperRef.current;
-
-    const handleChange = () => {
-      setIndex(swiperEle.realIndex);
-    };
-
-    if (swiperEle) swiperEle.on("slideChange", handleChange);
-
-    return () => {
-      if (swiperEle) swiperEle.off("slideChange", handleChange);
-    };
-  }, [swiperRef]);
-
-  return (
-    <>
-      {Array.from({ length: slideLength }).map((_, dotIndex) => (
-        <span
-          key={dotIndex}
-          className={`${dotIndex} cursor-pointer h-[4px] inline-block rounded-sm transition-all duration-300 ${
-            dotIndex === index ? "w-5 bg-white" : "w-[10px] bg-[#c0c0c0]"
-          } ${dotIndex === slideLength - 1 ? "" : "mr-[10px]"}`}
-          onClick={() => changeSlide(dotIndex)}
-        ></span>
-      ))}
-    </>
-  );
-};
-
 const OwlCarousel = () => {
-  const swiperRef = useRef(null);
+  const { isLoading, data } = useGetSlides({
+    // refetchOnMount: false,
+  });
 
-  const handleNext = () => swiperRef.current && swiperRef.current.slideNext();
-  const handlePrev = () => swiperRef.current && swiperRef.current.slidePrev();
-
-  return (
-    <div className="relative">
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={30}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        loop={true}
-        onSwiper={(swiperInstance) => {
-          swiperRef.current = swiperInstance;
-        }}
-        className="h-fit sm:h-[360px] md:h-[460px] w-full rounded-xl"
-      >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <OwlCarouselCard slide={slide} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="z-[1] flex items-center justify-center mt-[20px] 2lg:absolute 2lg:bottom-[12px] 2lg:right-0 2lg:pr-[60px]">
-        <Dots swiperRef={swiperRef} slideLength={slides.length} />
-        <button
-          onClick={handlePrev}
-          className="hidden 2lg:inline-block ml-[10px]"
-        >
-          <PrevSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
-        </button>
-        <button onClick={handleNext} className="hidden 2lg:inline-block">
-          <NextSvg className="fill-white hover:fill-[#25a56a] w-[30px] h-[30px] transition-colors duration-300" />
-        </button>
-      </div>
-    </div>
-  );
+  if (isLoading)
+    return (
+      <div className="react-loading-skeleton h-fit sm:h-[360px] md:h-[460px] w-full rounded-xl"></div>
+    );
+  return <HeroCarousel slides={data} />;
 };
 
 const SongCard = ({ song }) => {
