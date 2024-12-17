@@ -25,8 +25,8 @@ const NewRelesese = () => {
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">
-        <h2 className="text-white text-2xl">New Releases</h2>
-        <NextLink>See All</NextLink>
+        <h2 className="text-white text-[30px]">New Releases</h2>
+        <NextLink className="text-[16px]">See All</NextLink>
       </div>
       {isLoading || isError ? (
         <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">

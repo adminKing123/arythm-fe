@@ -29,7 +29,7 @@ export const Main = ({ children }) => {
   return (
     <div className="w-screen h-screen bg-[#16151A] flex">
       <SideNavbar />
-      <div className="h-screen flex-grow overflow-y-auto pb-[40px]">
+      <div className="h-screen flex-grow overflow-y-auto pb-[40px] custom-scroller">
         <Header />
         <div>{children}</div>
       </div>
