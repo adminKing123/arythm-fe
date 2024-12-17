@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { Main } from "../layouts";
-import { NewRelesese } from "../../components/songcards/containers";
+import {
+  HeroArtists,
+  NewRelesese,
+} from "../../components/songcards/containers";
 import { HeroCarousel } from "../../components/carousals";
 
 const Home = () => {
@@ -15,6 +18,9 @@ const Home = () => {
       </section>
       <section className="p-[30px]">
         <NewRelesese />
+      </section>
+      <section className="p-[30px]">
+        <HeroArtists />
       </section>
     </Main>
   );

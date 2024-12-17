@@ -1,4 +1,5 @@
 import { useGetSongsLatestRelease } from "../../api/songs/queryHooks";
+import { HeroArtistsCarousal } from "../carousals";
 import { NextLink } from "../links/links";
 import SongCard, { SongCardLoading } from "./songcard";
 
@@ -24,6 +25,18 @@ export const NewRelesese = () => {
           ))}
         </div>
       )}
+    </>
+  );
+};
+
+export const HeroArtists = () => {
+  return (
+    <>
+      <div className="flex justify-between items-center flex-wrap mb-8">
+        <h2 className="text-white text-[30px]">Artists</h2>
+        <NextLink className="text-[16px]">See All</NextLink>
+      </div>
+      <HeroArtistsCarousal />
     </>
   );
 };

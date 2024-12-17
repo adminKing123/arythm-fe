@@ -1,5 +1,4 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { useRef, useState, useEffect } from "react";
 import Button from "../../components/buttons/buttons";
 import { NextSvg, PrevSvg } from "../../assets/svg";
@@ -85,11 +84,8 @@ const HeroCarousel = () => {
   return (
     <div className="relative">
       <Swiper
-        modules={[Navigation]}
         spaceBetween={30}
         slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
         loop={true}
         onSwiper={(swiperInstance) => {
           swiperRef.current = swiperInstance;
