@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { useRef, useState, useEffect } from "react";
 import Button from "../../components/buttons/buttons";
 import { NextSvg, PrevSvg } from "../../assets/svg";
+import { useGetSlides } from "../../api/songs/queryHooks";
 
 const OwlCarouselCard = ({ slide }) => {
   return (
@@ -68,20 +68,24 @@ const Dots = ({ swiperRef, slideLength }) => {
   );
 };
 
-const HeroCarousel = ({ slides }) => {
+const HeroCarousel = () => {
   const swiperRef = useRef(null);
 
   const handleNext = () => swiperRef.current && swiperRef.current.slideNext();
   const handlePrev = () => swiperRef.current && swiperRef.current.slidePrev();
 
+  const { isLoading, isError, data: slides } = useGetSlides();
+
+  if (isLoading || isError)
+    return (
+      <div className="skeleton h-[360px] sm:h-[360px] md:h-[460px] w-full rounded-xl"></div>
+    );
+
   return (
     <div className="relative">
       <Swiper
-        modules={[Navigation]}
         spaceBetween={30}
         slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
         loop={true}
         onSwiper={(swiperInstance) => {
           swiperRef.current = swiperInstance;

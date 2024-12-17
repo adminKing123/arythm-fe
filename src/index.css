@@ -15,3 +15,16 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+.custom-scroller::-webkit-scrollbar {
+  width: 16px;
+}
+
+.custom-scroller::-webkit-scrollbar-track {
+  background: #222227;
+}
+
+.custom-scroller::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  outline: 1px solid #222227;
+}
