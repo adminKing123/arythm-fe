@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ApiProvider from "./api/provider";
 import "./css/skeleton.css";
+import "./css/musicplayer.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -28,4 +28,12 @@ export const numeral = (num) => {
   return formatter.format(num);
 };
 
+export const formatPlayerTime = (timeInSeconds) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  return `-${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
+};
+
 export default tokenManager;
