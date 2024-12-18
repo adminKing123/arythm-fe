@@ -2,8 +2,10 @@ import { ALink, ArtistsLinks } from "../../components/links/links";
 import { get_src_uri, numeral } from "../../api/utils";
 import { HeadphoneSvg, PlaylistsSvg, PlaySvg } from "../../assets/svg";
 import { Link } from "react-router-dom";
+import playerStore from "../../zstore/playerStore";
 
 const SongCard = ({ song }) => {
+  const setSong = playerStore((state) => state.setSong);
   return (
     <div>
       <div className="relative flex flex-col items-center justify-center w-full aspect-square rounded-xl overflow-hidden bg-[#000] group">
@@ -12,7 +14,10 @@ const SongCard = ({ song }) => {
           alt={song.album.id}
           src={get_src_uri(song.album.thumbnail300x300)}
         />
-        <Link className="flex justify-center items-center w-10 h-10 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl bg-[#222227] relative scale-[0.8] opacity-0 group-hover:scale-[1] group-hover:opacity-100 transition-all duration-500">
+        <Link
+          onClick={() => setSong(song)}
+          className="flex justify-center items-center w-10 h-10 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl bg-[#222227] relative scale-[0.8] opacity-0 group-hover:scale-[1] group-hover:opacity-100 transition-all duration-500"
+        >
           <PlaySvg className="w-5 h-5 fill-white sm:w-6 sm:h-6" />
         </Link>
         <span className="absolute flex items-center justify-center w-full bottom-1 sm:bottom-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
