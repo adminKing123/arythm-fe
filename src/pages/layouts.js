@@ -25,13 +25,15 @@ export const CheckLogin = () => {
   return <Outlet />;
 };
 
-export const Main = ({ children }) => {
+export const Main = () => {
   return (
     <div className="w-screen h-screen bg-[#16151A] flex">
       <SideNavbar />
       <div className="h-screen flex-grow overflow-y-auto pb-[40px] custom-scroller">
         <Header />
-        <div>{children}</div>
+        <div>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

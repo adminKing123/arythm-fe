@@ -46,7 +46,7 @@ const SideNavbar = () => {
           Artists
         </NavbarTab>
         {user && (
-          <NavbarTab to={"your-library"} Icon={PlaylistsSvg}>
+          <NavbarTab to={ROUTES.YOURLIBRARY} Icon={PlaylistsSvg}>
             Your Library
           </NavbarTab>
         )}
