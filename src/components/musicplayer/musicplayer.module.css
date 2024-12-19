@@ -1,0 +1,21 @@
+.seek {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  background: #363636;
+  margin-left: 8px;
+}
+
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  background-color: white;
+  border-radius: 50%;
+  border: none;
+  transition: 0.2s ease-in-out;
+}
