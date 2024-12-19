@@ -8,6 +8,7 @@ const API_ENDPOINTS = {
   AUTH_CONFIG: "/auth/config",
   GET_SLIDES: "/content/get-slides",
   GET_SONGS: "/content/songs",
+  GET_SONG: (id) => `/content/songs/${id}`,
   GET_ARTISTS: "/content/artists",
 };
 
