@@ -118,7 +118,7 @@ const VolumeControl = ({ playerRef }) => {
       const tempvolume = value
         ? prevVolume.current
           ? prevVolume.current
-          : 1
+          : 0.25
         : 0;
       audioElement.volume = tempvolume;
       sliderEl.value = tempvolume * 100;

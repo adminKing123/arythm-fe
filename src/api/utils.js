@@ -12,6 +12,7 @@ const tokenManager = {
   removeToken: () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
+    localStorage.removeItem("last_song");
   },
 };
 
