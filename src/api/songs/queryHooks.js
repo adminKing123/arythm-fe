@@ -1,6 +1,11 @@
 import { useQuery } from "react-query";
 import QUERY_KEYS from "../querykeys";
-import { getArtists, getSlides, getSongs } from "./queryFunctions";
+import {
+  getArtists,
+  getSlides,
+  getSongs,
+  getSongsHistory,
+} from "./queryFunctions";
 
 export const useGetSlides = (config = {}) =>
   useQuery({
@@ -29,5 +34,15 @@ export const useGetHeroArtists = (config = {}) =>
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    ...config,
+  });
+
+export const useGetLatestSongsFromHistory = (config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.GET_LATEST_SONGS_FROM_HISTORY],
+    queryFn: () => getSongsHistory(),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
     ...config,
   });

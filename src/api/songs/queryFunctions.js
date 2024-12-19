@@ -45,3 +45,16 @@ export const getSong = async (data) => {
 
   return response.data;
 };
+
+export const getSongsHistory = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_SONGS_HISTORY,
+    params: {
+      limit: data?.limit || 12,
+      offset: data?.offset || 0,
+    },
+  });
+
+  return response.data;
+};

@@ -1,10 +1,9 @@
 import authConfigStore from "../../zstore/authConfigStore";
 import ROUTES from "../../router/routes";
+import { LibraryLatestHistorySongs } from "../../components/carousals/libraryHistorSongsCarousal";
 
 const YourLibrary = () => {
   const user = authConfigStore((state) => state.user);
-
-  console.log(user);
 
   if (!user) {
     alert("Please Login To Access This Page!");
@@ -12,7 +11,13 @@ const YourLibrary = () => {
     return;
   }
 
-  return <></>;
+  return (
+    <>
+      <section className="p-[30px]">
+        <LibraryLatestHistorySongs />
+      </section>
+    </>
+  );
 };
 
 export default YourLibrary;
