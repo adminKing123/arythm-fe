@@ -145,7 +145,7 @@ const VolumeControl = ({ playerRef }) => {
       <input
         ref={sliderRef}
         type="range"
-        className={`${styles.seek} w-[70px] m2lg:w-[100px]`}
+        className={`${styles.seek} w-[100px] 2lg:w-[70px]`}
         min={0}
         max={100}
       />
@@ -172,7 +172,7 @@ const MusicPlayer = () => {
   return (
     <div
       ref={musicPlayerContainerRef}
-      className="sticky p-5 border border-[#222227] bg-[#16151a] h-[260px] m2lg:w-screen m2lg:z-20 m2lg:fixed m2lg:left-0 m2lg:bottom-[-260px]"
+      className="border border-[#222227] bg-[#16151a] p-5 w-screen z-20 fixed left-0 bottom-[-260px] h-[290px] sm:h-[260px] 2lg:sticky 2lg:w-[280px]"
     >
       <button
         onClick={toggle}
