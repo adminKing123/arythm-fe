@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  OpenPlaylistSvg,
   PauseSvg,
   PlayerNextSvg,
   PlayerPrevSvg,
   PlaySvg,
   ReleasesSvg,
+  VolumeFullSvg,
+  VolumeMuteSvg,
 } from "../../assets/svg";
 import { formatPlayerTime, get_src_uri } from "../../api/utils";
 import AudioPlayer from "react-h5-audio-player";
 import playerStore from "../../zstore/playerStore";
+import styles from "./musicplayer.module.css";
 
 const PlayerControls = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,15 +43,15 @@ const PlayerControls = ({ playerRef }) => {
 
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
-      <PlayerPrevSvg className="w-6 h-6 fill-white" />
+      <PlayerPrevSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
       <span onClick={handlePlayPause}>
         {isPlaying ? (
-          <PauseSvg className="w-6 h-6 fill-white" />
+          <PauseSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
         ) : (
-          <PlaySvg className="w-6 h-6 fill-white" />
+          <PlaySvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
         )}
       </span>
-      <PlayerNextSvg className="w-6 h-6 fill-white" />
+      <PlayerNextSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
     </div>
   );
 };
@@ -74,6 +78,78 @@ const Duration = ({ playerRef }) => {
     <span className="text-sm ml-[10px] w-[45px] flex-shrink-0">
       {remainingTime}
     </span>
+  );
+};
+
+const VolumeControl = ({ playerRef }) => {
+  const sliderRef = useRef(null);
+  const prevVolume = useRef(null);
+  const [volume, setVolume] = useState(1);
+
+  useEffect(() => {
+    const sliderEl = sliderRef.current;
+
+    if (sliderEl && playerRef?.current?.audio?.current) {
+      const audioElement = playerRef.current.audio.current;
+      const initialVolume = audioElement.volume * 100;
+      setVolume(audioElement.volume);
+      sliderEl.value = initialVolume;
+      const progress = (initialVolume / sliderEl.max) * 100;
+      sliderEl.style.background = `linear-gradient(to right, #25a56a ${progress}%, #363636 ${progress}%)`;
+
+      const handleInput = (event) => {
+        const tempSliderValue = event.target.value;
+        const progress = (tempSliderValue / sliderEl.max) * 100;
+        sliderEl.style.background = `linear-gradient(to right, #25a56a ${progress}%, #363636 ${progress}%)`;
+        audioElement.volume = tempSliderValue / 100;
+        setVolume(audioElement.volume);
+      };
+      sliderEl.addEventListener("input", handleInput);
+      return () => {
+        sliderEl.removeEventListener("input", handleInput);
+      };
+    }
+  }, [playerRef]);
+
+  const toggle = (value) => {
+    const audioElement = playerRef?.current?.audio?.current;
+    const sliderEl = sliderRef.current;
+    if (audioElement && sliderEl) {
+      const tempvolume = value
+        ? prevVolume.current
+          ? prevVolume.current
+          : 1
+        : 0;
+      audioElement.volume = tempvolume;
+      sliderEl.value = tempvolume * 100;
+      const progress = ((tempvolume * 100) / sliderEl.max) * 100;
+      sliderEl.style.background = `linear-gradient(to right, #25a56a ${progress}%, #363636 ${progress}%)`;
+      prevVolume.current = volume;
+      setVolume(tempvolume);
+    }
+  };
+
+  return (
+    <div className="flex items-center">
+      {volume ? (
+        <VolumeFullSvg
+          onClick={() => toggle(0)}
+          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+        />
+      ) : (
+        <VolumeMuteSvg
+          onClick={() => toggle(1)}
+          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+        />
+      )}
+      <input
+        ref={sliderRef}
+        type="range"
+        className={`${styles.seek} w-[70px] m2lg:w-[100px]`}
+        min={0}
+        max={100}
+      />
+    </div>
   );
 };
 
@@ -132,6 +208,13 @@ const MusicPlayer = () => {
           customControlsSection={["SEEK_BAR"]}
         />
         <Duration playerRef={playerRef} />
+      </div>
+      <div className="mt-[10px] flex justify-between items-center">
+        <VolumeControl playerRef={playerRef} />
+        <OpenPlaylistSvg
+          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+          title="Open Playlist"
+        />
       </div>
     </div>
   );

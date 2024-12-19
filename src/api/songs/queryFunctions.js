@@ -36,3 +36,12 @@ export const getArtists = async (data) => {
 
   return response.data;
 };
+
+export const getSong = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_SONG(data.id),
+  });
+
+  return response.data;
+};

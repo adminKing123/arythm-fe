@@ -13,6 +13,9 @@ import { ReactComponent as HeadphoneSvg } from "./headphone.svg";
 import { ReactComponent as PlayerNextSvg } from "./playerNext.svg";
 import { ReactComponent as PlayerPrevSvg } from "./playerPrev.svg";
 import { ReactComponent as PauseSvg } from "./pause.svg";
+import { ReactComponent as VolumeFullSvg } from "./volumeFull.svg";
+import { ReactComponent as VolumeMuteSvg } from "./volumeMute.svg";
+import { ReactComponent as OpenPlaylistSvg } from "./openPlaylist.svg";
 
 export {
   SignSvg,
@@ -30,4 +33,7 @@ export {
   PlayerNextSvg,
   PlayerPrevSvg,
   PauseSvg,
+  VolumeFullSvg,
+  VolumeMuteSvg,
+  OpenPlaylistSvg,
 };
