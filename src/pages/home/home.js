@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Main } from "../layouts";
 import {
   HeroArtists,
   NewRelesese,
@@ -12,7 +11,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Main>
+    <>
       <section className="p-[30px]">
         <HeroCarousel />
       </section>
@@ -22,7 +21,7 @@ const Home = () => {
       <section className="p-[30px]">
         <HeroArtists />
       </section>
-    </Main>
+    </>
   );
 };
 
