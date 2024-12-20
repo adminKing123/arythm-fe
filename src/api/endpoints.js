@@ -11,6 +11,7 @@ const API_ENDPOINTS = {
   GET_SONG: (id) => `/content/songs/${id}`,
   GET_ARTISTS: "/content/artists",
   GET_SONGS_HISTORY: "/content/songs-history",
+  LIKED_SONG: "/content/liked-songs",
 };
 
 export default API_ENDPOINTS;
