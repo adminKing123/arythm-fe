@@ -13,9 +13,10 @@ const playerStore = create((set, get) => ({
   addingInLiked: false,
   addingInHistory: false,
   setSong: async (song) => {
+    const prevSong = get().song;
     set({ song: song });
     setSongMetaData(song);
-    if (authConfigStore.getState().user) {
+    if (authConfigStore.getState().user && prevSong.id !== song.id) {
       localStorage.setItem("last_song", JSON.stringify(song));
 
       set({ addingInHistory: true });
