@@ -76,7 +76,7 @@ export const removeFromlikedSong = async (data) => {
     method: "DELETE",
     url: API_ENDPOINTS.LIKED_SONG,
     data: {
-      id: data.id,
+      song_id: data.id,
     },
   });
 
