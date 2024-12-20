@@ -105,6 +105,8 @@ const VolumeControl = ({ playerRef }) => {
         sliderEl.style.background = `linear-gradient(to right, #25a56a ${progress}%, #363636 ${progress}%)`;
         audioElement.volume = tempSliderValue / 100;
         setVolume(audioElement.volume);
+
+        localStorage.setItem("volume", audioElement.volume);
       };
       sliderEl.addEventListener("input", handleInput);
       return () => {
@@ -128,6 +130,7 @@ const VolumeControl = ({ playerRef }) => {
       sliderEl.style.background = `linear-gradient(to right, #25a56a ${progress}%, #363636 ${progress}%)`;
       prevVolume.current = volume;
       setVolume(tempvolume);
+      localStorage.setItem("volume", audioElement.volume);
     }
   };
 
@@ -240,6 +243,7 @@ const MusicPlayer = () => {
 
       <div className="flex justify-center items-center mt-[10px]">
         <AudioPlayer
+          volume={parseFloat(localStorage.getItem("volume")) || 1}
           ref={playerRef}
           autoPlay
           crossOrigin="*"

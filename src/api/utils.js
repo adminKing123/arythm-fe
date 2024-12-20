@@ -13,6 +13,8 @@ const tokenManager = {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
     localStorage.removeItem("last_song");
+    localStorage.removeItem("last_song_liked");
+    localStorage.removeItem("volume");
   },
 };
 
