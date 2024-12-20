@@ -58,3 +58,27 @@ export const getSongsHistory = async (data) => {
 
   return response.data;
 };
+
+export const likeSong = async (data) => {
+  const response = await api({
+    method: "POST",
+    url: API_ENDPOINTS.LIKED_SONG,
+    data: {
+      song_id: data.id,
+    },
+  });
+
+  return response.data;
+};
+
+export const removeFromlikedSong = async (data) => {
+  const response = await api({
+    method: "DELETE",
+    url: API_ENDPOINTS.LIKED_SONG,
+    data: {
+      id: data.id,
+    },
+  });
+
+  return response.data;
+};

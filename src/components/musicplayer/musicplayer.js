@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  HeartSvg,
   OpenPlaylistSvg,
   PauseSvg,
   PlayerNextSvg,
@@ -13,6 +14,7 @@ import { formatPlayerTime, get_src_uri } from "../../api/utils";
 import AudioPlayer from "react-h5-audio-player";
 import playerStore from "../../zstore/playerStore";
 import styles from "./musicplayer.module.css";
+import authConfigStore from "../../zstore/authConfigStore";
 
 const PlayerControls = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -153,6 +155,47 @@ const VolumeControl = ({ playerRef }) => {
   );
 };
 
+const LikeSongButton = () => {
+  const user = authConfigStore((state) => state.user);
+  const addingInHistory = playerStore((state) => state.addingInHistory);
+  const isLiked = playerStore((state) => state.isLiked);
+  const setLike = playerStore((state) => state.setLike);
+  const addingInLiked = playerStore((state) => state.addingInLiked);
+
+  const handleClick = () => {
+    if (!addingInLiked) {
+      setLike(!isLiked);
+    }
+  };
+
+  if (user)
+    return (
+      <HeartSvg
+        onClick={handleClick}
+        className={`w-6 h-6 ${
+          addingInHistory
+            ? "fill-[#c0c0c0]"
+            : isLiked
+            ? "fill-red-600"
+            : "fill-white"
+        } hover:fill-[#25a56a] transition-colors duration-300`}
+      />
+    );
+  return;
+};
+
+const ExtraOptions = ({ playerRef }) => {
+  return (
+    <div className="flex items-center gap-1">
+      <LikeSongButton />
+      <OpenPlaylistSvg
+        className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+        title="Open Playlist"
+      />
+    </div>
+  );
+};
+
 const MusicPlayer = () => {
   const song = playerStore((state) => state.song);
 
@@ -211,10 +254,7 @@ const MusicPlayer = () => {
       </div>
       <div className="mt-[10px] flex justify-between items-center">
         <VolumeControl playerRef={playerRef} />
-        <OpenPlaylistSvg
-          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
-          title="Open Playlist"
-        />
+        <ExtraOptions playerRef={playerRef} />
       </div>
     </div>
   );
