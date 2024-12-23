@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Logo from "../../assets/logo/logo.png";
 import Input from "../../components/Inputs/inputs";
 import A from "../../components/links/links";
@@ -72,9 +71,8 @@ const Form = () => {
 };
 
 const ForgotPassword = () => {
-  useEffect(() => {
-    document.title = "Forgot Password";
-  }, []);
+  document.title = "Forgot Password";
+ 
   return (
     <CheckToken>
       <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">

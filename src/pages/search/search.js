@@ -1,14 +1,12 @@
-import { useEffect } from "react";
-
 const Search = () => {
-  useEffect(() => {
-    document.title = "Search";
-  }, []);
+  document.title = "Search";
 
   return (
     <>
       <section className="p-[30px]">
-        <h2>Search</h2>
+        <div className="flex justify-between items-center flex-wrap">
+          <h2 className="text-white text-[30px]">Search</h2>
+        </div>
       </section>
     </>
   );

@@ -131,11 +131,8 @@ const Form = ({ email }) => {
 };
 
 const VerifyEmail = () => {
+  document.title = "Verify Email";
   const email = useLocation().state?.email;
-
-  useEffect(() => {
-    document.title = "Verify Email";
-  }, []);
 
   if (!email) return <Navigate to={ROUTES.REGISTER} />;
 

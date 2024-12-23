@@ -1,15 +1,11 @@
 import authConfigStore from "../../zstore/authConfigStore";
 import ROUTES from "../../router/routes";
 import { LibraryLatestHistorySongs } from "../../components/carousals/libraryHistorSongsCarousal";
-import { useEffect } from "react";
 import { LibraryPlaylists } from "../../components/songcards/containers";
 
 const YourLibrary = () => {
+  document.title = "Your Library";
   const user = authConfigStore((state) => state.user);
-
-  useEffect(() => {
-    document.title = "Your Library";
-  }, []);
 
   if (!user) {
     alert("Please Login To Access This Page!");

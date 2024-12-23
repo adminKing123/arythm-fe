@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Logo from "../../assets/logo/logo.png";
 import Input from "../../components/Inputs/inputs";
 import Checkbox from "../../components/checkboxs/checboxs";
@@ -142,9 +141,8 @@ const Form = () => {
 };
 
 const Register = () => {
-  useEffect(() => {
-    document.title = "Create Your Account";
-  }, []);
+  document.title = "Create Your Account";
+  
   return (
     <CheckToken>
       <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">

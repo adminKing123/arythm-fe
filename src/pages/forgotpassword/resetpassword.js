@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Logo from "../../assets/logo/logo.png";
 import Input from "../../components/Inputs/inputs";
 import A from "../../components/links/links";
@@ -87,11 +86,8 @@ const Form = ({ email }) => {
 };
 
 const ResetPassword = () => {
+  document.title = "Reset Password";
   const email = useLocation().state?.email;
-
-  useEffect(() => {
-    document.title = "Reset Password";
-  }, []);
 
   if (!email) return <Navigate to={ROUTES.FORGOTPASSWORD} />;
 
