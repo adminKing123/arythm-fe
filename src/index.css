@@ -25,3 +25,19 @@ body {
   background-color: #c0c0c0;
   outline: 1px solid #222227;
 }
+
+/* new scroller */
+.custom2-scroller::-webkit-scrollbar {
+  width: 2px;
+}
+
+.custom2-scroller::-webkit-scrollbar-track {
+  background: #222227;
+  border-radius: 8px;
+}
+
+.custom2-scroller::-webkit-scrollbar-thumb {
+  background-color: #515151;
+  border-radius: 8px;
+  outline: 1px solid #222227;
+}
