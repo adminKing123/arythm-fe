@@ -6,6 +6,7 @@ import {
 import Button from "../buttons/buttons";
 import { HeroArtistsCarousal } from "../carousals";
 import { NextLink } from "../links/links";
+import ArtistCard, { ArtistCardLoading } from "./artistcard";
 import PlaylistCardLibrary, {
   PlaylistCardLibraryLoading,
 } from "./playlistcard";
@@ -92,7 +93,7 @@ export const LibraryPlaylists = () => {
 const ShowHistoryGR = ({ data, isLoading }) => {
   if (data.length === 0) return;
   return isLoading ? (
-    <div className="grid gap-[30px] lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+    <div className="grid gap-[30px] sm:grid-cols-3 grid-cols-2 mt-[20px]">
       {Array.from({ length: 4 }, (_, index) => (
         <SongCardLoading key={index} />
       ))}
@@ -105,13 +106,13 @@ const ShowHistoryGR = ({ data, isLoading }) => {
       <div className="w-[200px] mt-2">
         <SongCard song={data[0].song} />
       </div>
-      <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+      <div className="grid gap-[30px] mt-4 sm:grid-cols-3 grid-cols-2">
         {data.slice(1).map((item) => {
           const song = item.song;
           return <SongCard key={song.id} song={song} />;
         })}
       </div>
-      <hr className="my-[16px] border-[#575757]" />
+      <div className="my-[20px]"></div>
     </>
   );
 };
@@ -119,7 +120,7 @@ const ShowHistoryGR = ({ data, isLoading }) => {
 const ShowSongsGR = ({ title = "Featuring", data, isLoading }) => {
   if (data.length === 0) return;
   return isLoading ? (
-    <div className="grid gap-[30px] lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+    <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2 mt-[20px]">
       {Array.from({ length: 4 }, (_, index) => (
         <SongCardLoading key={index} />
       ))}
@@ -134,6 +135,52 @@ const ShowSongsGR = ({ title = "Featuring", data, isLoading }) => {
           return <SongCard key={song.id} song={song} />;
         })}
       </div>
+      <div className="my-[20px]"></div>
+    </>
+  );
+};
+
+const ShowPlaylistsGR = ({ data, isLoading }) => {
+  if (data.length === 0) return;
+  return isLoading ? (
+    <div className="grid gap-[30px] sm:grid-cols-3 grid-cols-2 mt-[20px]">
+      {Array.from({ length: 4 }, (_, index) => (
+        <PlaylistCardLibraryLoading key={index} />
+      ))}
+    </div>
+  ) : (
+    <>
+      <div className="flex justify-between items-center flex-wrap">
+        <h2 className="text-white text-[30px]">Playlists</h2>
+      </div>
+      <div className="grid gap-[30px] mt-4 sm:grid-cols-3 grid-cols-2">
+        {data.map((playlist) => {
+          return <PlaylistCardLibrary key={playlist.id} playlist={playlist} />;
+        })}
+      </div>
+    </>
+  );
+};
+
+const ShowArtistsGR = ({ title = "Artists", data, isLoading }) => {
+  if (data.length === 0) return;
+  return isLoading ? (
+    <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+      {Array.from({ length: 4 }, (_, index) => (
+        <ArtistCardLoading key={index} />
+      ))}
+    </div>
+  ) : (
+    <>
+      <div className="flex justify-between items-center flex-wrap">
+        <h2 className="text-white text-[30px]">{title}</h2>
+      </div>
+      <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+        {data.map((artist) => {
+          return <ArtistCard key={artist.id} artist={artist} />;
+        })}
+      </div>
+      <div className="my-[20px]"></div>
     </>
   );
 };
@@ -155,7 +202,15 @@ export const GlobalSearchContainer = ({ q }) => {
         <ShowSongsGR
           title="Favorites"
           isLoading={isLoading || isFetching || isError}
-          data={data?.user_liked_songs || []}
+          data={data?.user_liked_songs.map((item) => item.song) || []}
+        />
+        <ShowArtistsGR
+          isLoading={isLoading || isFetching || isError}
+          data={data?.artists || []}
+        />
+        <ShowPlaylistsGR
+          isLoading={isLoading || isFetching || isError}
+          data={data?.playlists || []}
         />
       </div>
     </div>
