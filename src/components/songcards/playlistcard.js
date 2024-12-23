@@ -14,10 +14,10 @@ const PlaylistCardLibrary = ({ playlist }) => {
       ></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
         <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-white text-lg font-semibold truncate">
+          <h3 className="text-white font-semibold truncate lg:text-base sm:text-sm text-xs">
             {playlist.name}
           </h3>
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-300 lg:text-sm text-xs">
             {numeral(playlist.songs_count)} songs •{" "}
             <b>{playlist.privacy_type}</b>
           </p>
