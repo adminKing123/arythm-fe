@@ -47,7 +47,7 @@ const SearchInput = () => {
       className={`
         ${
           isSearching
-            ? "absolute top-0 min-w-[280px] w-full max-w-[640px] -translate-x-1/2 left-1/2"
+            ? "fixed top-0 min-w-[280px] w-full max-w-[640px] -translate-x-1/2 left-1/2 z-10"
             : ""
         }`}
     >
