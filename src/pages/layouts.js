@@ -5,6 +5,7 @@ import authConfigStore from "../zstore/authConfigStore";
 import tokenManager from "../api/utils";
 import SideNavbar from "../components/sidenavbar/sidenavbar";
 import Header from "../components/header/header";
+import ROUTES from "../router/routes";
 
 export const CheckLogin = () => {
   const setConfig = authConfigStore((state) => state.setConfig);
@@ -14,7 +15,10 @@ export const CheckLogin = () => {
       setConfig(data, () => {
         setLoading(false);
       }),
-    onError: () => tokenManager.removeToken(),
+    onError: () => {
+      tokenManager.removeToken();
+      window.location = ROUTES.LOGIN;
+    },
   });
 
   useEffect(() => {
