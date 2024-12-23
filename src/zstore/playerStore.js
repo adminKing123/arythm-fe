@@ -7,8 +7,11 @@ import {
 } from "../api/songs/queryFunctions";
 import { setSongMetaData } from "../api/utils";
 
+const already_selected_song = JSON.parse(localStorage.getItem("last_song"));
+if (already_selected_song) setSongMetaData(already_selected_song);
+
 const playerStore = create((set, get) => ({
-  song: JSON.parse(localStorage.getItem("last_song")) || null,
+  song: already_selected_song || null,
   isLiked: localStorage.getItem("last_song_liked") === "0" ? false : true,
   addingInLiked: false,
   addingInHistory: false,

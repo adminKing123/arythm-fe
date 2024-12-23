@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import QUERY_KEYS from "../querykeys";
 import {
   getArtists,
+  getLatestPlaylists,
   getSlides,
   getSongs,
   getSongsHistory,
@@ -41,6 +42,16 @@ export const useGetLatestSongsFromHistory = (config = {}) =>
   useQuery({
     queryKey: [QUERY_KEYS.GET_LATEST_SONGS_FROM_HISTORY],
     queryFn: () => getSongsHistory(),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    ...config,
+  });
+
+export const useGetLatestPlaylists = (config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.LATEST_PLAYLISTS],
+    queryFn: () => getLatestPlaylists(),
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,

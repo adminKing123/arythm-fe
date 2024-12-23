@@ -82,3 +82,12 @@ export const removeFromlikedSong = async (data) => {
 
   return response.data;
 };
+
+export const getLatestPlaylists = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.LATEST_PLAYLISTS,
+  });
+
+  return response.data;
+};
