@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import QUERY_KEYS from "../querykeys";
 import {
   getArtists,
+  getGlobalSearch,
   getLatestPlaylists,
   getSlides,
   getSongs,
@@ -52,6 +53,16 @@ export const useGetLatestPlaylists = (config = {}) =>
   useQuery({
     queryKey: [QUERY_KEYS.LATEST_PLAYLISTS],
     queryFn: () => getLatestPlaylists(),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    ...config,
+  });
+
+export const useGlobalSearch = (q, config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.GLOBAL_SEARCH, q],
+    queryFn: () => getGlobalSearch({ q }),
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,

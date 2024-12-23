@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import {
   useGetLatestPlaylists,
   useGetSongsLatestRelease,
+  useGlobalSearch,
 } from "../../api/songs/queryHooks";
 import Button from "../buttons/buttons";
 import { HeroArtistsCarousal } from "../carousals";
@@ -85,5 +87,44 @@ export const LibraryPlaylists = () => {
         </div>
       )}
     </>
+  );
+};
+
+const ShowHistoryGR = ({ data, isLoading }) => {
+  if (data.length === 0) return;
+  return isLoading ? (
+    <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+      {Array.from({ length: 4 }, (_, index) => (
+        <SongCardLoading key={index} />
+      ))}
+    </div>
+  ) : (
+    <>
+      <div className="flex justify-between items-center flex-wrap">
+        <h2 className="text-white text-[30px]">Top Results</h2>
+      </div>
+      <div className="w-[200px] mt-2">
+        <SongCard song={data[0].song} />
+      </div>
+      <div className="grid gap-[30px] mt-8 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+        {data.slice(1).map((item) => {
+          const song = item.song;
+          return <SongCard key={song.id} song={song} />;
+        })}
+      </div>
+    </>
+  );
+};
+
+export const GlobalSearchContainer = ({ q }) => {
+  const { isLoading, isFetching, isError, data } = useGlobalSearch(q);
+
+  return (
+    <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
+      <ShowHistoryGR
+        isLoading={isLoading || isFetching || isError}
+        data={data?.user_history || []}
+      />
+    </div>
   );
 };

@@ -4,6 +4,8 @@ import { MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
 import A from "../links/links";
+import { useDebounce } from "use-debounce";
+import { GlobalSearchContainer } from "../songcards/containers";
 
 const Tab = ({ children }) => {
   return (
@@ -41,6 +43,7 @@ const OptionSignLogout = ({ user }) => {
 const SearchInput = () => {
   const [isSearching, setSearching] = useState(false);
   const [q, setQ] = useState("");
+  const [debouncedQ] = useDebounce(q, 500);
 
   return (
     <div
@@ -52,9 +55,13 @@ const SearchInput = () => {
         }`}
     >
       {isSearching ? (
-        <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px]">
-          {q}
-        </div>
+        debouncedQ ? (
+          <GlobalSearchContainer q={debouncedQ} />
+        ) : (
+          <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
+            <p className="text-sm text-center">Please Type In To Search!</p>
+          </div>
+        )
       ) : null}
       <div className="flex justify-center items-center h-[70px] mx-2">
         <div className="relative w-full">

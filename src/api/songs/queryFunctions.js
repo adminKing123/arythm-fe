@@ -91,3 +91,15 @@ export const getLatestPlaylists = async (data) => {
 
   return response.data;
 };
+
+export const getGlobalSearch = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GLOBAL_SEARCH,
+    params: {
+      q: data.q,
+    },
+  });
+
+  return response.data;
+};

@@ -13,6 +13,7 @@ const API_ENDPOINTS = {
   GET_SONGS_HISTORY: "/content/songs-history",
   LIKED_SONG: "/content/liked-songs",
   LATEST_PLAYLISTS: "/content/latest-playlists",
+  GLOBAL_SEARCH: "/content/global-search",
 };
 
 export default API_ENDPOINTS;
