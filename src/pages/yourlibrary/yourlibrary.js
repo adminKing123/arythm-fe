@@ -2,6 +2,7 @@ import authConfigStore from "../../zstore/authConfigStore";
 import ROUTES from "../../router/routes";
 import { LibraryLatestHistorySongs } from "../../components/carousals/libraryHistorSongsCarousal";
 import { useEffect } from "react";
+import { LibraryPlaylists } from "../../components/songcards/containers";
 
 const YourLibrary = () => {
   const user = authConfigStore((state) => state.user);
@@ -20,6 +21,9 @@ const YourLibrary = () => {
     <>
       <section className="p-[30px]">
         <LibraryLatestHistorySongs />
+      </section>
+      <section className="p-[30px]">
+        <LibraryPlaylists />
       </section>
     </>
   );
