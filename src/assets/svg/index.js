@@ -17,6 +17,7 @@ import { ReactComponent as VolumeFullSvg } from "./volumeFull.svg";
 import { ReactComponent as VolumeMuteSvg } from "./volumeMute.svg";
 import { ReactComponent as OpenPlaylistSvg } from "./openPlaylist.svg";
 import { ReactComponent as HeartSvg } from "./heart.svg";
+import { ReactComponent as AddSvg } from "./add.svg";
 
 export {
   SignSvg,
@@ -38,4 +39,5 @@ export {
   VolumeMuteSvg,
   OpenPlaylistSvg,
   HeartSvg,
+  AddSvg,
 };
