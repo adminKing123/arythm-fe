@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Logo from "../../assets/logo/logo.png";
 import Input from "../../components/Inputs/inputs";
 import Checkbox from "../../components/checkboxs/checboxs";
@@ -121,9 +120,7 @@ const Form = () => {
 };
 
 const Login = () => {
-  useEffect(() => {
-    document.title = "Login";
-  }, []);
+  document.title = "Login";
 
   return (
     <CheckToken>

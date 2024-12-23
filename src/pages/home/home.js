@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   HeroArtists,
   NewRelesese,
@@ -6,9 +5,7 @@ import {
 import { HeroCarousel } from "../../components/carousals";
 
 const Home = () => {
-  useEffect(() => {
-    document.title = "ARhythm";
-  }, []);
+  document.title = "ARhythm";
 
   return (
     <>

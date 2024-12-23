@@ -1,8 +1,11 @@
+import { useState } from "react";
 import tokenManager from "../../api/utils";
 import { MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
 import A from "../links/links";
+import { useDebounce } from "use-debounce";
+import { GlobalSearchContainer } from "../songcards/containers";
 
 const Tab = ({ children }) => {
   return (
@@ -38,14 +41,60 @@ const OptionSignLogout = ({ user }) => {
 };
 
 const SearchInput = () => {
+  const [isSearching, setSearching] = useState(false);
+  const [q, setQ] = useState("");
+  const [debouncedQ] = useDebounce(q, 300);
+  const user = authConfigStore((state) => state.user);
+
   return (
-    <div className="relative">
-      <input
-        className="h-10 md:w-[320px] w-full bg-[#222227] rounded-xl pl-5 pr-11 focus:outline-none text-white placeholder:text-[#c0c0c0]"
-        placeholder="Artist, track or podcast"
-      ></input>
-      <div className="absolute top-0 right-0 h-full flex items-center mr-5">
-        <SearchSvg className="fill-white w-5 h-5" />
+    <div
+      className={`
+        ${
+          isSearching
+            ? "fixed top-0 min-w-[280px] w-full max-w-[640px] -translate-x-1/2 left-1/2 z-10"
+            : ""
+        }`}
+    >
+      {isSearching ? (
+        debouncedQ ? (
+          user ? (
+            <GlobalSearchContainer q={debouncedQ} />
+          ) : (
+            <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
+              <p className="text-sm text-center">Login Required!</p>
+            </div>
+          )
+        ) : (
+          <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
+            <p className="text-sm text-center">Please Type In To Search!</p>
+          </div>
+        )
+      ) : null}
+      <div className="flex justify-center items-center h-[70px] mx-2">
+        <div className="relative w-full">
+          <input
+            className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
+            placeholder="Artist, track or podcast"
+            onFocus={() => setSearching(true)}
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          ></input>
+          <div className="absolute top-0 right-0 h-full flex items-center mr-5">
+            {isSearching ? (
+              <span
+                className="cursor-pointer"
+                onClick={() => {
+                  setSearching(false);
+                  setQ("");
+                }}
+              >
+                close
+              </span>
+            ) : (
+              <SearchSvg className="fill-white w-5 h-5" />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
