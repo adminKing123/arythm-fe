@@ -6,6 +6,7 @@ const ROUTES = {
   RESETPASSWORD: "/reset-password",
   HOME: "/home",
   YOURLIBRARY: "/your-library",
+  SEARCH: "/search",
 };
 
 export default ROUTES;

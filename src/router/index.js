@@ -8,6 +8,7 @@ import ForgotPassword from "../pages/forgotpassword/forgotpassword";
 import Resetpassword from "../pages/forgotpassword/resetpassword";
 import { CheckLogin, Main } from "../pages/layouts";
 import YourLibrary from "../pages/yourlibrary/yourlibrary";
+import Search from "../pages/search/search";
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
             <Route index element={<Navigate to={ROUTES.HOME} replace />} />
             <Route path={ROUTES.HOME} element={<Home />}></Route>
             <Route path={ROUTES.YOURLIBRARY} element={<YourLibrary />}></Route>
+            <Route path={ROUTES.SEARCH} element={<Search />}></Route>
           </Route>
         </Route>
       </Routes>
