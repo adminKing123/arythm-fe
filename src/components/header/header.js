@@ -43,7 +43,8 @@ const OptionSignLogout = ({ user }) => {
 const SearchInput = () => {
   const [isSearching, setSearching] = useState(false);
   const [q, setQ] = useState("");
-  const [debouncedQ] = useDebounce(q, 500);
+  const [debouncedQ] = useDebounce(q, 300);
+  const user = authConfigStore((state) => state.user);
 
   return (
     <div
@@ -56,7 +57,13 @@ const SearchInput = () => {
     >
       {isSearching ? (
         debouncedQ ? (
-          <GlobalSearchContainer q={debouncedQ} />
+          user ? (
+            <GlobalSearchContainer q={debouncedQ} />
+          ) : (
+            <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
+              <p className="text-sm text-center">Login Required!</p>
+            </div>
+          )
         ) : (
           <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
             <p className="text-sm text-center">Please Type In To Search!</p>
