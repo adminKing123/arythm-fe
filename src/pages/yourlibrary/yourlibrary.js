@@ -57,6 +57,14 @@ export const LibraryPlaylists = () => {
       thumbnail300x300: "album-images/300x300/Aalas%20Ka%20Pedh.png",
       isPrivate: false,
     },
+    {
+      id: 4,
+      name: "2001-16 Best Songs",
+      count: 514,
+      thumbnail300x300:
+        "album-images/300x300/APKGK%20-%20Ajab%20Prem%20Ki%20Ghazab%20Kahani%20(2009).jpg",
+      isPrivate: false,
+    },
   ];
   return (
     <>
