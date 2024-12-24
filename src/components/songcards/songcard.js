@@ -3,14 +3,43 @@ import { get_src_uri, numeral } from "../../api/utils";
 import { HeadphoneSvg, PlaylistsSvg, PlaySvg } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import playerStore from "../../zstore/playerStore";
+import { useEffect, useRef } from "react";
 
 const SongCard = ({ song }) => {
   const setSong = playerStore((state) => state.setSong);
+
+  const imgRef = useRef(null);
+  const imgContainerRef = useRef(null);
+
+  useEffect(() => {
+    const imgEle = imgRef.current;
+    const imgContainerEle = imgContainerRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgContainerEle.classList.remove("skeleton");
+    };
+
+    if (imgEle && imgContainerRef) {
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, imgContainerRef]);
+
   return (
     <div>
-      <div className="relative flex flex-col items-center justify-center w-full aspect-square rounded-xl overflow-hidden bg-[#000] group">
+      <div
+        ref={imgContainerRef}
+        className="skeleton relative flex flex-col items-center justify-center w-full aspect-square rounded-xl overflow-hidden bg-[#000] group"
+      >
         <img
-          className="absolute top-0 left-0 w-full aspect-square group-hover:opacity-[0.6] group-hover:scale-[1.08] transition-all duration-500"
+          ref={imgRef}
+          loading="lazy"
+          className="opacity-0 absolute top-0 left-0 w-full aspect-square group-hover:opacity-[0.6] group-hover:scale-[1.08] transition-all duration-500"
           alt={song.album.id}
           src={get_src_uri(song.album.thumbnail300x300)}
         />
