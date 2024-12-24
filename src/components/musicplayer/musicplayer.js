@@ -204,6 +204,27 @@ const MusicPlayer = () => {
 
   const musicPlayerContainerRef = useRef(null);
   const playerRef = useRef(null);
+  const imgRef = useRef(null);
+  const imgContainerRef = useRef(null);
+
+  useEffect(() => {
+    const imgEle = imgRef.current;
+    const imgContainerEle = imgContainerRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgContainerEle.classList.remove("skeleton");
+    };
+
+    if (imgEle && imgContainerRef) {
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, imgContainerRef]);
 
   const toggle = () => {
     if (musicPlayerContainerRef.current) {
@@ -227,11 +248,17 @@ const MusicPlayer = () => {
         <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" /> Player
       </button>
       <div className="w-full flex justify-center">
-        <img
-          className="w-[90px] h-[90px] rounded-xl"
-          src={get_src_uri(song.album.thumbnail300x300)}
-          alt="thumbnail"
-        />
+        <div
+          ref={imgContainerRef}
+          className="w-[90px] h-[90px] rounded-xl skeleton"
+        >
+          <img
+            ref={imgRef}
+            className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
+            src={get_src_uri(song.album.thumbnail300x300)}
+            alt="thumbnail"
+          />
+        </div>
       </div>
       <div className="w-full flex justify-center mt-[10px]">
         <div className="max-w-64 truncate text-center">
