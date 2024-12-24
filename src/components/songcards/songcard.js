@@ -18,6 +18,7 @@ const SongCard = ({ song }) => {
     const handleLoaded = () => {
       imgEle.classList.remove("opacity-0");
       imgContainerEle.classList.remove("skeleton");
+      imgContainerEle.classList.add("group-hover:opacity-[0.6]");
     };
 
     if (imgEle && imgContainerRef) {
@@ -39,7 +40,7 @@ const SongCard = ({ song }) => {
         <img
           ref={imgRef}
           loading="lazy"
-          className="opacity-0 absolute top-0 left-0 w-full aspect-square group-hover:opacity-[0.6] group-hover:scale-[1.08] transition-all duration-500"
+          className="opacity-0 absolute top-0 left-0 w-full aspect-square group-hover:scale-[1.08] transition-all duration-500"
           alt={song.album.id}
           src={get_src_uri(song.album.thumbnail300x300)}
         />

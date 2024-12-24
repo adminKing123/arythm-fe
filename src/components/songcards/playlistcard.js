@@ -1,17 +1,42 @@
+import { useEffect, useRef } from "react";
 import { get_src_uri, numeral } from "../../api/utils";
 
 const PlaylistCardLibrary = ({ playlist }) => {
+  const imgRef = useRef(null);
+  const imgContainerRef = useRef(null);
+
+  useEffect(() => {
+    const imgEle = imgRef.current;
+    const imgContainerEle = imgContainerRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgContainerEle.classList.remove("skeleton");
+    };
+
+    if (imgEle && imgContainerRef) {
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, imgContainerRef]);
+
   return (
     <div
       key={playlist.id}
       className="relative rounded-xl overflow-hidden cursor-pointer group shadow-lg hover:shadow-xl transition-shadow"
     >
-      <div
-        className="w-full aspect-square bg-cover bg-center group-hover:scale-[1.08] transition-transform duration-300"
-        style={{
-          backgroundImage: `url("${get_src_uri(playlist.thumbnail)}")`,
-        }}
-      ></div>
+      <div ref={imgContainerRef} className="skeleton w-full aspect-square">
+        <img
+          ref={imgRef}
+          loading="lazy"
+          src={get_src_uri(playlist.thumbnail)}
+          className="opacity-0 w-full aspect-square bg-cover bg-center group-hover:scale-[1.08] transition-transform duration-300"
+        ></img>
+      </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
         <div className="absolute bottom-4 left-4 right-4">
           <h3 className="text-white font-semibold truncate lg:text-base sm:text-sm text-xs">
