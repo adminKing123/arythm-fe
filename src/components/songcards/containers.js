@@ -6,6 +6,7 @@ import {
 import Button from "../buttons/buttons";
 import { HeroArtistsCarousal } from "../carousals";
 import {
+  ShowAlbumGR,
   ShowArtistsGR,
   ShowHistoryGR,
   ShowPlaylistsGR,
@@ -117,6 +118,10 @@ export const GlobalSearchContainer = ({ q }) => {
         <ShowArtistsGR
           isLoading={isLoading || isFetching || isError}
           data={data?.artists || []}
+        />
+        <ShowAlbumGR
+          isLoading={isLoading || isFetching || isError}
+          data={data?.albums || []}
         />
         <ShowPlaylistsGR
           isLoading={isLoading || isFetching || isError}
