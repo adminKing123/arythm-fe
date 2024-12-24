@@ -61,12 +61,12 @@ const SearchInput = () => {
             <GlobalSearchContainer q={debouncedQ} />
           ) : (
             <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
-              <p className="text-sm text-center">Login Required!</p>
+              <p className="text-center">Login Required!</p>
             </div>
           )
         ) : (
           <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
-            <p className="text-sm text-center">Please Type In To Search!</p>
+            <p className="text-center">Please enter your search query!</p>
           </div>
         )
       ) : null}
