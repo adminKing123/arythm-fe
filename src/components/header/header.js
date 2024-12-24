@@ -48,20 +48,23 @@ const SearchInput = () => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleKeyDown = (event) => {
       if (event.key === "Escape" && isSearching) {
         inputRef.current?.blur();
         setSearching(false);
         setQ("");
       }
+
+      if (event.ctrlKey && event.key === " ") {
+        event.preventDefault();
+        inputRef.current?.focus();
+      }
     };
 
-    if (isSearching) {
-      window.addEventListener("keydown", handleEscKey);
-    }
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleEscKey);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isSearching]);
 
