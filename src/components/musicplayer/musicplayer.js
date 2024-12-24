@@ -18,6 +18,7 @@ import authConfigStore from "../../zstore/authConfigStore";
 
 const PlayerControls = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const loadingSongFromURI = playerStore((state) => state.loadingSongFromURI);
 
   const handlePlayPause = () => {
     if (playerRef.current) {
@@ -46,13 +47,17 @@ const PlayerControls = ({ playerRef }) => {
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
       <PlayerPrevSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
-      <span onClick={handlePlayPause}>
-        {isPlaying ? (
-          <PauseSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
-        ) : (
-          <PlaySvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
-        )}
-      </span>
+      {loadingSongFromURI ? (
+        <span className="w-6 h-6 loader border-[3px] rounded-full"></span>
+      ) : (
+        <span onClick={handlePlayPause}>
+          {isPlaying ? (
+            <PauseSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+          ) : (
+            <PlaySvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+          )}
+        </span>
+      )}
       <PlayerNextSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
     </div>
   );
@@ -201,6 +206,9 @@ const ExtraOptions = ({ playerRef }) => {
 
 const MusicPlayer = () => {
   const song = playerStore((state) => state.song);
+  const setLoadingSongFromURI = playerStore(
+    (state) => state.setLoadingSongFromURI
+  );
 
   const musicPlayerContainerRef = useRef(null);
   const playerRef = useRef(null);
@@ -280,6 +288,10 @@ const MusicPlayer = () => {
           customVolumeControls={[]}
           customAdditionalControls={[]}
           customControlsSection={["SEEK_BAR"]}
+          onLoadStart={() => setLoadingSongFromURI(true)}
+          onWaiting={() => setLoadingSongFromURI(true)}
+          onCanPlay={() => setLoadingSongFromURI(false)}
+          onLoadedData={() => setLoadingSongFromURI(false)}
         />
         <Duration playerRef={playerRef} />
       </div>

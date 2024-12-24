@@ -34,6 +34,7 @@ const PlaylistCardLibrary = ({ playlist }) => {
           ref={imgRef}
           loading="lazy"
           src={get_src_uri(playlist.thumbnail)}
+          alt={playlist.name}
           className="opacity-0 w-full aspect-square bg-cover bg-center group-hover:scale-[1.08] transition-transform duration-300"
         ></img>
       </div>
