@@ -181,7 +181,7 @@ const LikeSongButton = () => {
             : isLiked
             ? "fill-red-600"
             : "fill-white"
-        } hover:fill-[#25a56a] transition-colors duration-300`}
+        } cursor-pointer transition-colors duration-300`}
       />
     );
   return;
