@@ -134,6 +134,7 @@ export const GlobalSearchContainer = ({ q }) => {
         data.songs.length === 0 &&
         data.user_liked_songs.length === 0 &&
         data.artists.length === 0 &&
+        data.albums.length === 0 &&
         data.playlists.length === 0 ? (
           <div className="text-center">No Result Found</div>
         ) : null}
