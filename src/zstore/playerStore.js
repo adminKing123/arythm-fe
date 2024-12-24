@@ -15,6 +15,12 @@ const playerStore = create((set, get) => ({
   isLiked: localStorage.getItem("last_song_liked") === "0" ? false : true,
   addingInLiked: false,
   addingInHistory: false,
+
+  loadingSongFromURI: false,
+  setLoadingSongFromURI: (value) => {
+    set({ loadingSongFromURI: value });
+  },
+
   setSong: async (song) => {
     const prevSong = get().song;
     set({ song: song });
