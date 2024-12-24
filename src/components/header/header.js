@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import tokenManager from "../../api/utils";
 import { MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
 import ROUTES from "../../router/routes";
@@ -45,6 +45,25 @@ const SearchInput = () => {
   const [q, setQ] = useState("");
   const [debouncedQ] = useDebounce(q, 300);
   const user = authConfigStore((state) => state.user);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape" && isSearching) {
+        inputRef.current?.blur();
+        setSearching(false);
+        setQ("");
+      }
+    };
+
+    if (isSearching) {
+      window.addEventListener("keydown", handleEscKey);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isSearching]);
 
   return (
     <div
@@ -73,6 +92,7 @@ const SearchInput = () => {
       <div className="flex justify-center items-center h-[70px] mx-2">
         <div className="relative w-full">
           <input
+            ref={inputRef}
             className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
             placeholder="Artist, track or podcast"
             onFocus={() => setSearching(true)}
