@@ -225,6 +225,9 @@ const MusicPlayer = () => {
     };
 
     if (imgEle && imgContainerRef) {
+      imgEle.classList.add("opacity-0");
+      imgContainerEle.classList.add("skeleton");
+
       if (imgEle.complete) handleLoaded();
       else imgEle.addEventListener("load", handleLoaded);
 
@@ -232,7 +235,7 @@ const MusicPlayer = () => {
         imgEle.removeEventListener("load", handleLoaded);
       };
     }
-  }, [imgRef, imgContainerRef]);
+  }, [imgRef, imgContainerRef, song]);
 
   const toggle = () => {
     if (musicPlayerContainerRef.current) {
@@ -263,7 +266,7 @@ const MusicPlayer = () => {
           <img
             ref={imgRef}
             className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
-            src={get_src_uri(song.album.thumbnail300x300)}
+            src={get_src_uri(song.album.thumbnail1200x1200)}
             alt="thumbnail"
           />
         </div>
