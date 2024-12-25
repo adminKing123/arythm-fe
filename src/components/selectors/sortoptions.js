@@ -34,6 +34,7 @@ const SortOptions = ({ options }) => {
       </button>
       {options.slice(1).map((item) => (
         <button
+          key={item.id}
           onClick={(e) => handleClick(e, item)}
           className={`h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
             item.id === option?.id ? "text-white" : ""
