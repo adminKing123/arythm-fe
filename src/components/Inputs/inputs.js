@@ -1,3 +1,5 @@
+import { SearchSvg } from "../../assets/svg";
+
 const Input = ({ className, ...props }) => {
   return (
     <input
@@ -6,6 +8,20 @@ const Input = ({ className, ...props }) => {
       }`}
       {...props}
     ></input>
+  );
+};
+
+export const SearchInput = () => {
+  return (
+    <div className="relative w-full">
+      <input
+        className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
+        placeholder="Search..."
+      ></input>
+      <div className="absolute top-0 right-0 h-full flex items-center mr-5">
+        <SearchSvg className="fill-white w-5 h-5" />
+      </div>
+    </div>
   );
 };
 
