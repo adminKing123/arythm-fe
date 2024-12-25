@@ -11,6 +11,7 @@ import {
   ShowHistoryGR,
   ShowPlaylistsGR,
   ShowSongsGR,
+  ShowTagGR,
 } from "../globalsearchcardcontainers";
 import { NextLink } from "../links/links";
 import PlaylistCardLibrary, {
@@ -127,6 +128,10 @@ export const GlobalSearchContainer = ({ q }) => {
           isLoading={isLoading || isFetching || isError}
           data={data?.playlists || []}
         />
+        <ShowTagGR
+          isLoading={isLoading || isFetching || isError}
+          data={data?.tags || []}
+        />
         {!isLoading &&
         !isFetching &&
         !isError &&
@@ -135,6 +140,7 @@ export const GlobalSearchContainer = ({ q }) => {
         data.user_liked_songs.length === 0 &&
         data.artists.length === 0 &&
         data.albums.length === 0 &&
+        data.tags.length === 0 &&
         data.playlists.length === 0 ? (
           <div className="text-center">No Result Found</div>
         ) : null}

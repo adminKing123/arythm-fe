@@ -4,6 +4,7 @@ import PlaylistCardLibrary, {
   PlaylistCardLibraryLoading,
 } from "../songcards/playlistcard";
 import SongCard, { SongCardLoading } from "../songcards/songcard";
+import TagCard, { TagCardLoading } from "../songcards/tagcard";
 
 export const ShowHistoryGR = ({ data, isLoading }) => {
   if (data.length === 0) return;
@@ -116,6 +117,29 @@ export const ShowAlbumGR = ({ title = "Albums", data, isLoading }) => {
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((album) => {
           return <AlbumCard key={album.id} album={album} />;
+        })}
+      </div>
+      <div className="my-[20px]"></div>
+    </>
+  );
+};
+
+export const ShowTagGR = ({ title = "Related Queries", data, isLoading }) => {
+  if (data.length === 0) return;
+  return isLoading ? (
+    <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2 mt-[20px]">
+      {Array.from({ length: 4 }, (_, index) => (
+        <TagCardLoading key={index} />
+      ))}
+    </div>
+  ) : (
+    <>
+      <div className="flex justify-between items-center flex-wrap mt-[20px]">
+        <h2 className="text-white text-[30px]">{title}</h2>
+      </div>
+      <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+        {data.map((tag) => {
+          return <TagCard key={tag.id} tag={tag} />;
         })}
       </div>
       <div className="my-[20px]"></div>
