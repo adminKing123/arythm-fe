@@ -79,7 +79,9 @@ export const LibraryPlaylists = () => {
       ) : playlistsData.length ? (
         <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
           {playlistsData.map((playlist) => {
-            return <PlaylistCardLibrary playlist={playlist} />;
+            return (
+              <PlaylistCardLibrary key={playlist.id} playlist={playlist} />
+            );
           })}
         </div>
       ) : (
