@@ -6,7 +6,7 @@ import PlaylistCardLibrary, {
 import SongCard, { SongCardLoading } from "../songcards/songcard";
 import TagCard, { TagCardLoading } from "../songcards/tagcard";
 
-export const ShowHistoryGR = ({ data, isLoading }) => {
+export const ShowHistoryGR = ({ data, isLoading, handleClose }) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] sm:grid-cols-3 grid-cols-2 mt-[20px]">
@@ -20,12 +20,18 @@ export const ShowHistoryGR = ({ data, isLoading }) => {
         <h2 className="text-white text-[30px]">Top Results</h2>
       </div>
       <div className="w-[200px] mt-2">
-        <SongCard song={data[0].song} />
+        <SongCard song={data[0].song} setCallback={() => handleClose(false)} />;
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.slice(1).map((item) => {
           const song = item.song;
-          return <SongCard key={song.id} song={song} />;
+          return (
+            <SongCard
+              key={song.id}
+              song={song}
+              setCallback={() => handleClose(false)}
+            />
+          );
         })}
       </div>
       <div className="my-[20px]"></div>
@@ -33,7 +39,12 @@ export const ShowHistoryGR = ({ data, isLoading }) => {
   );
 };
 
-export const ShowSongsGR = ({ title = "Featuring", data, isLoading }) => {
+export const ShowSongsGR = ({
+  title = "Featuring",
+  data,
+  isLoading,
+  handleClose,
+}) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2 mt-[20px]">
@@ -48,7 +59,13 @@ export const ShowSongsGR = ({ title = "Featuring", data, isLoading }) => {
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((song) => {
-          return <SongCard key={song.id} song={song} />;
+          return (
+            <SongCard
+              key={song.id}
+              song={song}
+              setCallback={() => handleClose(false)}
+            />
+          );
         })}
       </div>
       <div className="my-[20px]"></div>
@@ -56,7 +73,7 @@ export const ShowSongsGR = ({ title = "Featuring", data, isLoading }) => {
   );
 };
 
-export const ShowPlaylistsGR = ({ data, isLoading }) => {
+export const ShowPlaylistsGR = ({ data, isLoading, handleClose }) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] sm:grid-cols-3 grid-cols-2 mt-[20px]">
@@ -78,7 +95,12 @@ export const ShowPlaylistsGR = ({ data, isLoading }) => {
   );
 };
 
-export const ShowArtistsGR = ({ title = "Artists", data, isLoading }) => {
+export const ShowArtistsGR = ({
+  title = "Artists",
+  data,
+  isLoading,
+  handleClose,
+}) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
@@ -101,7 +123,12 @@ export const ShowArtistsGR = ({ title = "Artists", data, isLoading }) => {
   );
 };
 
-export const ShowAlbumGR = ({ title = "Albums", data, isLoading }) => {
+export const ShowAlbumGR = ({
+  title = "Albums",
+  data,
+  isLoading,
+  handleClose,
+}) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
@@ -124,7 +151,12 @@ export const ShowAlbumGR = ({ title = "Albums", data, isLoading }) => {
   );
 };
 
-export const ShowTagGR = ({ title = "Related Queries", data, isLoading }) => {
+export const ShowTagGR = ({
+  title = "Related Queries",
+  data,
+  isLoading,
+  handleClose,
+}) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] md:grid-cols-4 sm:grid-cols-3 grid-cols-2 mt-[20px]">

@@ -47,12 +47,16 @@ const SearchInput = () => {
   const user = authConfigStore((state) => state.user);
   const inputRef = useRef(null);
 
+  const handleClose = (q = true) => {
+    setSearching(false);
+    if (q) setQ("");
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape" && isSearching) {
         inputRef.current?.blur();
-        setSearching(false);
-        setQ("");
+        handleClose();
       }
 
       if (event.ctrlKey && event.key === " ") {
@@ -71,51 +75,61 @@ const SearchInput = () => {
   return (
     <div
       className={`
-        ${
-          isSearching
-            ? "fixed top-0 min-w-[280px] w-full max-w-[740px] -translate-x-1/2 left-1/2 z-10"
-            : ""
-        }`}
+      ${
+        isSearching
+          ? "absolute top-0 left-0 z-20 w-screen flex justify-center backdrop-blur-sm h-screen"
+          : ""
+      }`}
+      onClick={() => {
+        handleClose();
+      }}
     >
-      {isSearching ? (
-        debouncedQ ? (
-          user ? (
-            <GlobalSearchContainer q={debouncedQ} />
+      <div
+        className={`${
+          isSearching ? "min-w-[280px] w-full max-w-[740px] h-fit" : ""
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {isSearching ? (
+          debouncedQ ? (
+            user ? (
+              <GlobalSearchContainer q={debouncedQ} handleClose={handleClose} />
+            ) : (
+              <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
+                <p className="text-center">Login Required!</p>
+              </div>
+            )
           ) : (
-            <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
-              <p className="text-center">Login Required!</p>
+            <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
+              <p className="text-center">Please enter your search query!</p>
             </div>
           )
-        ) : (
-          <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
-            <p className="text-center">Please enter your search query!</p>
-          </div>
-        )
-      ) : null}
-      <div className="flex justify-center items-center h-[70px] mx-2">
-        <div className="relative w-full">
-          <input
-            ref={inputRef}
-            className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
-            placeholder="Artist, track or podcast"
-            onFocus={() => setSearching(true)}
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          ></input>
-          <div className="absolute top-0 right-0 h-full flex items-center mr-5">
-            {isSearching ? (
-              <span
-                className="cursor-pointer"
-                onClick={() => {
-                  setSearching(false);
-                  setQ("");
-                }}
-              >
-                close
-              </span>
-            ) : (
-              <SearchSvg className="fill-white w-5 h-5" />
-            )}
+        ) : null}
+        <div className="flex justify-center items-center h-[70px] mx-2">
+          <div className="relative w-full">
+            <input
+              ref={inputRef}
+              className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
+              placeholder="Artist, track or podcast"
+              onFocus={() => setSearching(true)}
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            ></input>
+            <div className="absolute top-0 right-0 h-full flex items-center mr-5">
+              {isSearching ? (
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSearching(false);
+                    setQ("");
+                  }}
+                >
+                  close
+                </span>
+              ) : (
+                <SearchSvg className="fill-white w-5 h-5" />
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -97,38 +97,45 @@ export const LibraryPlaylists = () => {
   );
 };
 
-export const GlobalSearchContainer = ({ q }) => {
+export const GlobalSearchContainer = ({ q, handleClose }) => {
   const { isLoading, isFetching, isError, data } = useGlobalSearch(q);
 
   return (
-    <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute w-full pt-[70px] px-6 pb-6">
-      <div className="max-h-[76vh] overflow-y-auto pr-8 custom2-scroller">
+    <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
+      <div className="max-h-[80vh] overflow-y-auto pr-8 custom2-scroller">
         <ShowHistoryGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.user_history || []}
         />
         <ShowSongsGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.songs || []}
         />
         <ShowSongsGR
+          handleClose={handleClose}
           title="Favorites"
           isLoading={isLoading || isFetching || isError}
           data={data?.user_liked_songs.map((item) => item.song) || []}
         />
         <ShowArtistsGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.artists || []}
         />
         <ShowAlbumGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.albums || []}
         />
         <ShowPlaylistsGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.playlists || []}
         />
         <ShowTagGR
+          handleClose={handleClose}
           isLoading={isLoading || isFetching || isError}
           data={data?.tags || []}
         />
