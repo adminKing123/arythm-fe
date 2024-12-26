@@ -241,7 +241,7 @@ const MusicPlayer = () => {
     if (musicPlayerContainerRef.current) {
       const bottom = musicPlayerContainerRef.current.style.bottom;
       musicPlayerContainerRef.current.style.bottom =
-        bottom === "0px" ? "-260px" : "0px";
+        bottom === "0px" ? "-290px" : "0px";
     }
   };
 
@@ -250,7 +250,7 @@ const MusicPlayer = () => {
   return (
     <div
       ref={musicPlayerContainerRef}
-      className="border border-[#222227] bg-[#16151a] p-5 w-screen z-20 fixed left-0 bottom-[-260px] h-[290px] sm:h-[260px] 2lg:sticky 2lg:w-[280px]"
+      className="border border-[#222227] bg-[#16151a] p-5 w-screen z-20 fixed left-0 bottom-[-290px] h-[290px] sm:h-[260px] 2lg:sticky 2lg:w-[280px]"
     >
       <button
         onClick={toggle}
