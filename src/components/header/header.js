@@ -137,6 +137,28 @@ const SearchInput = () => {
   );
 };
 
+const SideBarToggler = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  const handleMenuClick = () => {
+    const sidebar = document.getElementById("sidebar");
+    const left = isOpen ? "-280px" : "0px";
+    sidebar.style.left = left;
+    setOpen(!isOpen);
+  };
+
+  return (
+    <div
+      className="items-center ml-4 m2lg:flex hidden"
+      onClick={handleMenuClick}
+    >
+      <MenuSvg
+        className={`w-6 h-6 ${isOpen ? "stroke-[#25a56a]" : "stroke-white"}`}
+      />
+    </div>
+  );
+};
+
 const Header = () => {
   const user = authConfigStore((state) => state.user);
 
@@ -153,9 +175,7 @@ const Header = () => {
       <div className="hidden items-center sm:flex md:ml-0 ml-8">
         <OptionSignLogout user={user} />
       </div>
-      <div className="items-center ml-4 m2lg:flex hidden">
-        <MenuSvg className="w-6 h-6" />
-      </div>
+      <SideBarToggler />
     </div>
   );
 };
