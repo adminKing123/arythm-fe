@@ -20,18 +20,12 @@ export const ShowHistoryGR = ({ data, isLoading, handleClose }) => {
         <h2 className="text-white text-[30px]">Top Results</h2>
       </div>
       <div className="w-[200px] mt-2">
-        <SongCard song={data[0].song} setCallback={() => handleClose(false)} />;
+        <SongCard song={data[0].song} />;
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.slice(1).map((item) => {
           const song = item.song;
-          return (
-            <SongCard
-              key={song.id}
-              song={song}
-              setCallback={() => handleClose(false)}
-            />
-          );
+          return <SongCard key={song.id} song={song} />;
         })}
       </div>
       <div className="my-[20px]"></div>
@@ -59,13 +53,7 @@ export const ShowSongsGR = ({
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((song) => {
-          return (
-            <SongCard
-              key={song.id}
-              song={song}
-              setCallback={() => handleClose(false)}
-            />
-          );
+          return <SongCard key={song.id} song={song} />;
         })}
       </div>
       <div className="my-[20px]"></div>
