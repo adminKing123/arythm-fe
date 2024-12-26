@@ -93,7 +93,7 @@ const SearchInput = () => {
         {isSearching ? (
           debouncedQ ? (
             user ? (
-              <GlobalSearchContainer q={debouncedQ} />
+              <GlobalSearchContainer q={debouncedQ} handleClose={handleClose} />
             ) : (
               <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
                 <p className="text-center">Login Required!</p>
