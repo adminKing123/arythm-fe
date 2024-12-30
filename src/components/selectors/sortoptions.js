@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const SortOptions = ({ options, value, setValue }) => {
+const SortOptions = ({ options, value, setValue, onChange }) => {
   const sliderRef = useRef(null);
   const firstOptionBtnRef = useRef(null);
 
@@ -9,6 +9,7 @@ const SortOptions = ({ options, value, setValue }) => {
     sliderRef.current.style.transform = `translateX(${selectedButton.offsetLeft}px)`;
     sliderRef.current.style.width = `${selectedButton.offsetWidth}px`;
     setValue(item);
+    onChange?.(item);
   };
 
   useEffect(() => {

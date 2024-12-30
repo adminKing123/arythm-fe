@@ -70,7 +70,7 @@ const SearchFilter = () => {
   );
 
   const handlePageChange = (url) => {
-    const gotoffset = parseInt(getParamFromUrl(url, "offset"));
+    const gotoffset = parseInt(getParamFromUrl(url, "offset")) || 0;
     setOffset(gotoffset);
     setSearchParams({ q: value, index: searchBy.index, offset: gotoffset });
     const element = document.getElementById("main-content");
@@ -94,7 +94,7 @@ const SearchFilter = () => {
                 setSearchParams({
                   q: e.target.value,
                   index: searchBy.index,
-                  offset: offset,
+                  offset: 0,
                 });
               }}
             />
@@ -105,10 +105,11 @@ const SearchFilter = () => {
               setValue={setSearchBy}
               options={dropdownOptions}
               onChange={(selected) => {
+                setOffset(0);
                 setSearchParams({
                   q: value,
                   index: selected.index,
-                  offset: offset,
+                  offset: 0,
                 });
               }}
             />
@@ -118,6 +119,9 @@ const SearchFilter = () => {
           value={sortBy}
           setValue={setSortBy}
           options={sortOptions}
+          onChange={() => {
+            setOffset(0);
+          }}
         />
       </div>
       {isLoading || isFetching ? (
@@ -131,7 +135,10 @@ const SearchFilter = () => {
       ) : (
         <FilterSongsContainer songs={data.results} />
       )}
-      {!isError && !isLoading && !isFetching ? (
+      {!isError &&
+      !isLoading &&
+      !isFetching &&
+      (data?.next || data?.previous) ? (
         <div className="flex justify-center items-center gap-5 mt-8">
           <button
             className="px-3 py-1 rounded-lg hover:bg-[#1e1e1e] disabled:opacity-50"
@@ -143,7 +150,6 @@ const SearchFilter = () => {
           <button
             className="px-3 py-1 rounded-lg hover:bg-[#1e1e1e] disabled:opacity-50"
             disabled={data.next === null}
-            offset={offset}
             onClick={() => handlePageChange(data.next)}
           >
             Next
