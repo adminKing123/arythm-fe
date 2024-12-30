@@ -6,6 +6,7 @@ import authConfigStore from "../../zstore/authConfigStore";
 import A from "../links/links";
 import { useDebounce } from "use-debounce";
 import { GlobalSearchContainer } from "../songcards/containers";
+import pageItemsStore from "../../zstore/pageItemsStore";
 
 const Tab = ({ children }) => {
   return (
@@ -161,6 +162,7 @@ const SideBarToggler = () => {
 
 const Header = () => {
   const user = authConfigStore((state) => state.user);
+  const showGlobalSearch = pageItemsStore((state) => state.showGlobalSearch);
 
   return (
     <div className="z-10 h-[70px] border-[#222227] border-b px-[30px] bg-[#16151A] flex m2lg:sticky m2lg:top-0">
@@ -168,9 +170,11 @@ const Header = () => {
         {user && <Tab>Profile</Tab>}
         <Tab>About</Tab>
         <Tab>Contacts</Tab>
-        <div className="lg:ml-[30px] md:w-fit w-full">
-          <SearchInput />
-        </div>
+        {showGlobalSearch ? (
+          <div className="lg:ml-[30px] md:w-fit w-full">
+            <SearchInput />
+          </div>
+        ) : null}
       </div>
       <div className="hidden items-center sm:flex md:ml-0 ml-8">
         <OptionSignLogout user={user} />

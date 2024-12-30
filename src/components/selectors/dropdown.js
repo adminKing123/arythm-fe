@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { ArrowSvg } from "../../assets/svg";
 
-const DropDown = ({ options = [], defaultValue, onChange }) => {
+const DropDown = ({ value, setValue, options = [], onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState(defaultValue);
 
   const handleSelect = (e, option) => {
     setValue(option);
@@ -26,7 +25,11 @@ const DropDown = ({ options = [], defaultValue, onChange }) => {
               <li
                 key={option.id}
                 onClick={(e) => handleSelect(e, option)}
-                className="cursor-pointer text-sm px-4 py-[10px] hover:text-[#25a56a]"
+                className={`cursor-pointer text-sm px-4 py-[10px] ${
+                  value?.id === option.id
+                    ? "text-[#25a56a]"
+                    : "hover:text-[#25a56a]"
+                }`}
               >
                 {option.name}
               </li>

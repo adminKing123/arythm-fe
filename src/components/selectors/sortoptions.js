@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-const SortOptions = ({ options }) => {
+const SortOptions = ({ options, value, setValue }) => {
   const sliderRef = useRef(null);
   const firstOptionBtnRef = useRef(null);
-
-  const [option, setOption] = useState(options[0]);
 
   const handleClick = (e, item) => {
     const selectedButton = e.target;
     sliderRef.current.style.transform = `translateX(${selectedButton.offsetLeft}px)`;
     sliderRef.current.style.width = `${selectedButton.offsetWidth}px`;
-    setOption(item);
+    setValue(item);
   };
 
   useEffect(() => {
@@ -27,7 +25,7 @@ const SortOptions = ({ options }) => {
         ref={firstOptionBtnRef}
         onClick={(e) => handleClick(e, options[0])}
         className={`h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
-          options[0].id === option?.id ? "text-white" : ""
+          options[0].id === value?.id ? "text-white" : ""
         }`}
       >
         {options[0].name}
@@ -37,7 +35,7 @@ const SortOptions = ({ options }) => {
           key={item.id}
           onClick={(e) => handleClick(e, item)}
           className={`h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
-            item.id === option?.id ? "text-white" : ""
+            item.id === value?.id ? "text-white" : ""
           }`}
         >
           {item.name}

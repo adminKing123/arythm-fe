@@ -54,7 +54,8 @@ export const ShowSongsGR = ({
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
         <NextLink
-          href={`${ROUTES.GET_SEARCH_URI(q, 1)}`}
+          href={`${ROUTES.GET_SEARCH_URI(q, 0)}`}
+          onClick={handleClose}
           className="text-[16px]"
         >
           See All
@@ -111,7 +112,8 @@ export const ShowArtistsGR = ({
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
         <NextLink
-          href={`${ROUTES.GET_SEARCH_URI(q, 2)}`}
+          href={`${ROUTES.GET_SEARCH_URI(q, 1)}`}
+          onClick={handleClose}
           className="text-[16px]"
         >
           See All
@@ -146,7 +148,8 @@ export const ShowAlbumGR = ({
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
         <NextLink
-          href={`${ROUTES.GET_SEARCH_URI(q, 3)}`}
+          href={`${ROUTES.GET_SEARCH_URI(q, 2)}`}
+          onClick={handleClose}
           className="text-[16px]"
         >
           See All
@@ -181,7 +184,8 @@ export const ShowTagGR = ({
       <div className="flex justify-between items-center flex-wrap mt-[20px]">
         <h2 className="text-white text-[30px]">{title}</h2>
         <NextLink
-          href={`${ROUTES.GET_SEARCH_URI(q, 4)}`}
+          href={`${ROUTES.GET_SEARCH_URI(q, 3)}`}
+          onClick={handleClose}
           className="text-[16px]"
         >
           See All
