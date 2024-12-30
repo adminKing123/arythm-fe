@@ -81,4 +81,10 @@ export const setSongMetaData = async (song) => {
   }
 };
 
+export const getParamFromUrl = (url, key) => {
+  const urlParams = new URLSearchParams(url);
+  const value = urlParams.get(key);
+  return value;
+};
+
 export default tokenManager;
