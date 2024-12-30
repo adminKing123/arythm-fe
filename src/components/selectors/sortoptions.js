@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const SortOptions = ({ options, value, setValue }) => {
   const sliderRef = useRef(null);

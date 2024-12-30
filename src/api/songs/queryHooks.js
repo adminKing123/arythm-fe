@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import QUERY_KEYS from "../querykeys";
 import {
   getArtists,
+  getFilteredSongs,
   getGlobalSearch,
   getLatestPlaylists,
   getSlides,
@@ -63,6 +64,23 @@ export const useGlobalSearch = (q, config = {}) =>
   useQuery({
     queryKey: [QUERY_KEYS.GLOBAL_SEARCH, q],
     queryFn: () => getGlobalSearch({ q }),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    ...config,
+  });
+
+export const useFilteredSongs = (
+  q,
+  searchBy,
+  sortBy,
+  limit = 24,
+  offset = 0,
+  config = {}
+) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.GLOBAL_SEARCH, q, searchBy, sortBy, limit, offset],
+    queryFn: () => getFilteredSongs({ q, searchBy, sortBy, limit, offset }),
     retry: 1,
     refetchOnWindowFocus: false,
     refetchOnMount: true,

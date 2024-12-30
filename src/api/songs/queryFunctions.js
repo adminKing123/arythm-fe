@@ -103,3 +103,19 @@ export const getGlobalSearch = async (data) => {
 
   return response.data;
 };
+
+export const getFilteredSongs = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.FILTER,
+    params: {
+      q: data.q,
+      searchby: data.searchBy,
+      sortby: data.sortBy,
+      limit: data?.limit || 0,
+      offset: data?.offset || 0,
+    },
+  });
+
+  return response.data;
+};

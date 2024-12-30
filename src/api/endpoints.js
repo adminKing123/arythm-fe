@@ -14,6 +14,7 @@ const API_ENDPOINTS = {
   LIKED_SONG: "/content/liked-songs",
   LATEST_PLAYLISTS: "/content/latest-playlists",
   GLOBAL_SEARCH: "/content/global-search",
+  FILTER: "/content/filter",
 };
 
 export default API_ENDPOINTS;

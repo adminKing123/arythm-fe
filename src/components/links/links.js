@@ -39,11 +39,13 @@ export const ALink = ({ href, className, ...props }) => {
   );
 };
 
-export const ArtistsLinks = ({ artists }) => {
+export const ArtistsLinks = ({ artists, className = "" }) => {
   return artists.map((artist, index) => (
     <Fragment key={artist.id}>
       <Link
-        className="hover:text-[#25a564] transition-colors duration-300"
+        className={`hover:text-[#25a564] transition-colors duration-300 ${
+          className ?? ""
+        }`}
         href={`#artist-${artist.id}`}
       >
         {artist.name}

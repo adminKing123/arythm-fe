@@ -4,6 +4,22 @@ import DropDown from "../../components/selectors/dropdown";
 import SortOptions from "../../components/selectors/sortoptions";
 import { useSearchParams } from "react-router-dom";
 import pageItemsStore from "../../zstore/pageItemsStore";
+import { useFilteredSongs } from "../../api/songs/queryHooks";
+import { useDebounce } from "use-debounce";
+import {
+  SongCard2,
+  SongCard2Loading,
+} from "../../components/songcards/songcard";
+
+const FilterSongsContainer = ({ songs }) => {
+  return (
+    <div className="grid gap-[15px] mt-8 grid-cols-2">
+      {songs.map((song) => (
+        <SongCard2 key={song.id} song={song} />
+      ))}
+    </div>
+  );
+};
 
 const SearchFilter = () => {
   const dropdownOptions = [
@@ -28,47 +44,77 @@ const SearchFilter = () => {
     },
   ];
   const [searchParams, setSearchParams] = useSearchParams();
-  const q = searchParams.get("q");
+  const q = searchParams.get("q") || "";
   const index = parseInt(searchParams.get("index")) || 0;
+  const limit = 24;
+  const offsetP = parseInt(searchParams.get("offset")) || 0;
 
   const [value, setValue] = useState(q);
   const [searchBy, setSearchBy] = useState(dropdownOptions[index]);
   const [sortBy, setSortBy] = useState(sortOptions[0]);
+  const [offset, setOffset] = useState(offsetP);
 
   const setShowGlobalSearch = pageItemsStore(
     (state) => state.setShowGlobalSearch
   );
 
+  const [debouncedQ] = useDebounce(value, 300);
+
+  const { data, isLoading, isFetching, isError } = useFilteredSongs(
+    debouncedQ,
+    searchBy.id,
+    sortBy.id,
+    limit,
+    offset
+  );
+
   useEffect(() => {
     setShowGlobalSearch(false);
     return () => setShowGlobalSearch(true);
-  }, []);
+  }, [setShowGlobalSearch]);
 
   return (
-    <div className="flex items-center justify-between gap-5 flex-wrap">
-      <div className="flex items-center flex-wrap gap-[30px]">
-        <div className="w-[220px]">
-          <SearchInput
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value);
-              setSearchParams({ q: e.target.value, index: searchBy.index });
-            }}
-          />
+    <>
+      <div className="flex items-center justify-between gap-5 flex-wrap">
+        <div className="flex items-center flex-wrap gap-[30px]">
+          <div className="w-[220px]">
+            <SearchInput
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+                setSearchParams({ q: e.target.value, index: searchBy.index });
+              }}
+            />
+          </div>
+          <div>
+            <DropDown
+              value={searchBy}
+              setValue={setSearchBy}
+              options={dropdownOptions}
+              onChange={(selected) => {
+                setSearchParams({ q: value, index: selected.index });
+              }}
+            />
+          </div>
         </div>
-        <div>
-          <DropDown
-            value={searchBy}
-            setValue={setSearchBy}
-            options={dropdownOptions}
-            onChange={(selected) => {
-              setSearchParams({ q: value, index: selected.index });
-            }}
-          />
-        </div>
+        <SortOptions
+          value={sortBy}
+          setValue={setSortBy}
+          options={sortOptions}
+        />
       </div>
-      <SortOptions value={sortBy} setValue={setSortBy} options={sortOptions} />
-    </div>
+      {isLoading || isFetching ? (
+        <div className="grid gap-[15px] mt-8 grid-cols-2">
+          {Array.from({ length: 24 }, (_, index) => (
+            <SongCard2Loading key={index} />
+          ))}
+        </div>
+      ) : isError || data.results.length === 0 ? (
+        <div className="py-8 text-center text-xl">No result Found</div>
+      ) : (
+        <FilterSongsContainer songs={data.results} />
+      )}
+    </>
   );
 };
 
