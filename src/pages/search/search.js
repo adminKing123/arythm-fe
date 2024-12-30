@@ -10,6 +10,7 @@ import {
   SongCard2,
   SongCard2Loading,
 } from "../../components/songcards/songcard";
+import { getParamFromUrl } from "../../api/utils";
 
 const FilterSongsContainer = ({ songs }) => {
   return (
@@ -68,6 +69,14 @@ const SearchFilter = () => {
     offset
   );
 
+  const handlePageChange = (url) => {
+    const gotoffset = parseInt(getParamFromUrl(url, "offset"));
+    setOffset(gotoffset);
+    setSearchParams({ q: value, index: searchBy.index, offset: gotoffset });
+    const element = document.getElementById("main-content");
+    element.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     setShowGlobalSearch(false);
     return () => setShowGlobalSearch(true);
@@ -82,7 +91,11 @@ const SearchFilter = () => {
               value={value}
               onChange={(e) => {
                 setValue(e.target.value);
-                setSearchParams({ q: e.target.value, index: searchBy.index });
+                setSearchParams({
+                  q: e.target.value,
+                  index: searchBy.index,
+                  offset: offset,
+                });
               }}
             />
           </div>
@@ -92,7 +105,11 @@ const SearchFilter = () => {
               setValue={setSearchBy}
               options={dropdownOptions}
               onChange={(selected) => {
-                setSearchParams({ q: value, index: selected.index });
+                setSearchParams({
+                  q: value,
+                  index: selected.index,
+                  offset: offset,
+                });
               }}
             />
           </div>
@@ -113,6 +130,27 @@ const SearchFilter = () => {
         <div className="py-8 text-center text-xl">No result Found</div>
       ) : (
         <FilterSongsContainer songs={data.results} />
+      )}
+      {!isError && !isLoading && !isFetching ? (
+        <div className="flex justify-center items-center gap-5 mt-8">
+          <button
+            className="px-3 py-1 rounded-lg hover:bg-[#1e1e1e] disabled:opacity-50"
+            disabled={data.previous === null}
+            onClick={() => handlePageChange(data.previous)}
+          >
+            Prev
+          </button>
+          <button
+            className="px-3 py-1 rounded-lg hover:bg-[#1e1e1e] disabled:opacity-50"
+            disabled={data.next === null}
+            offset={offset}
+            onClick={() => handlePageChange(data.next)}
+          >
+            Next
+          </button>
+        </div>
+      ) : (
+        <></>
       )}
     </>
   );
