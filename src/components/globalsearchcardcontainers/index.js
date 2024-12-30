@@ -1,3 +1,5 @@
+import ROUTES from "../../router/routes";
+import { NextLink } from "../links/links";
 import AlbumCard, { AlbumCardLoading } from "../songcards/albumcard";
 import ArtistCard, { ArtistCardLoading } from "../songcards/artistcard";
 import PlaylistCardLibrary, {
@@ -34,10 +36,11 @@ export const ShowHistoryGR = ({ data, isLoading, handleClose }) => {
 };
 
 export const ShowSongsGR = ({
-  title = "Featuring",
+  q,
   data,
   isLoading,
   handleClose,
+  title = "Featuring",
 }) => {
   if (data.length === 0) return;
   return isLoading ? (
@@ -50,6 +53,12 @@ export const ShowSongsGR = ({
     <>
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
+        <NextLink
+          href={`${ROUTES.GET_SEARCH_URI(q, 1)}`}
+          className="text-[16px]"
+        >
+          See All
+        </NextLink>
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((song) => {
@@ -61,7 +70,7 @@ export const ShowSongsGR = ({
   );
 };
 
-export const ShowPlaylistsGR = ({ data, isLoading, handleClose }) => {
+export const ShowPlaylistsGR = ({ q, data, isLoading, handleClose }) => {
   if (data.length === 0) return;
   return isLoading ? (
     <div className="grid gap-[30px] sm:grid-cols-3 grid-cols-2 mt-[20px]">
@@ -84,10 +93,11 @@ export const ShowPlaylistsGR = ({ data, isLoading, handleClose }) => {
 };
 
 export const ShowArtistsGR = ({
-  title = "Artists",
+  q,
   data,
   isLoading,
   handleClose,
+  title = "Artists",
 }) => {
   if (data.length === 0) return;
   return isLoading ? (
@@ -100,6 +110,12 @@ export const ShowArtistsGR = ({
     <>
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
+        <NextLink
+          href={`${ROUTES.GET_SEARCH_URI(q, 2)}`}
+          className="text-[16px]"
+        >
+          See All
+        </NextLink>
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((artist) => {
@@ -112,10 +128,11 @@ export const ShowArtistsGR = ({
 };
 
 export const ShowAlbumGR = ({
-  title = "Albums",
+  q,
   data,
   isLoading,
   handleClose,
+  title = "Albums",
 }) => {
   if (data.length === 0) return;
   return isLoading ? (
@@ -128,6 +145,12 @@ export const ShowAlbumGR = ({
     <>
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">{title}</h2>
+        <NextLink
+          href={`${ROUTES.GET_SEARCH_URI(q, 3)}`}
+          className="text-[16px]"
+        >
+          See All
+        </NextLink>
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((album) => {
@@ -140,10 +163,11 @@ export const ShowAlbumGR = ({
 };
 
 export const ShowTagGR = ({
-  title = "Related Queries",
+  q,
   data,
   isLoading,
   handleClose,
+  title = "Related Queries",
 }) => {
   if (data.length === 0) return;
   return isLoading ? (
@@ -156,6 +180,12 @@ export const ShowTagGR = ({
     <>
       <div className="flex justify-between items-center flex-wrap mt-[20px]">
         <h2 className="text-white text-[30px]">{title}</h2>
+        <NextLink
+          href={`${ROUTES.GET_SEARCH_URI(q, 4)}`}
+          className="text-[16px]"
+        >
+          See All
+        </NextLink>
       </div>
       <div className="grid gap-[30px] mt-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
         {data.map((tag) => {
