@@ -13,7 +13,7 @@ import {
 
 const FilterSongsContainer = ({ songs }) => {
   return (
-    <div className="grid gap-[15px] mt-8 grid-cols-2">
+    <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-2">
       {songs.map((song) => (
         <SongCard2 key={song.id} song={song} />
       ))}
@@ -104,7 +104,7 @@ const SearchFilter = () => {
         />
       </div>
       {isLoading || isFetching ? (
-        <div className="grid gap-[15px] mt-8 grid-cols-2">
+        <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-2">
           {Array.from({ length: 24 }, (_, index) => (
             <SongCard2Loading key={index} />
           ))}
