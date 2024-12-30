@@ -11,12 +11,13 @@ const Input = ({ className, ...props }) => {
   );
 };
 
-export const SearchInput = () => {
+export const SearchInput = ({ ...props }) => {
   return (
     <div className="relative w-full">
       <input
-        className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-20 focus:outline-none text-white placeholder:text-[#c0c0c0]"
+        className="h-10 w-full bg-[#222227] rounded-xl pl-5 pr-12 focus:outline-none text-white placeholder:text-[#c0c0c0]"
         placeholder="Search..."
+        {...props}
       ></input>
       <div className="absolute top-0 right-0 h-full flex items-center mr-5">
         <SearchSvg className="fill-white w-5 h-5" />

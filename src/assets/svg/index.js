@@ -19,6 +19,7 @@ import { ReactComponent as OpenPlaylistSvg } from "./openPlaylist.svg";
 import { ReactComponent as HeartSvg } from "./heart.svg";
 import { ReactComponent as AddSvg } from "./add.svg";
 import { ReactComponent as ArrowSvg } from "./arrow.svg";
+import { ReactComponent as DownloadSvg } from "./download.svg";
 
 export {
   SignSvg,
@@ -42,4 +43,5 @@ export {
   HeartSvg,
   AddSvg,
   ArrowSvg,
+  DownloadSvg,
 };
