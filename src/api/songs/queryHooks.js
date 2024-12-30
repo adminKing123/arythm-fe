@@ -79,7 +79,7 @@ export const useFilteredSongs = (
   config = {}
 ) =>
   useQuery({
-    queryKey: [QUERY_KEYS.GLOBAL_SEARCH, q, searchBy, sortBy, limit, offset],
+    queryKey: [QUERY_KEYS.FILTER, q, searchBy, sortBy, limit, offset],
     queryFn: () => getFilteredSongs({ q, searchBy, sortBy, limit, offset }),
     retry: 1,
     refetchOnWindowFocus: false,
