@@ -2,14 +2,17 @@ import { ALink, ArtistsLinks } from "../../components/links/links";
 import { formatPlayerTime, get_src_uri, numeral } from "../../api/utils";
 import {
   AddSvg,
-  DownloadSvg,
+  AddToQueueSvg,
+  CheckMarkSvg,
   HeadphoneSvg,
   PlaylistsSvg,
   PlaySvg,
 } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import playerStore from "../../zstore/playerStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import songsQueueStore from "../../zstore/songsQueueStore";
+import authConfigStore from "../../zstore/authConfigStore";
 
 const SongCard = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
@@ -92,6 +95,10 @@ export const SongCardLoading = () => {
 
 export const SongCard2 = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
+  const addToQueue = songsQueueStore((state) => state.addSong);
+  const user = authConfigStore((state) => state.user);
+
+  const [addedToQueue, setAddedToQueue] = useState(false);
 
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
@@ -99,6 +106,15 @@ export const SongCard2 = ({ song, setCallback }) => {
   const handleSelect = () => {
     setSong(song);
     setCallback?.(song);
+  };
+
+  const handleAddedToQueue = () => {
+    if (addedToQueue) return;
+    addToQueue(song);
+    setAddedToQueue(true);
+    setTimeout(() => {
+      setAddedToQueue(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -150,12 +166,23 @@ export const SongCard2 = ({ song, setCallback }) => {
         </div>
       </div>
       <div className="flex items-center gap-[15px]">
-        <button className="w-8 h-8 bg-[#25a56a26] flex justify-center items-center rounded-lg">
-          <AddSvg className="w-[18px] h-[18px] fill-[#25a56a]" />
-        </button>
-        <button className="w-8 h-8 bg-[#8051d426] flex justify-center items-center rounded-lg">
-          <DownloadSvg className="w-[18px] h-[18px] fill-[#8051d4]" />
-        </button>
+        {user ? (
+          <>
+            <button className="w-8 h-8 bg-[#25a56a26] flex justify-center items-center rounded-lg">
+              <AddSvg className="w-[18px] h-[18px] fill-[#25a56a]" />
+            </button>
+            <button
+              onClick={handleAddedToQueue}
+              className="w-8 h-8 bg-[#8051d426] flex justify-center items-center rounded-lg"
+            >
+              {addedToQueue ? (
+                <CheckMarkSvg className="w-[18px] h-[18px] fill-[#8051d4]" />
+              ) : (
+                <AddToQueueSvg className="w-[18px] h-[18px] fill-[#8051d4]" />
+              )}
+            </button>
+          </>
+        ) : null}
         <span className="text-sm w-10">
           {formatPlayerTime(song.duration, "")}
         </span>
