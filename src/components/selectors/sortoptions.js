@@ -13,8 +13,12 @@ const SortOptions = ({ options, value, setValue, onChange }) => {
   };
 
   useEffect(() => {
-    firstOptionBtnRef.current?.click();
-  }, [firstOptionBtnRef]);
+    if (sliderRef.current === null || firstOptionBtnRef.current === null)
+      return;
+    const selectedButton = firstOptionBtnRef.current;
+    sliderRef.current.style.transform = `translateX(${selectedButton.offsetLeft}px)`;
+    sliderRef.current.style.width = `${selectedButton.offsetWidth}px`;
+  }, [firstOptionBtnRef, sliderRef]);
 
   return (
     <div className="h-10 bg-[#222227] flex items-center rounded-xl relative">
