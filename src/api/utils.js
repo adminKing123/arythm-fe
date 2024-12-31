@@ -15,6 +15,7 @@ const tokenManager = {
     localStorage.removeItem("last_song");
     localStorage.removeItem("last_song_liked");
     localStorage.removeItem("volume");
+    localStorage.removeItem("gbSearchHistory");
   },
 };
 

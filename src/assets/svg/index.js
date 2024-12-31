@@ -20,6 +20,7 @@ import { ReactComponent as HeartSvg } from "./heart.svg";
 import { ReactComponent as AddSvg } from "./add.svg";
 import { ReactComponent as ArrowSvg } from "./arrow.svg";
 import { ReactComponent as DownloadSvg } from "./download.svg";
+import { ReactComponent as HistorySvg } from "./history.svg";
 
 export {
   SignSvg,
@@ -44,4 +45,5 @@ export {
   AddSvg,
   ArrowSvg,
   DownloadSvg,
+  HistorySvg,
 };
