@@ -136,10 +136,7 @@ export const SongCard2 = ({ song, setCallback }) => {
             alt={song.album.id}
           />
           <Link
-            onClick={() => {
-              setSong(song);
-              setCallback?.(song);
-            }}
+            onClick={handleSelect}
             className="bg-[#000000af] flex justify-center items-center w-12 h-12 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl relative opacity-0 group-hover:opacity-100 transition-all duration-500"
           >
             <PlaySvg className="w-5 h-5 fill-[#25a56a] sm:w-6 sm:h-6" />
@@ -159,7 +156,9 @@ export const SongCard2 = ({ song, setCallback }) => {
         <button className="w-8 h-8 bg-[#8051d426] flex justify-center items-center rounded-lg">
           <DownloadSvg className="w-[18px] h-[18px] fill-[#8051d4]" />
         </button>
-        <span className="text-sm">{formatPlayerTime(song.duration, "")}</span>
+        <span className="text-sm w-10">
+          {formatPlayerTime(song.duration, "")}
+        </span>
       </div>
     </div>
   );
