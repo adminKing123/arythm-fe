@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import tokenManager from "../../api/utils";
-import { MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
+import { HistorySvg, MenuSvg, SearchSvg, SignSvg } from "../../assets/svg";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
-import A from "../links/links";
+import A, { ALink } from "../links/links";
 import { useDebounce } from "use-debounce";
 import { GlobalSearchContainer } from "../songcards/containers";
 import pageItemsStore from "../../zstore/pageItemsStore";
@@ -41,12 +41,80 @@ const OptionSignLogout = ({ user }) => {
   );
 };
 
+const ShowLastGbSearches = ({ gbSearchHistory, clearHistory, setQ }) => {
+  return (
+    <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
+      {gbSearchHistory.length ? (
+        <>
+          <div className="flex justify-between items-center flex-wrap mb-3">
+            <h3 className="text-lg text-white">Search Activity</h3>
+            <ALink className="text-sm" onClick={clearHistory}>
+              Clear All
+            </ALink>
+          </div>
+          <ul>
+            {gbSearchHistory.map((query, index) => {
+              const number = (index + 1).toString().padStart(2, "0");
+              return (
+                <li
+                  key={index}
+                  onClick={() => setQ(query)}
+                  className="cursor-pointer flex justify-between items-center py-1 rounded-md group"
+                >
+                  <div className="flex items-center gap-3">
+                    <HistorySvg className="w-4 h-4 fill-white group-hover:fill-[#25a56a]" />
+                    <p
+                      className="truncate group-hover:text-[#25a56a]"
+                      title={query}
+                    >
+                      {query}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="w-8 h-8 flex items-center justify-center text-sm font-semibold rounded-md bg-[#1c1c1c] group-hover:bg-[#25a56990] text-white">
+                      {number}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ) : (
+        <p className="text-center">
+          No recent searches found. <br />
+          Start exploring by entering your query above.
+        </p>
+      )}
+    </div>
+  );
+};
+
 const SearchInput = () => {
   const [isSearching, setSearching] = useState(false);
   const [q, setQ] = useState("");
   const [debouncedQ] = useDebounce(q, 300);
   const user = authConfigStore((state) => state.user);
   const inputRef = useRef(null);
+
+  const [gbSearchHistory, setGbSearchHistory] = useState(() => {
+    const storedHistory = localStorage.getItem("gbSearchHistory");
+    return storedHistory ? JSON.parse(storedHistory) : [];
+  });
+
+  const saveHistory = (query) => {
+    if (!query.trim()) return;
+    setGbSearchHistory((prevHistory) => {
+      const updatedHistory = [...new Set([query, ...prevHistory])].slice(0, 10); // Keep the latest 10 unique queries
+      localStorage.setItem("gbSearchHistory", JSON.stringify(updatedHistory));
+      return updatedHistory;
+    });
+  };
+
+  const clearHistory = () => {
+    setGbSearchHistory([]);
+    localStorage.removeItem("gbSearchHistory");
+  };
 
   const handleClose = (q = true) => {
     setSearching(false);
@@ -73,6 +141,10 @@ const SearchInput = () => {
     };
   }, [isSearching]);
 
+  useEffect(() => {
+    if (debouncedQ?.trim()) saveHistory(debouncedQ?.trim());
+  }, [debouncedQ]);
+
   return (
     <div
       className={`
@@ -81,9 +153,7 @@ const SearchInput = () => {
           ? "absolute top-0 left-0 z-20 w-screen flex justify-center bg-[#00000030] h-screen"
           : ""
       }`}
-      onClick={() => {
-        handleClose();
-      }}
+      onClick={handleClose}
     >
       <div
         className={`${
@@ -92,18 +162,23 @@ const SearchInput = () => {
         onClick={(e) => e.stopPropagation()}
       >
         {isSearching ? (
-          debouncedQ ? (
+          debouncedQ?.trim() ? (
             user ? (
-              <GlobalSearchContainer q={debouncedQ} handleClose={handleClose} />
+              <GlobalSearchContainer
+                q={debouncedQ.trim()}
+                handleClose={handleClose}
+              />
             ) : (
               <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
                 <p className="text-center">Login Required!</p>
               </div>
             )
           ) : (
-            <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
-              <p className="text-center">Please enter your search query!</p>
-            </div>
+            <ShowLastGbSearches
+              gbSearchHistory={gbSearchHistory}
+              clearHistory={clearHistory}
+              setQ={setQ}
+            />
           )
         ) : null}
         <div className="flex justify-center items-center h-[70px] mx-2">
