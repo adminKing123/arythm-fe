@@ -96,7 +96,7 @@ const playerStore = create((set, get) => ({
   },
   setQueueSongWithIndex: (index) => {
     const { setSong, queue } = get();
-    if (index < 0) return;
+    if (index < 0 || queue.length === 0) return;
     const qIndex = index % queue.length;
     setSong(queue[qIndex]);
     set({ currentPlayingIndex: qIndex });
