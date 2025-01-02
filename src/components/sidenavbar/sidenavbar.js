@@ -12,10 +12,10 @@ import ROUTES from "../../router/routes";
 import styles from "./sidenavbar.module.css";
 import authConfigStore from "../../zstore/authConfigStore";
 import MusicPlayer from "../musicplayer/musicplayer";
-import songsQueueStore from "../../zstore/songsQueueStore";
+import playerStore from "../../zstore/playerStore";
 
 const QueueNavbarTab = () => {
-  const queue = songsQueueStore((state) => state.queue);
+  const queue = playerStore((state) => state.queue);
 
   if (queue.length)
     return (

@@ -19,6 +19,8 @@ import authConfigStore from "../../zstore/authConfigStore";
 const PlayerControls = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const loadingSongFromURI = playerStore((state) => state.loadingSongFromURI);
+  const setNextSong = playerStore((state) => state.setNextSong);
+  const setPrevSong = playerStore((state) => state.setPrevSong);
 
   const handlePlayPause = () => {
     if (playerRef.current) {
@@ -46,7 +48,10 @@ const PlayerControls = ({ playerRef }) => {
 
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
-      <PlayerPrevSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+      <PlayerPrevSvg
+        onClick={setPrevSong}
+        className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+      />
       {loadingSongFromURI ? (
         <span className="w-6 h-6 loader border-[3px] rounded-full"></span>
       ) : (
@@ -58,7 +63,10 @@ const PlayerControls = ({ playerRef }) => {
           )}
         </span>
       )}
-      <PlayerNextSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+      <PlayerNextSvg
+        onClick={setNextSong}
+        className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
+      />
     </div>
   );
 };
@@ -206,6 +214,7 @@ const ExtraOptions = ({ playerRef }) => {
 
 const MusicPlayer = () => {
   const song = playerStore((state) => state.song);
+  const setNextSong = playerStore((state) => state.setNextSong);
   const setLoadingSongFromURI = playerStore(
     (state) => state.setLoadingSongFromURI
   );
@@ -295,6 +304,7 @@ const MusicPlayer = () => {
           onWaiting={() => setLoadingSongFromURI(true)}
           onCanPlay={() => setLoadingSongFromURI(false)}
           onLoadedData={() => setLoadingSongFromURI(false)}
+          onEnded={setNextSong}
         />
         <Duration playerRef={playerRef} />
       </div>

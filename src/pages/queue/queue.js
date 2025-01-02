@@ -3,14 +3,14 @@ import { ALink } from "../../components/links/links";
 import { SongCard3 } from "../../components/songcards/songcard";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
-import songsQueueStore from "../../zstore/songsQueueStore";
+import playerStore from "../../zstore/playerStore";
 
 const Queue = () => {
   document.title = "Manage Queue";
   const user = authConfigStore((state) => state.user);
-  const queue = songsQueueStore((state) => state.queue);
-  const clearQueue = songsQueueStore((state) => state.clearQueue);
-  const removeSong = songsQueueStore((state) => state.removeSong);
+  const queue = playerStore((state) => state.queue);
+  const clearQueue = playerStore((state) => state.clearQueue);
+  const removeSong = playerStore((state) => state.removeSong);
 
   if (!user) {
     alert("Please Login To Access This Page!");

@@ -10,9 +10,8 @@ import {
   RemoveSvg,
 } from "../../assets/svg";
 import { Link } from "react-router-dom";
-import playerStore from "../../zstore/playerStore";
 import { useEffect, useRef, useState } from "react";
-import songsQueueStore from "../../zstore/songsQueueStore";
+import playerStore from "../../zstore/playerStore";
 import authConfigStore from "../../zstore/authConfigStore";
 
 const SongCard = ({ song, setCallback }) => {
@@ -96,7 +95,7 @@ export const SongCardLoading = () => {
 
 export const SongCard2 = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
-  const addToQueue = songsQueueStore((state) => state.addSong);
+  const addToQueue = playerStore((state) => state.addSong);
   const user = authConfigStore((state) => state.user);
 
   const [addedToQueue, setAddedToQueue] = useState(false);
