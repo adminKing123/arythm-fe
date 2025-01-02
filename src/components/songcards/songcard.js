@@ -7,6 +7,7 @@ import {
   HeadphoneSvg,
   PlaylistsSvg,
   PlaySvg,
+  RemoveSvg,
 } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import playerStore from "../../zstore/playerStore";
@@ -205,6 +206,85 @@ export const SongCard2Loading = () => {
         <div className="w-8 h-8 skeleton rounded-lg"></div>
         <div className="w-8 h-8 skeleton rounded-lg"></div>
         <div className="w-12 h-[12px] skeleton"></div>
+      </div>
+    </div>
+  );
+};
+
+export const SongCard3 = ({ song, setCallback, onClickRemove }) => {
+  const setSong = playerStore((state) => state.setSong);
+  const user = authConfigStore((state) => state.user);
+
+  const imgRef = useRef(null);
+  const imgContainerRef = useRef(null);
+
+  const handleSelect = () => {
+    setSong(song);
+    setCallback?.(song);
+  };
+
+  useEffect(() => {
+    const imgEle = imgRef.current;
+    const imgContainerEle = imgContainerRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgContainerEle.classList.remove("skeleton");
+      imgContainerEle.classList.add("group-hover:opacity-[0.6]");
+    };
+
+    if (imgEle && imgContainerRef) {
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, imgContainerRef]);
+
+  return (
+    <div className="flex justify-between items-center rounded-lg bg-[#1c1c1c] py-2 px-4">
+      <div className="flex items-center truncate">
+        <div
+          ref={imgContainerRef}
+          className="skeleton overflow-hidden w-12 h-12 flex-shrink-0 rounded-lg relative flex flex-col items-center justify-center group"
+        >
+          <img
+            loading="lazy"
+            ref={imgRef}
+            className="w-12 h-12 opacity-0 transition-opacity duration-500 absolute top-0 left-0"
+            src={get_src_uri(song.album.thumbnail300x300)}
+            alt={song.album.id}
+          />
+          <Link
+            onClick={handleSelect}
+            className="bg-[#000000af] flex justify-center items-center w-12 h-12 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl relative opacity-0 group-hover:opacity-100 transition-all duration-500"
+          >
+            <PlaySvg className="w-5 h-5 fill-[#25a56a] sm:w-6 sm:h-6" />
+          </Link>
+        </div>
+        <div className="ml-[15px] truncate">
+          <h3 className="text-base text-white truncate">
+            {song.original_name}
+          </h3>
+          <ArtistsLinks className="text-sm truncate" artists={song.artists} />
+        </div>
+      </div>
+      <div className="flex items-center gap-[15px]">
+        {user ? (
+          <>
+            <button
+              onClick={onClickRemove}
+              className="w-8 h-8 bg-[#a5252526] flex justify-center items-center rounded-lg opacity-50 hover:opacity-100 transition-opacity duration-300"
+            >
+              <RemoveSvg className="w-[18px] h-[18px] fill-[#a52525]" />
+            </button>
+          </>
+        ) : null}
+        <span className="text-sm w-10">
+          {formatPlayerTime(song.duration, "")}
+        </span>
       </div>
     </div>
   );

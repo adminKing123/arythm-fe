@@ -13,6 +13,7 @@ const songsQueueStore = create((set) => ({
       queue: state.queue.filter((s) => s.id !== song.id),
     })),
   clearQueue: () => set({ queue: [] }),
+  reorderQueue: (newQueue) => set({ queue: newQueue }),
 }));
 
 export default songsQueueStore;

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/logo/logo.png";
 import {
+  AddToQueueSvg,
   ArtistsSvg,
   HomeSvg,
   PlaylistsSvg,
@@ -11,6 +12,22 @@ import ROUTES from "../../router/routes";
 import styles from "./sidenavbar.module.css";
 import authConfigStore from "../../zstore/authConfigStore";
 import MusicPlayer from "../musicplayer/musicplayer";
+import songsQueueStore from "../../zstore/songsQueueStore";
+
+const QueueNavbarTab = () => {
+  const queue = songsQueueStore((state) => state.queue);
+
+  if (queue.length)
+    return (
+      <NavLink className={styles.NavbarTab} to="/queue">
+        <AddToQueueSvg className="w-[22px] h-[22px]" />
+        <span>
+          Manage Queue <span className="text-green-500">•</span>
+        </span>
+      </NavLink>
+    );
+  return null;
+};
 
 const NavbarTab = ({ to, Icon, children }) => {
   return (
@@ -48,6 +65,7 @@ const SideNavbar = () => {
         <NavbarTab to={"artists"} Icon={ArtistsSvg}>
           Artists
         </NavbarTab>
+        <QueueNavbarTab />
         {user && (
           <NavbarTab to={ROUTES.YOURLIBRARY} Icon={PlaylistsSvg}>
             Your Library
