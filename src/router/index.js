@@ -9,6 +9,7 @@ import Resetpassword from "../pages/forgotpassword/resetpassword";
 import { CheckLogin, Main } from "../pages/layouts";
 import YourLibrary from "../pages/yourlibrary/yourlibrary";
 import Search from "../pages/search/search";
+import Queue from "../pages/queue/queue";
 
 const Router = () => {
   return (
@@ -29,6 +30,7 @@ const Router = () => {
             <Route path={ROUTES.HOME} element={<Home />}></Route>
             <Route path={ROUTES.YOURLIBRARY} element={<YourLibrary />}></Route>
             <Route path={ROUTES.SEARCH} element={<Search />}></Route>
+            <Route path={ROUTES.QUEUE} element={<Queue />}></Route>
           </Route>
         </Route>
       </Routes>

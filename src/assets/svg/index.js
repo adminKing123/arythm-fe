@@ -22,6 +22,7 @@ import { ReactComponent as ArrowSvg } from "./arrow.svg";
 import { ReactComponent as AddToQueueSvg } from "./addToQueue.svg";
 import { ReactComponent as HistorySvg } from "./history.svg";
 import { ReactComponent as CheckMarkSvg } from "./checkmark.svg";
+import { ReactComponent as RemoveSvg } from "./remove.svg";
 
 export {
   SignSvg,
@@ -48,4 +49,5 @@ export {
   AddToQueueSvg,
   HistorySvg,
   CheckMarkSvg,
+  RemoveSvg,
 };

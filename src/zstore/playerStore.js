@@ -37,6 +37,32 @@ const playerStore = create((set, get) => ({
       localStorage.setItem("last_song_liked", response.liked ? "1" : "0");
     }
   },
+
+  setNextSong: () => {
+    const { queue, currentPlayingIndex, setSong } = get();
+    if (queue.length) {
+      const qIndex =
+        currentPlayingIndex === null
+          ? 0
+          : (currentPlayingIndex + 1) % queue.length;
+      setSong(queue[qIndex]);
+      set({ currentPlayingIndex: qIndex });
+    } else {
+      console.log("no queue");
+    }
+  },
+  setPrevSong: () => {
+    const { queue, currentPlayingIndex, setSong } = get();
+    if (queue.length) {
+      let qIndex = currentPlayingIndex === null ? 0 : currentPlayingIndex - 1;
+      if (qIndex < 0) qIndex = queue.length - 1;
+      setSong(queue[qIndex]);
+      set({ currentPlayingIndex: qIndex });
+    } else {
+      console.log("no queue");
+    }
+  },
+
   setLike: async (bool) => {
     const selected_song = get().song;
     const IsAddingInLiked = get().addingInLiked;
@@ -49,6 +75,21 @@ const playerStore = create((set, get) => ({
       set({ addingInLiked: false });
     }
   },
+
+  // player queue logic
+  queue: [],
+  currentPlayingIndex: null,
+  addSong: (song) =>
+    set((state) => ({
+      queue: state.queue.some((s) => s.id === song.id)
+        ? state.queue
+        : [...state.queue, song],
+    })),
+  removeSong: (song) =>
+    set((state) => ({
+      queue: state.queue.filter((s) => s.id !== song.id),
+    })),
+  clearQueue: () => set({ queue: [], currentPlayingIndex: null }),
 }));
 
 export default playerStore;

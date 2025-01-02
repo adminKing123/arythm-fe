@@ -8,6 +8,7 @@ const ROUTES = {
   YOURLIBRARY: "/your-library",
   SEARCH: "/search",
   GET_SEARCH_URI: (q, index) => `/search?q=${q}&index=${index}`,
+  QUEUE: "/queue",
 };
 
 export default ROUTES;
