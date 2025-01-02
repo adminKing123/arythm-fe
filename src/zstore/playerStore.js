@@ -86,17 +86,20 @@ const playerStore = create((set, get) => ({
         : [...state.queue, song],
     })),
   removeSong: (index) => {
-    const { currentPlayingIndex } = get();
+    const { currentPlayingIndex, setQueueSongWithIndex } = get();
     set((state) => ({
       queue: state.queue.filter((_, i) => i !== index),
     }));
-    if (index <= currentPlayingIndex)
+    if (index === currentPlayingIndex) setQueueSongWithIndex(index);
+    else if (index < currentPlayingIndex)
       set({ currentPlayingIndex: currentPlayingIndex - 1 });
   },
   setQueueSongWithIndex: (index) => {
     const { setSong, queue } = get();
-    setSong(queue[index]);
-    set({ currentPlayingIndex: index });
+    if (index < 0) return;
+    const qIndex = index % queue.length;
+    setSong(queue[qIndex]);
+    set({ currentPlayingIndex: qIndex });
   },
   clearQueue: () => set({ queue: [], currentPlayingIndex: null }),
 }));
