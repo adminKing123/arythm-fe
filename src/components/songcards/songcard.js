@@ -210,15 +210,17 @@ export const SongCard2Loading = () => {
   );
 };
 
-export const SongCard3 = ({ song, setCallback, onClickRemove }) => {
-  const setSong = playerStore((state) => state.setSong);
+export const SongCard3 = ({ index, song, setCallback, onClickRemove }) => {
+  const setQueueSongWithIndex = playerStore(
+    (state) => state.setQueueSongWithIndex
+  );
   const user = authConfigStore((state) => state.user);
 
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
 
   const handleSelect = () => {
-    setSong(song);
+    setQueueSongWithIndex(index);
     setCallback?.(song);
   };
 

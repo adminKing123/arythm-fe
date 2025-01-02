@@ -30,11 +30,12 @@ const Queue = () => {
               </ALink>
             </div>
             <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-1">
-              {queue.map((song) => (
+              {queue.map((song, index) => (
                 <SongCard3
+                  index={index}
                   key={song.id}
                   song={song}
-                  onClickRemove={() => removeSong(song)}
+                  onClickRemove={() => removeSong(index)}
                 />
               ))}
             </div>
