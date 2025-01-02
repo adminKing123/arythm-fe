@@ -48,7 +48,7 @@ const playerStore = create((set, get) => ({
       setSong(queue[qIndex]);
       set({ currentPlayingIndex: qIndex });
     } else {
-      console.log("no queue");
+      // pass
     }
   },
   setPrevSong: () => {
@@ -59,7 +59,7 @@ const playerStore = create((set, get) => ({
       setSong(queue[qIndex]);
       set({ currentPlayingIndex: qIndex });
     } else {
-      console.log("no queue");
+      // pass
     }
   },
 
@@ -85,10 +85,19 @@ const playerStore = create((set, get) => ({
         ? state.queue
         : [...state.queue, song],
     })),
-  removeSong: (song) =>
+  removeSong: (index) => {
+    const { currentPlayingIndex } = get();
     set((state) => ({
-      queue: state.queue.filter((s) => s.id !== song.id),
-    })),
+      queue: state.queue.filter((_, i) => i !== index),
+    }));
+    if (index <= currentPlayingIndex)
+      set({ currentPlayingIndex: currentPlayingIndex - 1 });
+  },
+  setQueueSongWithIndex: (index) => {
+    const { setSong, queue } = get();
+    setSong(queue[index]);
+    set({ currentPlayingIndex: index });
+  },
   clearQueue: () => set({ queue: [], currentPlayingIndex: null }),
 }));
 
