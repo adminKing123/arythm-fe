@@ -1,3 +1,4 @@
+import { scrollTo } from "../../api/utils";
 import Button from "../../components/buttons/buttons";
 import { ALink } from "../../components/links/links";
 import { SongCard3 } from "../../components/songcards/songcard";
@@ -7,6 +8,7 @@ import playerStore from "../../zstore/playerStore";
 
 const Queue = () => {
   document.title = "Manage Queue";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
   const user = authConfigStore((state) => state.user);
   const queue = playerStore((state) => state.queue);
   const clearQueue = playerStore((state) => state.clearQueue);

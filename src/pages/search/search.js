@@ -9,7 +9,7 @@ import {
   SongCard2,
   SongCard2Loading,
 } from "../../components/songcards/songcard";
-import { getParamFromUrl } from "../../api/utils";
+import { getParamFromUrl, scrollTo } from "../../api/utils";
 
 const FilterSongsContainer = ({ songs }) => {
   return (
@@ -72,8 +72,10 @@ const SearchFilter = () => {
     const gotoffset = parseInt(getParamFromUrl(url, "offset")) || 0;
     setOffset(gotoffset);
     setSearchParams({ q: value, index: searchBy.index, offset: gotoffset });
-    const element = document.getElementById("main-content");
-    element.scrollTo({ top: 0, behavior: "smooth" });
+    scrollTo("main-content", {
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
@@ -177,6 +179,7 @@ const SearchFilter = () => {
 
 const Search = () => {
   document.title = "Search";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
 
   return (
     <>

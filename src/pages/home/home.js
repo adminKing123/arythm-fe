@@ -3,9 +3,11 @@ import {
   NewRelesese,
 } from "../../components/songcards/containers";
 import { HeroCarousel } from "../../components/carousals";
+import { scrollTo } from "../../api/utils";
 
 const Home = () => {
   document.title = "ARhythm";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
 
   return (
     <>

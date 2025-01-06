@@ -2,9 +2,11 @@ import authConfigStore from "../../zstore/authConfigStore";
 import ROUTES from "../../router/routes";
 import { LibraryLatestHistorySongs } from "../../components/carousals/libraryHistorSongsCarousal";
 import { LibraryPlaylists } from "../../components/songcards/containers";
+import { scrollTo } from "../../api/utils";
 
 const YourLibrary = () => {
   document.title = "Your Library";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
   const user = authConfigStore((state) => state.user);
 
   if (!user) {
