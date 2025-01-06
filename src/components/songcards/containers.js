@@ -104,7 +104,7 @@ export const GlobalSearchContainer = ({ q, handleClose }) => {
 
   return (
     <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
-      <div className="max-h-[80vh] overflow-y-auto pr-8 custom2-scroller">
+      <div id="global-search-container" className="max-h-[80vh] overflow-y-auto pr-8 custom2-scroller">
         <ShowHistoryGR
           q={q}
           handleClose={handleClose}

@@ -6,6 +6,7 @@ import tokenManager from "../api/utils";
 import SideNavbar from "../components/sidenavbar/sidenavbar";
 import Header from "../components/header/header";
 import ROUTES from "../router/routes";
+import ContextMenu from "../components/contextmenu";
 
 export const CheckLogin = () => {
   const setConfig = authConfigStore((state) => state.setConfig);
@@ -46,6 +47,7 @@ export const Main = () => {
           <Outlet />
         </div>
       </div>
+      <ContextMenu />
     </div>
   );
 };
