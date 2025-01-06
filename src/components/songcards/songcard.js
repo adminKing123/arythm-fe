@@ -214,6 +214,7 @@ export const SongCard3 = ({ index, song, setCallback, onClickRemove }) => {
   const setQueueSongWithIndex = playerStore(
     (state) => state.setQueueSongWithIndex
   );
+  const currentSong = playerStore((state) => state.song);
   const user = authConfigStore((state) => state.user);
 
   const imgRef = useRef(null);
@@ -260,7 +261,11 @@ export const SongCard3 = ({ index, song, setCallback, onClickRemove }) => {
           />
           <Link
             onClick={handleSelect}
-            className="bg-[#000000af] flex justify-center items-center w-12 h-12 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl relative opacity-0 group-hover:opacity-100 transition-all duration-500"
+            className={`bg-[#000000af] flex justify-center items-center w-12 h-12 rounded-lg sm:w-14 sm:h-14 sm:rounded-xl relative ${
+              currentSong?.id === song.id
+                ? "opacity-100"
+                : "opacity-0 group-hover:opacity-100"
+            } transition-all duration-500`}
           >
             <PlaySvg className="w-5 h-5 fill-[#25a56a] sm:w-6 sm:h-6" />
           </Link>
