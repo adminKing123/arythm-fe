@@ -13,12 +13,24 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import playerStore from "../../zstore/playerStore";
 import authConfigStore from "../../zstore/authConfigStore";
+import contextMenuStore from "../../zstore/contextMenuStore";
 
 const SongCard = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
+  const setContextMenuData = contextMenuStore((state) => state.setData);
 
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenuData({
+      type: "song",
+      song,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
 
   useEffect(() => {
     const imgEle = imgRef.current;
@@ -44,6 +56,7 @@ const SongCard = ({ song, setCallback }) => {
     <div>
       <div
         ref={imgContainerRef}
+        onContextMenu={handleContextMenu}
         className="skeleton relative flex flex-col items-center justify-center w-full aspect-square rounded-xl overflow-hidden bg-[#000] group"
       >
         <img

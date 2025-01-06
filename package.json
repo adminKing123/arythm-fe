@@ -8,6 +8,7 @@
     "formik": "^2.4.6",
     "framer-motion": "^11.13.1",
     "react": "^19.0.0",
+    "react-detect-click-outside": "^1.1.7",
     "react-dom": "^19.0.0",
     "react-h5-audio-player": "^3.9.3",
     "react-query": "^3.39.3",
