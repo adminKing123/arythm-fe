@@ -88,4 +88,11 @@ export const getParamFromUrl = (url, key) => {
   return value;
 };
 
+export const scrollTo = (id, props) => {
+  const ele = document.getElementById(id);
+  if (ele) {
+    ele.scrollTo({ ...props });
+  }
+};
+
 export default tokenManager;
