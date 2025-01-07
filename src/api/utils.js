@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import authConfigStore from "../zstore/authConfigStore";
 
 const tokenManager = {
@@ -93,6 +94,55 @@ export const scrollTo = (id, props) => {
   if (ele) {
     ele.scrollTo({ ...props });
   }
+};
+
+export const useContextMenuCloseHandler = (ref, handleClose) => {
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+    const mainContent = document.getElementById("main-content");
+    const globalSearchContainer = document.getElementById(
+      "global-search-container"
+    );
+    document.addEventListener("mousedown", handleOutsideClick);
+    window.addEventListener("resize", () => handleClose());
+    mainContent.addEventListener("scroll", () => handleClose());
+    globalSearchContainer?.addEventListener("scroll", () => handleClose());
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      window.removeEventListener("resize", () => handleClose());
+      mainContent.removeEventListener("scroll", () => handleClose());
+      globalSearchContainer?.removeEventListener("scroll", () => handleClose());
+    };
+  }, [handleClose, ref]);
+};
+
+export const useContextPosition = (ref, contextMenuData, callback) => {
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const menuElement = ref.current;
+    const menuRect = menuElement.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate adjusted position
+    const adjustedX =
+      contextMenuData.x + menuRect.width > viewportWidth
+        ? viewportWidth - menuRect.width - 10
+        : contextMenuData.x;
+
+    const adjustedY =
+      contextMenuData.y + menuRect.height > viewportHeight
+        ? viewportHeight - menuRect.height - 10
+        : contextMenuData.y;
+
+    callback(menuElement, adjustedX, adjustedY);
+  }, [ref, contextMenuData, callback]);
 };
 
 export default tokenManager;
