@@ -125,9 +125,6 @@ export const SongCard2 = ({ song, setCallback }) => {
     if (addedToQueue) return;
     addToQueue(song);
     setAddedToQueue(true);
-    setTimeout(() => {
-      setAddedToQueue(false);
-    }, 3000);
   };
 
   useEffect(() => {
