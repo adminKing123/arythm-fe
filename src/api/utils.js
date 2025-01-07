@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import authConfigStore from "../zstore/authConfigStore";
 
 const tokenManager = {
@@ -93,6 +94,31 @@ export const scrollTo = (id, props) => {
   if (ele) {
     ele.scrollTo({ ...props });
   }
+};
+
+export const useContextMenuCloseHandler = (ref, handleClose) => {
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+    const mainContent = document.getElementById("main-content");
+    const globalSearchContainer = document.getElementById(
+      "global-search-container"
+    );
+    document.addEventListener("mousedown", handleOutsideClick);
+    window.addEventListener("resize", () => handleClose());
+    mainContent.addEventListener("scroll", () => handleClose());
+    globalSearchContainer?.addEventListener("scroll", () => handleClose());
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      window.removeEventListener("resize", () => handleClose());
+      mainContent.removeEventListener("scroll", () => handleClose());
+      globalSearchContainer?.removeEventListener("scroll", () => handleClose());
+    };
+  }, [handleClose, ref]);
 };
 
 export default tokenManager;
