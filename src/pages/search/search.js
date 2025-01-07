@@ -33,25 +33,29 @@ const SearchFilter = () => {
     {
       id: 1,
       name: "Featured",
+      index: 0,
     },
     {
       id: 2,
       name: "Popular",
+      index: 1,
     },
     {
       id: 3,
       name: "Newest",
+      index: 2,
     },
   ];
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
   const index = parseInt(searchParams.get("index")) || 0;
+  const sortByIndexP = parseInt(searchParams.get("sortby")) || 0;
   const limit = 24;
   const offsetP = parseInt(searchParams.get("offset")) || 0;
 
   const [value, setValue] = useState(q);
   const [searchBy, setSearchBy] = useState(dropdownOptions[index]);
-  const [sortBy, setSortBy] = useState(sortOptions[0]);
+  const [sortBy, setSortBy] = useState(sortOptions[sortByIndexP]);
   const [offset, setOffset] = useState(offsetP);
 
   const setShowGlobalSearch = pageItemsStore(
@@ -71,7 +75,12 @@ const SearchFilter = () => {
   const handlePageChange = (url) => {
     const gotoffset = parseInt(getParamFromUrl(url, "offset")) || 0;
     setOffset(gotoffset);
-    setSearchParams({ q: value, index: searchBy.index, offset: gotoffset });
+    setSearchParams({
+      q: value,
+      index: searchBy.index,
+      offset: gotoffset,
+      sortby: sortBy.index,
+    });
     scrollTo("main-content", {
       top: 0,
       behavior: "smooth",
@@ -101,6 +110,7 @@ const SearchFilter = () => {
                     q: e.target.value,
                     index: searchBy.index,
                     offset: 0,
+                    sortby: sortBy.index,
                   });
                   setEnteredQ(e.target.value);
                 }
@@ -119,22 +129,25 @@ const SearchFilter = () => {
                   q: value,
                   index: selected.index,
                   offset: 0,
+                  sortby: sortBy.index,
                 });
               }}
             />
           </div>
         </div>
         <SortOptions
+          defaultIndex={sortByIndexP}
           value={sortBy}
           setValue={setSortBy}
           options={sortOptions}
-          onChange={() => {
+          onChange={(item) => {
             setOffset(0);
             setEnteredQ(value);
             setSearchParams({
               q: value,
               index: searchBy.index,
               offset: 0,
+              sortby: item.index,
             });
           }}
         />

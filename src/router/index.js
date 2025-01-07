@@ -10,6 +10,7 @@ import { CheckLogin, Main } from "../pages/layouts";
 import YourLibrary from "../pages/yourlibrary/yourlibrary";
 import Search from "../pages/search/search";
 import Queue from "../pages/queue/queue";
+import Artists from "../pages/artists/artists";
 
 const Router = () => {
   return (
@@ -31,6 +32,7 @@ const Router = () => {
             <Route path={ROUTES.YOURLIBRARY} element={<YourLibrary />}></Route>
             <Route path={ROUTES.SEARCH} element={<Search />}></Route>
             <Route path={ROUTES.QUEUE} element={<Queue />}></Route>
+            <Route path={ROUTES.ARTISTS} element={<Artists />}></Route>
           </Route>
         </Route>
       </Routes>

@@ -9,6 +9,7 @@ const ROUTES = {
   SEARCH: "/search",
   GET_SEARCH_URI: (q, index) => `/search?q=${q}&index=${index}`,
   QUEUE: "/queue",
+  ARTISTS: "/artists",
 };
 
 export default ROUTES;

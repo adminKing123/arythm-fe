@@ -59,11 +59,11 @@ const SideNavbar = () => {
         <NavbarTab to={"search"} Icon={SearchSvg}>
           Search
         </NavbarTab>
-        <NavbarTab to={"releases"} Icon={ReleasesSvg}>
-          Releases
-        </NavbarTab>
         <NavbarTab to={"artists"} Icon={ArtistsSvg}>
           Artists
+        </NavbarTab>
+        <NavbarTab to={"albums"} Icon={ReleasesSvg}>
+          Albums
         </NavbarTab>
         <QueueNavbarTab />
         {user && (

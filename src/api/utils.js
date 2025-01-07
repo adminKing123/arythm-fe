@@ -121,6 +121,21 @@ export const useContextMenuCloseHandler = (ref, handleClose) => {
   }, [handleClose, ref]);
 };
 
+export const useOutsideClick = (ref, handleClose) => {
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [handleClose, ref]);
+};
+
 export const useContextPosition = (ref, contextMenuData, callback) => {
   useEffect(() => {
     if (!ref.current) return;
