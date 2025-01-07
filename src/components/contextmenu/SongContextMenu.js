@@ -6,27 +6,7 @@ import {
   useContextMenuCloseHandler,
   useContextPosition,
 } from "../../api/utils";
-
-const SongContextMenuButton = ({
-  title,
-  Icon,
-  className,
-  iconClassName = "fill-white w-[14px] h-[14px]",
-  titleClassName = "text-[14px]",
-  ...props
-}) => {
-  return (
-    <div
-      className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-[#222222] ${
-        className ?? ""
-      }`}
-      {...props}
-    >
-      <Icon className={iconClassName} />
-      <span className={titleClassName}>{title}</span>
-    </div>
-  );
-};
+import ContextMenuButton from "./components";
 
 const AddToQueueOption = ({ song }) => {
   const addToQueue = playerStore((state) => state.addSong);
@@ -38,7 +18,7 @@ const AddToQueueOption = ({ song }) => {
   };
 
   return (
-    <SongContextMenuButton
+    <ContextMenuButton
       Icon={AddToQueueSvg}
       title={songAddedToQueue ? "Added To Queue" : "Add To Queue"}
       onClick={handleAddToQueue}
@@ -64,8 +44,8 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
     >
       <AddToQueueOption song={contextMenuData.song} />
 
-      <SongContextMenuButton Icon={AddToQueueSvg} title={"Add To Playlist"} />
-      <SongContextMenuButton Icon={DetailsSvg} title={"Details"} />
+      <ContextMenuButton Icon={AddToQueueSvg} title={"Add To Playlist"} />
+      <ContextMenuButton Icon={DetailsSvg} title={"Details"} />
     </div>,
     document.body
   );

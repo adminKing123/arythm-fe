@@ -1,4 +1,6 @@
 import contextMenuStore from "../../zstore/contextMenuStore";
+import AlbumContextMenu from "./AlbumContextMenu";
+import ArtistContextMenu from "./ArtistContextMenu";
 import SongContextMenu from "./SongContextMenu";
 
 const ContextMenu = () => {
@@ -11,35 +13,28 @@ const ContextMenu = () => {
   };
 
   if (contextMenuData === null) return null;
-  if (contextMenuData.type === "song") {
-    // const { x, y } = contextMenuData;
-    // const menuWidth = 200; // Width of the context menu
-    // const menuHeight = 111; // Height of the context menu
-    // const viewportWidth = window.innerWidth;
-    // const viewportHeight = window.innerHeight;
-
-    // // Adjust x position if it's too far to the right
-    // const adjustedX =
-    //   x + menuWidth > viewportWidth ? viewportWidth - menuWidth - 10 : x;
-
-    // // Adjust y position if it's too far down
-    // const adjustedY =
-    //   y + menuHeight > viewportHeight ? viewportHeight - menuHeight - 10 : y;
-
-    // const adjustedContextMenuData = {
-    //   ...contextMenuData,
-    //   x: adjustedX,
-    //   y: adjustedY,
-    // };
-
+  else if (contextMenuData.type === "song")
     return (
       <SongContextMenu
         contextMenuData={contextMenuData}
         handleClose={handleClose}
       />
     );
-  }
-  return null;
+  else if (contextMenuData.type === "artist")
+    return (
+      <ArtistContextMenu
+        contextMenuData={contextMenuData}
+        handleClose={handleClose}
+      />
+    );
+  else if (contextMenuData.type === "album")
+    return (
+      <AlbumContextMenu
+        contextMenuData={contextMenuData}
+        handleClose={handleClose}
+      />
+    );
+  else return null;
 };
 
 export default ContextMenu;
