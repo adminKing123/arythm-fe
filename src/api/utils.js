@@ -121,4 +121,28 @@ export const useContextMenuCloseHandler = (ref, handleClose) => {
   }, [handleClose, ref]);
 };
 
+export const useContextPosition = (ref, contextMenuData, callback) => {
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const menuElement = ref.current;
+    const menuRect = menuElement.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate adjusted position
+    const adjustedX =
+      contextMenuData.x + menuRect.width > viewportWidth
+        ? viewportWidth - menuRect.width - 10
+        : contextMenuData.x;
+
+    const adjustedY =
+      contextMenuData.y + menuRect.height > viewportHeight
+        ? viewportHeight - menuRect.height - 10
+        : contextMenuData.y;
+
+    callback(menuElement, adjustedX, adjustedY);
+  }, [ref, contextMenuData, callback]);
+};
+
 export default tokenManager;
