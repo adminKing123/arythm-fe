@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 
-const SortOptions = ({ options, value, setValue, onChange }) => {
+const SortOptions = ({ defaultIndex, options, value, setValue, onChange }) => {
   const sliderRef = useRef(null);
-  const firstOptionBtnRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleClick = (e, item) => {
     const selectedButton = e.target;
@@ -13,33 +13,30 @@ const SortOptions = ({ options, value, setValue, onChange }) => {
   };
 
   useEffect(() => {
-    if (sliderRef.current === null || firstOptionBtnRef.current === null)
-      return;
-    const selectedButton = firstOptionBtnRef.current;
-    sliderRef.current.style.transform = `translateX(${selectedButton.offsetLeft}px)`;
-    sliderRef.current.style.width = `${selectedButton.offsetWidth}px`;
-  }, [firstOptionBtnRef, sliderRef]);
+    if (sliderRef.current === null || containerRef.current === null) return;
+    const container = containerRef.current;
+    const defaultActiveElement =
+      container.getElementsByClassName("sort-button")[defaultIndex];
+    if (defaultActiveElement) {
+      sliderRef.current.style.transform = `translateX(${defaultActiveElement.offsetLeft}px)`;
+      sliderRef.current.style.width = `${defaultActiveElement.offsetWidth}px`;
+    }
+  }, [sliderRef, containerRef, defaultIndex]);
 
   return (
-    <div className="h-10 bg-[#222227] flex items-center rounded-xl relative">
+    <div
+      ref={containerRef}
+      className="h-10 bg-[#222227] flex items-center rounded-xl relative"
+    >
       <div
         ref={sliderRef}
         className="h-[30px] absolute top-[5px] bg-[#25a56a] rounded-[10px] transition-all duration-200"
       ></div>
-      <button
-        ref={firstOptionBtnRef}
-        onClick={(e) => handleClick(e, options[0])}
-        className={`h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
-          options[0].id === value?.id ? "text-white" : ""
-        }`}
-      >
-        {options[0].name}
-      </button>
-      {options.slice(1).map((item) => (
+      {options.map((item) => (
         <button
           key={item.id}
           onClick={(e) => handleClick(e, item)}
-          className={`h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
+          className={`sort-button h-[30px] mx-[5px] rounded-[10px] px-[15px] text-sm relative transition-colors duration-200 ${
             item.id === value?.id ? "text-white" : ""
           }`}
         >

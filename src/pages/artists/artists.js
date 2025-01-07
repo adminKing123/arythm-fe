@@ -1,73 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SearchInput } from "../../components/Inputs/inputs";
-import DropDown from "../../components/selectors/dropdown";
-import SortOptions from "../../components/selectors/sortoptions";
 import { useSearchParams } from "react-router-dom";
-import pageItemsStore from "../../zstore/pageItemsStore";
-import { useFilteredSongs } from "../../api/songs/queryHooks";
-import {
-  SongCard2,
-  SongCard2Loading,
-} from "../../components/songcards/songcard";
+import { useFilteredArtists } from "../../api/songs/queryHooks";
 import { getParamFromUrl, scrollTo } from "../../api/utils";
+import ArtistCard, {
+  ArtistCardLoading,
+} from "../../components/songcards/artistcard";
 
-const FilterSongsContainer = ({ songs }) => {
+const FilterArtistsContainer = ({ artists }) => {
   return (
-    <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-2">
-      {songs.map((song) => (
-        <SongCard2 key={song.id} song={song} />
+    <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+      {artists.map((artist) => (
+        <ArtistCard key={artist.id} artist={artist} />
       ))}
     </div>
   );
 };
 
 const SearchFilter = () => {
-  const dropdownOptions = [
-    { id: 1, name: "All Songs", index: 0 },
-    { id: 2, name: "Legacy Artists", index: 1 },
-    { id: 3, name: "Albums", index: 2 },
-    { id: 4, name: "Genres", index: 3 },
-    { id: 5, name: "Release Year", index: 4 },
-  ];
-  const sortOptions = [
-    {
-      id: 1,
-      name: "Featured",
-      index: 0,
-    },
-    {
-      id: 2,
-      name: "Popular",
-      index: 1,
-    },
-    {
-      id: 3,
-      name: "Newest",
-      index: 2,
-    },
-  ];
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
-  const index = parseInt(searchParams.get("index")) || 0;
-  const sortByIndexP = parseInt(searchParams.get("sortby")) || 0;
   const limit = 24;
   const offsetP = parseInt(searchParams.get("offset")) || 0;
 
   const [value, setValue] = useState(q);
-  const [searchBy, setSearchBy] = useState(dropdownOptions[index]);
-  const [sortBy, setSortBy] = useState(sortOptions[sortByIndexP]);
   const [offset, setOffset] = useState(offsetP);
-
-  const setShowGlobalSearch = pageItemsStore(
-    (state) => state.setShowGlobalSearch
-  );
 
   const [enteredQ, setEnteredQ] = useState(value);
 
-  const { data, isLoading, isFetching, isError } = useFilteredSongs(
+  const { data, isLoading, isFetching, isError } = useFilteredArtists(
     enteredQ,
-    searchBy.id,
-    sortBy.id,
     limit,
     offset
   );
@@ -77,20 +39,13 @@ const SearchFilter = () => {
     setOffset(gotoffset);
     setSearchParams({
       q: value,
-      index: searchBy.index,
       offset: gotoffset,
-      sortby: sortBy.index,
     });
     scrollTo("main-content", {
       top: 0,
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    setShowGlobalSearch(false);
-    return () => setShowGlobalSearch(true);
-  }, [setShowGlobalSearch]);
 
   return (
     <>
@@ -108,60 +63,25 @@ const SearchFilter = () => {
                   setOffset(0);
                   setSearchParams({
                     q: e.target.value,
-                    index: searchBy.index,
                     offset: 0,
-                    sortby: sortBy.index,
                   });
                   setEnteredQ(e.target.value);
                 }
               }}
             />
           </div>
-          <div>
-            <DropDown
-              value={searchBy}
-              setValue={setSearchBy}
-              options={dropdownOptions}
-              onChange={(selected) => {
-                setEnteredQ(value);
-                setOffset(0);
-                setSearchParams({
-                  q: value,
-                  index: selected.index,
-                  offset: 0,
-                  sortby: sortBy.index,
-                });
-              }}
-            />
-          </div>
         </div>
-        <SortOptions
-          defaultIndex={sortByIndexP}
-          value={sortBy}
-          setValue={setSortBy}
-          options={sortOptions}
-          onChange={(item) => {
-            setOffset(0);
-            setEnteredQ(value);
-            setSearchParams({
-              q: value,
-              index: searchBy.index,
-              offset: 0,
-              sortby: item.index,
-            });
-          }}
-        />
       </div>
       {isLoading || isFetching ? (
-        <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-2">
+        <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
           {Array.from({ length: 24 }, (_, index) => (
-            <SongCard2Loading key={index} />
+            <ArtistCardLoading key={index} />
           ))}
         </div>
       ) : isError || data.results.length === 0 ? (
         <div className="py-8 text-center text-xl">No result Found</div>
       ) : (
-        <FilterSongsContainer songs={data.results} />
+        <FilterArtistsContainer artists={data.results} />
       )}
       {!isError &&
       !isLoading &&
@@ -190,15 +110,15 @@ const SearchFilter = () => {
   );
 };
 
-const Search = () => {
-  document.title = "Search";
+const Artists = () => {
+  document.title = "Artists";
   scrollTo("main-content", { top: 0, behavior: "instant" });
 
   return (
     <>
       <section className="p-[30px]">
         <div className="flex justify-between items-center flex-wrap">
-          <h2 className="text-white text-[30px]">Search</h2>
+          <h2 className="text-white text-[30px]">Artists</h2>
         </div>
       </section>
       <section className="p-[30px] border-t border-b border-[#2a2a2a]">
@@ -208,4 +128,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default Artists;

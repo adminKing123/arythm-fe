@@ -86,3 +86,18 @@ export const useFilteredSongs = (
     refetchOnMount: true,
     ...config,
   });
+
+export const useFilteredArtists = (q, limit = 24, offset = 0, config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.FILTER_ARTISTS, q, limit, offset],
+    queryFn: () =>
+      getArtists({
+        q,
+        limit,
+        offset,
+      }),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    ...config,
+  });

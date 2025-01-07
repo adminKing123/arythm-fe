@@ -29,6 +29,7 @@ export const getArtists = async (data) => {
     method: "GET",
     url: API_ENDPOINTS.GET_ARTISTS,
     params: {
+      name: data?.q || "",
       limit: data?.limit || 12,
       offset: data?.offset || 0,
     },
