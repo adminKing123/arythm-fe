@@ -102,6 +102,10 @@ const playerStore = create((set, get) => ({
     set({ currentPlayingIndex: qIndex });
   },
   clearQueue: () => set({ queue: [], currentPlayingIndex: null }),
+
+  // playoption
+  playoption: "playlistonce",
+  setPlayoption: (value) => set({ playoption: value }),
 }));
 
 export default playerStore;
