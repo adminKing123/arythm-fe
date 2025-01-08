@@ -15,6 +15,7 @@ const playerStore = create((set, get) => ({
   isLiked: localStorage.getItem("last_song_liked") === "0" ? false : true,
   addingInLiked: false,
   addingInHistory: false,
+  playby: null,
 
   loadingSongFromURI: false,
   setLoadingSongFromURI: (value) => {
@@ -84,24 +85,37 @@ const playerStore = create((set, get) => ({
       queue: state.queue.some((s) => s.id === song.id)
         ? state.queue
         : [...state.queue, song],
+      playby: "queue",
     })),
   removeSong: (index) => {
-    const { currentPlayingIndex, setQueueSongWithIndex } = get();
-    set((state) => ({
-      queue: state.queue.filter((_, i) => i !== index),
-    }));
-    if (index === currentPlayingIndex) setQueueSongWithIndex(index);
-    else if (index < currentPlayingIndex)
-      set({ currentPlayingIndex: currentPlayingIndex - 1 });
+    set((state) => {
+      const updatedQueue = state.queue.filter((_, i) => i !== index);
+      const data = {
+        queue: updatedQueue,
+        currentPlayingIndex:
+          index < state.currentPlayingIndex
+            ? state.currentPlayingIndex - 1
+            : state.currentPlayingIndex,
+        playby: updatedQueue.length ? "queue" : null,
+      };
+      if (updatedQueue.length && index === state.currentPlayingIndex)
+        data["song"] = updatedQueue[state.currentPlayingIndex];
+      return data;
+    });
   },
   setQueueSongWithIndex: (index) => {
-    const { setSong, queue } = get();
-    if (index < 0 || queue.length === 0) return;
-    const qIndex = index % queue.length;
-    setSong(queue[qIndex]);
-    set({ currentPlayingIndex: qIndex });
+    set((state) => {
+      if (index < 0 || state.queue.length === 0) return {};
+      const qIndex = index % state.queue.length;
+      return {
+        song: state.queue[qIndex],
+        currentPlayingIndex: qIndex,
+        playby: "queue",
+      };
+    });
   },
-  clearQueue: () => set({ queue: [], currentPlayingIndex: null }),
+  clearQueue: () =>
+    set({ queue: [], currentPlayingIndex: null, playby: "queue" }),
 
   // playoption
   playoption: "playlistonce",
