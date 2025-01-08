@@ -5,8 +5,12 @@ import {
   PauseSvg,
   PlayerNextSvg,
   PlayerPrevSvg,
+  PlaylistonceSvg,
   PlaySvg,
+  RandomSvg,
   ReleasesSvg,
+  RepeatoneSvg,
+  RepeatSvg,
   VolumeFullSvg,
   VolumeMuteSvg,
 } from "../../assets/svg";
@@ -49,7 +53,7 @@ const PlayerControls = ({ playerRef }) => {
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
       <PlayerPrevSvg
-        onClick={setPrevSong}
+        onClick={() => setPrevSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
       />
       {loadingSongFromURI ? (
@@ -64,7 +68,7 @@ const PlayerControls = ({ playerRef }) => {
         </span>
       )}
       <PlayerNextSvg
-        onClick={setNextSong}
+        onClick={() => setNextSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
       />
     </div>
@@ -200,10 +204,49 @@ const LikeSongButton = () => {
   return;
 };
 
+const PlayOptions = () => {
+  const playoption = playerStore((state) => state.playoption);
+  const setPlayoption = playerStore((state) => state.setPlayoption);
+
+  const Options = {
+    playlistonce: (
+      <PlaylistonceSvg
+        className="w-5 h-5 stroke-white"
+        onClick={() => setPlayoption("repeatplaylist")}
+      />
+    ),
+    repeatplaylist: (
+      <RepeatSvg
+        className="w-4 h-4 fill-[#25a56a]"
+        onClick={() => setPlayoption("repeat")}
+      />
+    ),
+    repeat: (
+      <RepeatoneSvg
+        className="w-4 h-4 fill-[#25a56a]"
+        onClick={() => setPlayoption("random")}
+      />
+    ),
+    random: (
+      <RandomSvg
+        className="w-4 h-4 fill-[#25a56a]"
+        onClick={() => setPlayoption("playlistonce")}
+      />
+    ),
+  };
+
+  return (
+    <div className="w-6 h-6 flex justify-center items-center cursor-pointer">
+      {Options[playoption]}
+    </div>
+  );
+};
+
 const ExtraOptions = ({ playerRef }) => {
   return (
     <div className="flex items-center gap-1">
       <LikeSongButton />
+      <PlayOptions />
       <OpenPlaylistSvg
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
         title="Open Playlist"
@@ -304,7 +347,7 @@ const MusicPlayer = () => {
           onWaiting={() => setLoadingSongFromURI(true)}
           onCanPlay={() => setLoadingSongFromURI(false)}
           onLoadedData={() => setLoadingSongFromURI(false)}
-          onEnded={setNextSong}
+          onEnded={() => setNextSong(playerRef)}
         />
         <Duration playerRef={playerRef} />
       </div>

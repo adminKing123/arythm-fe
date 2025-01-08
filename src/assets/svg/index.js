@@ -24,6 +24,10 @@ import { ReactComponent as HistorySvg } from "./history.svg";
 import { ReactComponent as CheckMarkSvg } from "./checkmark.svg";
 import { ReactComponent as RemoveSvg } from "./remove.svg";
 import { ReactComponent as DetailsSvg } from "./details.svg";
+import { ReactComponent as PlaylistonceSvg } from "./playlistonce.svg";
+import { ReactComponent as RepeatSvg } from "./repeat.svg";
+import { ReactComponent as RepeatoneSvg } from "./repeatone.svg";
+import { ReactComponent as RandomSvg } from "./random.svg";
 
 export {
   SignSvg,
@@ -52,4 +56,8 @@ export {
   CheckMarkSvg,
   RemoveSvg,
   DetailsSvg,
+  PlaylistonceSvg,
+  RepeatSvg,
+  RepeatoneSvg,
+  RandomSvg,
 };
