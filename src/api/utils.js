@@ -160,4 +160,14 @@ export const useContextPosition = (ref, contextMenuData, callback) => {
   }, [ref, contextMenuData, callback]);
 };
 
+export const getRandomIndex = (maxvalue, prev) => {
+  let randomNum = Math.floor(Math.random() * maxvalue);
+
+  if (randomNum === prev) {
+    if (randomNum > 0) return randomNum - 1;
+    else return maxvalue - 1;
+  }
+  return randomNum;
+};
+
 export default tokenManager;

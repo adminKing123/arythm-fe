@@ -53,7 +53,7 @@ const PlayerControls = ({ playerRef }) => {
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
       <PlayerPrevSvg
-        onClick={setPrevSong}
+        onClick={() => setPrevSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
       />
       {loadingSongFromURI ? (
@@ -68,7 +68,7 @@ const PlayerControls = ({ playerRef }) => {
         </span>
       )}
       <PlayerNextSvg
-        onClick={setNextSong}
+        onClick={() => setNextSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
       />
     </div>
@@ -212,16 +212,16 @@ const PlayOptions = () => {
     playlistonce: (
       <PlaylistonceSvg
         className="w-5 h-5 stroke-white"
+        onClick={() => setPlayoption("repeatplaylist")}
+      />
+    ),
+    repeatplaylist: (
+      <RepeatSvg
+        className="w-4 h-4 fill-[#25a56a]"
         onClick={() => setPlayoption("repeat")}
       />
     ),
     repeat: (
-      <RepeatSvg
-        className="w-4 h-4 fill-[#25a56a]"
-        onClick={() => setPlayoption("repeatonce")}
-      />
-    ),
-    repeatonce: (
       <RepeatoneSvg
         className="w-4 h-4 fill-[#25a56a]"
         onClick={() => setPlayoption("random")}
@@ -347,7 +347,7 @@ const MusicPlayer = () => {
           onWaiting={() => setLoadingSongFromURI(true)}
           onCanPlay={() => setLoadingSongFromURI(false)}
           onLoadedData={() => setLoadingSongFromURI(false)}
-          onEnded={setNextSong}
+          onEnded={() => setNextSong(playerRef)}
         />
         <Duration playerRef={playerRef} />
       </div>
