@@ -99,8 +99,14 @@ const playerStore = create((set, get) => ({
             : state.currentPlayingIndex,
         playby: updatedQueue.length ? "queue" : null,
       };
-      if (updatedQueue.length && index === state.currentPlayingIndex)
-        state.setSong(updatedQueue[state.currentPlayingIndex]);
+      let qIndex = state.currentPlayingIndex;
+      if (updatedQueue.length && index === state.currentPlayingIndex) {
+        if (index === updatedQueue.length) {
+          qIndex -= 1;
+          data["currentPlayingIndex"] = qIndex;
+        }
+        state.setSong(updatedQueue[qIndex]);
+      }
       return data;
     });
   },
