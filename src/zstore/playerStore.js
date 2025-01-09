@@ -145,7 +145,7 @@ const playerStore = create((set, get) => ({
     });
   },
   clearQueue: () =>
-    set({ queue: [], currentPlayingIndex: null, playby: "queue" }),
+    set({ queue: [], currentPlayingIndex: null, playby: null }),
 
   getNextFromQueue: () => {
     set((state) => {
