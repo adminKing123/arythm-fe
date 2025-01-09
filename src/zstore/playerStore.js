@@ -2,6 +2,7 @@ import { create } from "zustand";
 import authConfigStore from "./authConfigStore";
 import {
   getSong as addToHistory,
+  getRandomSong,
   likeSong,
   removeFromlikedSong,
 } from "../api/songs/queryFunctions";
@@ -44,12 +45,25 @@ const playerStore = create((set, get) => ({
 
       localStorage.setItem("last_song_liked", response.liked ? "1" : "0");
     }
+
+    if (!shouldAddToHistory) {
+      localStorage.setItem("last_song", JSON.stringify(song));
+      set({ isLiked: song?.liked ? true : false });
+      localStorage.setItem("last_song_liked", song?.liked ? "1" : "0");
+    }
   },
 
   setNextSong: (playerRef) => {
-    const { playby, getNextFromQueue, playoption, repeatSong } = get();
+    const {
+      playby,
+      getNextFromQueue,
+      playoption,
+      repeatSong,
+      getRandomSongFromAPI,
+    } = get();
     if (playoption === "repeat") repeatSong(playerRef);
     else if (playby === "queue") getNextFromQueue();
+    else if (playby === null && playoption === "random") getRandomSongFromAPI();
   },
   setPrevSong: (playerRef) => {
     const { playby, getPrevFromQueue, playoption, repeatSong } = get();
@@ -63,6 +77,12 @@ const playerStore = create((set, get) => ({
       audioElement.currentTime = 0;
       audioElement.play();
     }
+  },
+  getRandomSongFromAPI: async () => {
+    const { setSong } = get();
+    set({ loadingSongFromURI: true });
+    const randomSong = await getRandomSong();
+    setSong(randomSong, false);
   },
 
   setLike: async (bool) => {
@@ -94,7 +114,9 @@ const playerStore = create((set, get) => ({
       const data = {
         queue: updatedQueue,
         currentPlayingIndex:
-          index < state.currentPlayingIndex
+          updatedQueue.length === 0
+            ? null
+            : index < state.currentPlayingIndex
             ? state.currentPlayingIndex - 1
             : state.currentPlayingIndex,
         playby: updatedQueue.length ? "queue" : null,

@@ -15,6 +15,7 @@ const API_ENDPOINTS = {
   LATEST_PLAYLISTS: "/content/latest-playlists",
   GLOBAL_SEARCH: "/content/global-search",
   FILTER: "/content/filter",
+  GET_RANDOM_SONG: "/content/songs/random/",
 };
 
 export default API_ENDPOINTS;

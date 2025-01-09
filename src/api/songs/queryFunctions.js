@@ -120,3 +120,12 @@ export const getFilteredSongs = async (data) => {
 
   return response.data;
 };
+
+export const getRandomSong = async () => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_RANDOM_SONG,
+  });
+
+  return response.data;
+};
