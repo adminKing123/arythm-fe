@@ -163,7 +163,7 @@ const playerStore = create((set, get) => ({
         if (qIndex >= 0 && qIndex < state.queue.length)
           songToBeUpdated = state.queue[qIndex];
       } else if (
-        state.playoption === "repeat" ||
+        state.playoption === "repeatplaylist" ||
         state.playoption === "random"
       ) {
         qIndex = qIndex < 0 ? state.queue.length - 1 : qIndex;
