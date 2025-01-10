@@ -79,7 +79,9 @@ const ShowCurrentPlayingSong = () => {
 
           {currentPlayingIndex === null ? (
             <div className="mt-2 text-center">
-              <Button>Play Queue</Button>
+              <Button onClick={() => setQueueSongWithIndex(0)}>
+                Play Queue
+              </Button>
             </div>
           ) : (
             <div></div>
@@ -121,7 +123,7 @@ const QueueList = () => {
       <QueueHeader />
       <div className="flex justify-between mt-8 gap-8 flex-wrap sm:flex-nowrap min-w-[260px]">
         <ShowCurrentPlayingSong />
-        <div className="grid gap-[15px] grid-cols-1 flex-grow">
+        <div className="grid gap-[15px] grid-cols-1 flex-grow h-fit">
           {queue.map((song, index) => (
             <SongCard3
               index={index}
