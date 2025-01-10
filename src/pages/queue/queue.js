@@ -1,4 +1,5 @@
-import { scrollTo } from "../../api/utils";
+import { useEffect, useRef, useState } from "react";
+import { get_src_uri, scrollTo } from "../../api/utils";
 import { BookmarkSvg } from "../../assets/svg";
 import Button from "../../components/buttons/buttons";
 import { ALink } from "../../components/links/links";
@@ -7,16 +8,92 @@ import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
 import playerStore from "../../zstore/playerStore";
 
-const ShowCurrentPlayingSong = () => {
-  const current_song = playerStore((state) => state.song);
+const CurrentSongImage = ({ song }) => {
+  const imgRef = useRef(null);
+  const imgContainerRef = useRef(null);
 
-  return <div></div>;
+  useEffect(() => {
+    const imgEle = imgRef.current;
+    const imgContainerEle = imgContainerRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgContainerEle.classList.remove("skeleton");
+    };
+
+    if (imgEle && imgContainerRef) {
+      imgEle.classList.add("opacity-0");
+      imgContainerEle.classList.add("skeleton");
+
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, imgContainerRef, song]);
+
+  return (
+    <div
+      ref={imgContainerRef}
+      className="w-full aspect-square rounded-xl skeleton"
+    >
+      <img
+        ref={imgRef}
+        className="w-full aspect-square rounded-xl opacity-0 transition-opacity duration-500"
+        src={get_src_uri(song.album.thumbnail1200x1200)}
+        alt="thumbnail"
+      />
+    </div>
+  );
+};
+
+const ShowCurrentPlayingSong = () => {
+  const currentPlayingIndex = playerStore((state) => state.currentPlayingIndex);
+  const [currentSong, setCurrentSong] = useState(null);
+  const setQueueSongWithIndex = playerStore(
+    (state) => state.setQueueSongWithIndex
+  );
+
+  useEffect(() => {
+    const queueSong =
+      currentPlayingIndex === null
+        ? null
+        : playerStore.getState().queue[currentPlayingIndex];
+
+    setCurrentSong(queueSong || playerStore.getState().queue[0]);
+  }, [currentPlayingIndex]);
+
+  return (
+    <div className="w-full md:max-w-full 2md:max-w-[380px]">
+      {currentSong ? (
+        <div className="sticky top-24 2lg:top-8">
+          <CurrentSongImage song={currentSong} />
+          <div>
+            <p className="truncate mt-2 text-lg text-white text-center">
+              {currentSong.original_name} -
+              <span>{currentSong.album.title}</span>
+            </p>
+          </div>
+
+          {currentPlayingIndex === null ? (
+            <div className="mt-2 text-center">
+              <Button>Play Queue</Button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
 };
 
 const QueueHeader = () => {
   const clearQueue = playerStore((state) => state.clearQueue);
   return (
-    <div className="flex justify-between items-center flex-wrap gap-4">
+    <div className="flex justify-between items-center flex-wrap gap-4 relative">
       <h2 className="text-white text-[30px]">Manage Your Song Queue</h2>
       <div className="flex justify-center items-center gap-5">
         <ALink
@@ -41,15 +118,19 @@ const QueueList = () => {
 
   return queue.length ? (
     <>
-      <div className="grid gap-[15px] mt-8 grid-cols-1 md:grid-cols-1">
-        {queue.map((song, index) => (
-          <SongCard3
-            index={index}
-            key={song.id}
-            song={song}
-            onClickRemove={() => removeSong(index)}
-          />
-        ))}
+      <QueueHeader />
+      <div className="flex justify-between mt-8 gap-8 flex-wrap sm:flex-nowrap min-w-[260px]">
+        <ShowCurrentPlayingSong />
+        <div className="grid gap-[15px] grid-cols-1 flex-grow">
+          {queue.map((song, index) => (
+            <SongCard3
+              index={index}
+              key={song.id}
+              song={song}
+              onClickRemove={() => removeSong(index)}
+            />
+          ))}
+        </div>
       </div>
     </>
   ) : (
@@ -63,15 +144,6 @@ const QueueList = () => {
         <Button>Add Songs</Button>
       </div>
     </div>
-  );
-};
-
-const QueueContainer = () => {
-  return (
-    <>
-      <QueueHeader />
-      <QueueList />
-    </>
   );
 };
 
@@ -89,7 +161,7 @@ const Queue = () => {
   return (
     <>
       <section className="p-[30px]">
-        <QueueContainer />
+        <QueueList />
       </section>
     </>
   );

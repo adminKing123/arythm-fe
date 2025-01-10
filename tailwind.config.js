@@ -14,6 +14,7 @@ module.exports = {
         m2lg: { max: "1200px" },
         xxs: { min: "360px" },
         "2lg": { min: "1200px" },
+        "2md": { min: "940px" },
       },
     },
   },
