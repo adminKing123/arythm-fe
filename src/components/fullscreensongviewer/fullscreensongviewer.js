@@ -232,7 +232,10 @@ const FullScreenSongViewer = ({ playerRef }) => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "f") setShow((prev) => !prev);
+      if (event.ctrlKey && event.key === "f") {
+        event.preventDefault();
+        setShow((prev) => !prev);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
