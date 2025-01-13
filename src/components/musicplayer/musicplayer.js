@@ -19,6 +19,7 @@ import AudioPlayer from "react-h5-audio-player";
 import playerStore from "../../zstore/playerStore";
 import styles from "./musicplayer.module.css";
 import authConfigStore from "../../zstore/authConfigStore";
+import FullScreenSongViewer from "../fullscreensongviewer/fullscreensongviewer";
 
 const PlayerControls = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -300,62 +301,66 @@ const MusicPlayer = () => {
   if (song === null) return;
 
   return (
-    <div
-      ref={musicPlayerContainerRef}
-      className="border border-[#222227] bg-[#16151a] p-5 w-screen z-20 fixed left-0 bottom-[-290px] h-[290px] sm:h-[260px] 2lg:sticky 2lg:w-[280px]"
-    >
-      <button
-        onClick={toggle}
-        className="hidden m2lg:flex fixed -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] bottom-0 items-center justify-center text-sm border border-[#222227]"
+    <>
+      <div
+        ref={musicPlayerContainerRef}
+        className="border border-[#222227] bg-[#16151a] p-5 w-screen z-20 fixed left-0 bottom-[-290px] h-[290px] sm:h-[260px] 2lg:sticky 2lg:w-[280px]"
       >
-        <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" /> Player
-      </button>
-      <div className="w-full flex justify-center">
-        <div
-          ref={imgContainerRef}
-          className="w-[90px] h-[90px] rounded-xl skeleton"
+        <button
+          onClick={toggle}
+          className="hidden m2lg:flex fixed -translate-x-1/2 left-1/2 rounded-t-xl bg-[#16151a] h-[40px] w-[90px] bottom-0 items-center justify-center text-sm border border-[#222227]"
         >
-          <img
-            ref={imgRef}
-            className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
-            src={get_src_uri(song.album.thumbnail1200x1200)}
-            alt="thumbnail"
-          />
+          <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" />{" "}
+          Player
+        </button>
+        <div className="w-full flex justify-center">
+          <div
+            ref={imgContainerRef}
+            className="w-[90px] h-[90px] rounded-xl skeleton"
+          >
+            <img
+              ref={imgRef}
+              className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
+              src={get_src_uri(song.album.thumbnail1200x1200)}
+              alt="thumbnail"
+            />
+          </div>
         </div>
-      </div>
-      <div className="w-full flex justify-center mt-[10px]">
-        <div className="max-w-64 truncate text-center">
-          <span className="text-white font-medium">{song.original_name}</span>
-          <span> - {song.album.title}</span>
+        <div className="w-full flex justify-center mt-[10px]">
+          <div className="max-w-64 truncate text-center">
+            <span className="text-white font-medium">{song.original_name}</span>
+            <span> - {song.album.title}</span>
+          </div>
         </div>
-      </div>
-      <PlayerControls playerRef={playerRef} />
+        <PlayerControls playerRef={playerRef} />
 
-      <div className="flex justify-center items-center mt-[10px]">
-        <AudioPlayer
-          volume={parseFloat(localStorage.getItem("volume")) || 1}
-          ref={playerRef}
-          autoPlay
-          crossOrigin="*"
-          src={get_src_uri(song.url)}
-          showJumpControls={false}
-          showSkipControls={false}
-          customVolumeControls={[]}
-          customAdditionalControls={[]}
-          customControlsSection={["SEEK_BAR"]}
-          onLoadStart={() => setLoadingSongFromURI(true)}
-          onWaiting={() => setLoadingSongFromURI(true)}
-          onCanPlay={() => setLoadingSongFromURI(false)}
-          onLoadedData={() => setLoadingSongFromURI(false)}
-          onEnded={() => setNextSong(playerRef)}
-        />
-        <Duration playerRef={playerRef} />
+        <div className="flex justify-center items-center mt-[10px]">
+          <AudioPlayer
+            volume={parseFloat(localStorage.getItem("volume")) || 1}
+            ref={playerRef}
+            autoPlay
+            crossOrigin="*"
+            src={get_src_uri(song.url)}
+            showJumpControls={false}
+            showSkipControls={false}
+            customVolumeControls={[]}
+            customAdditionalControls={[]}
+            customControlsSection={["SEEK_BAR"]}
+            onLoadStart={() => setLoadingSongFromURI(true)}
+            onWaiting={() => setLoadingSongFromURI(true)}
+            onCanPlay={() => setLoadingSongFromURI(false)}
+            onLoadedData={() => setLoadingSongFromURI(false)}
+            onEnded={() => setNextSong(playerRef)}
+          />
+          <Duration playerRef={playerRef} />
+        </div>
+        <div className="mt-[10px] flex justify-between items-center">
+          <VolumeControl playerRef={playerRef} />
+          <ExtraOptions playerRef={playerRef} />
+        </div>
       </div>
-      <div className="mt-[10px] flex justify-between items-center">
-        <VolumeControl playerRef={playerRef} />
-        <ExtraOptions playerRef={playerRef} />
-      </div>
-    </div>
+      <FullScreenSongViewer playerRef={playerRef} />
+    </>
   );
 };
 
