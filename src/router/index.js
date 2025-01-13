@@ -11,6 +11,7 @@ import YourLibrary from "../pages/yourlibrary/yourlibrary";
 import Search from "../pages/search/search";
 import Queue from "../pages/queue/queue";
 import Artists from "../pages/artists/artists";
+import Albums from "../pages/albums/albums";
 
 const Router = () => {
   return (
@@ -33,6 +34,7 @@ const Router = () => {
             <Route path={ROUTES.SEARCH} element={<Search />}></Route>
             <Route path={ROUTES.QUEUE} element={<Queue />}></Route>
             <Route path={ROUTES.ARTISTS} element={<Artists />}></Route>
+            <Route path={ROUTES.ALBUMS} element={<Albums />}></Route>
           </Route>
         </Route>
       </Routes>

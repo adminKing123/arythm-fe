@@ -10,6 +10,7 @@ const ROUTES = {
   GET_SEARCH_URI: (q, index) => `/search?q=${q}&index=${index}`,
   QUEUE: "/queue",
   ARTISTS: "/artists",
+  ALBUMS: "/albums",
 };
 
 export default ROUTES;
