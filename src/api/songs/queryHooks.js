@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import QUERY_KEYS from "../querykeys";
 import {
+  getAlbums,
   getArtists,
   getFilteredSongs,
   getGlobalSearch,
@@ -92,6 +93,21 @@ export const useFilteredArtists = (q, limit = 24, offset = 0, config = {}) =>
     queryKey: [QUERY_KEYS.FILTER_ARTISTS, q, limit, offset],
     queryFn: () =>
       getArtists({
+        q,
+        limit,
+        offset,
+      }),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    ...config,
+  });
+
+export const useFilteredAlbums = (q, limit = 24, offset = 0, config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.FILTER_ALBUMS, q, limit, offset],
+    queryFn: () =>
+      getAlbums({
         q,
         limit,
         offset,
