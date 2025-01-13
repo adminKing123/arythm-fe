@@ -73,7 +73,7 @@ const ShowCurrentPlayingSong = () => {
           <div>
             <p className="truncate mt-2 text-lg text-white text-center">
               {currentSong.original_name} -
-              <span>{currentSong.album.title}</span>
+              <span> {currentSong.album.title}</span>
             </p>
           </div>
 
