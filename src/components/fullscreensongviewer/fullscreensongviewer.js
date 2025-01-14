@@ -115,7 +115,7 @@ const PlayerControls = ({ playerRef }) => {
   }, [playerRef]);
 
   return (
-    <div className="cursor-pointer flex justify-center items-center w-full gap-[10px] opacity-20 hover:opacity-100 duration-300 transition-opacity">
+    <div className="cursor-pointer flex justify-center items-center w-full gap-[10px] opacity-5 hover:opacity-100 duration-300 transition-opacity">
       <PlayerPrevSvg
         onClick={() => setPrevSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
@@ -143,7 +143,7 @@ const Options = ({ playerRef, className }) => {
   return (
     <div className={`absolute bottom-4 ${className ?? ""}`}>
       <PlayerControls playerRef={playerRef} />
-      <div className="flex justify-center items-center gap-2 mt-2 opacity-20 hover:opacity-100 duration-300 transition-opacity">
+      <div className="flex justify-center items-center gap-2 mt-2 opacity-5 hover:opacity-100 duration-300 transition-opacity">
         <LikeSongButton />
         <PlayOptions />
       </div>
