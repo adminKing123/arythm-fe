@@ -115,7 +115,7 @@ const PlayerControls = ({ playerRef }) => {
   }, [playerRef]);
 
   return (
-    <div className="mt-[10px] flex justify-center items-center w-full gap-[10px] opacity-20 hover:opacity-100 duration-300 transition-opacity">
+    <div className="cursor-pointer flex justify-center items-center w-full gap-[10px] opacity-20 hover:opacity-100 duration-300 transition-opacity">
       <PlayerPrevSvg
         onClick={() => setPrevSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
@@ -139,9 +139,9 @@ const PlayerControls = ({ playerRef }) => {
   );
 };
 
-const Options = ({ playerRef }) => {
+const Options = ({ playerRef, className }) => {
   return (
-    <div className="absolute bottom-4">
+    <div className={`absolute bottom-4 ${className ?? ""}`}>
       <PlayerControls playerRef={playerRef} />
       <div className="flex justify-center items-center gap-2 mt-2 opacity-20 hover:opacity-100 duration-300 transition-opacity">
         <LikeSongButton />
@@ -180,7 +180,7 @@ const CurrentSongImage = ({ song }) => {
   return (
     <div
       ref={imgContainerRef}
-      className="w-full aspect-square rounded-xl skeleton"
+      className="w-full aspect-square rounded-xl skeleton shadow-md"
     >
       <img
         ref={imgRef}
@@ -189,6 +189,41 @@ const CurrentSongImage = ({ song }) => {
         alt="thumbnail"
       />
     </div>
+  );
+};
+
+const BgImage = () => {
+  const imgRef = useRef(null);
+  const song = playerStore((state) => state.song);
+
+  useEffect(() => {
+    const imgEle = imgRef.current;
+
+    const handleLoaded = () => {
+      imgEle.classList.remove("opacity-0");
+      imgEle.classList.add("opacity-75");
+    };
+
+    if (imgEle) {
+      imgEle.classList.remove("opacity-75");
+      imgEle.classList.add("opacity-0");
+
+      if (imgEle.complete) handleLoaded();
+      else imgEle.addEventListener("load", handleLoaded);
+
+      return () => {
+        imgEle.removeEventListener("load", handleLoaded);
+      };
+    }
+  }, [imgRef, song]);
+
+  return (
+    <img
+      ref={imgRef}
+      className="shadow-inner absolute top-0 left-0 object-cover object-center blur-xl w-screen h-screen rounded-xl opacity-0 transition-opacity duration-500"
+      src={get_src_uri(song.album.thumbnail1200x1200)}
+      alt="thumbnail"
+    />
   );
 };
 
@@ -212,11 +247,11 @@ const Duration = ({ playerRef }) => {
   return <p className="text-sm text-center mt-2">{remainingTime}</p>;
 };
 
-const CurrentSong = ({ playerRef }) => {
+const CurrentSong = ({ playerRef, className }) => {
   const song = playerStore((state) => state.song);
   if (song === null) return null;
   return (
-    <div className="mx-10 max-w-[420px] w-full">
+    <div className={`mx-10 max-w-[420px] w-full ${className ?? ""}`}>
       <CurrentSongImage song={song} />
       <p className="truncate mt-2 text-lg text-white text-center">
         {song.original_name} -<span> {song.album.title}</span>
@@ -248,7 +283,8 @@ const FullScreenSongViewer = ({ playerRef }) => {
   if (show)
     return ReactDOM.createPortal(
       <div className="bg-[#16151A] absolute top-0 left-0 w-screen h-screen z-50 flex justify-center items-center">
-        <CurrentSong playerRef={playerRef} />
+        <BgImage />
+        <CurrentSong playerRef={playerRef} className={"relative"} />
         <Options playerRef={playerRef} />
       </div>,
       document.body

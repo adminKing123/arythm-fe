@@ -52,7 +52,7 @@ const PlayerControls = ({ playerRef }) => {
   }, [playerRef]);
 
   return (
-    <div className="mt-[10px] flex justify-center items-center w-full gap-[10px]">
+    <div className="mt-[10px] flex justify-center items-center w-full gap-[10px] cursor-pointer">
       <PlayerPrevSvg
         onClick={() => setPrevSong(playerRef)}
         className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
