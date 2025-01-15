@@ -42,7 +42,7 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
   return ReactDOM.createPortal(
     <div
       ref={ref}
-      className="bg-[#151515] absolute z-20 w-[200px] rounded-md shadow-md overflow-hidden opacity-0 transition-opacity duration-200"
+      className="bg-[#151515] absolute z-[60] w-[200px] rounded-md shadow-md overflow-hidden opacity-0 transition-opacity duration-200"
     >
       {user ? (
         <>
