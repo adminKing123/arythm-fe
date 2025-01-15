@@ -150,7 +150,7 @@ const SearchInput = () => {
       className={`
       ${
         isSearching
-          ? "absolute top-0 left-0 z-20 w-screen flex justify-center bg-[#00000030] h-screen"
+          ? "absolute top-0 left-0 z-[60] w-screen flex justify-center bg-[#00000030] h-screen"
           : ""
       }`}
       onClick={handleClose}
