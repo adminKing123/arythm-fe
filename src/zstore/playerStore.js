@@ -72,7 +72,6 @@ const playerStore = create((set, get) => ({
   },
   repeatSong: (playerRef) => {
     const audioElement = playerRef.current?.audio?.current;
-    console.log("wow");
     if (audioElement) {
       audioElement.currentTime = 0;
       audioElement.play();
@@ -144,8 +143,7 @@ const playerStore = create((set, get) => ({
       };
     });
   },
-  clearQueue: () =>
-    set({ queue: [], currentPlayingIndex: null, playby: null }),
+  clearQueue: () => set({ queue: [], currentPlayingIndex: null, playby: null }),
 
   getNextFromQueue: () => {
     set((state) => {

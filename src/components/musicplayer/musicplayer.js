@@ -22,6 +22,8 @@ import authConfigStore from "../../zstore/authConfigStore";
 import FullScreenSongViewer from "../fullscreensongviewer/fullscreensongviewer";
 
 const PlayerControls = ({ playerRef }) => {
+  const playNextBtnRef = useRef(null);
+  const playPrevBtnRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const loadingSongFromURI = playerStore((state) => state.loadingSongFromURI);
   const setNextSong = playerStore((state) => state.setNextSong);
@@ -41,37 +43,52 @@ const PlayerControls = ({ playerRef }) => {
   useEffect(() => {
     const audioEle = playerRef.current?.audio?.current;
     if (audioEle) {
+      const handleKeyDown = (event) => {
+        if (event.ctrlKey && event.key === "ArrowLeft") {
+          event.preventDefault();
+          playPrevBtnRef?.current?.click();
+        } else if (event.ctrlKey && event.key === "ArrowRight") {
+          event.preventDefault();
+          playNextBtnRef?.current?.click();
+        } else if (event.ctrlKey && event.key === "p") {
+          event.preventDefault();
+          if (audioEle.paused) audioEle.play();
+          else audioEle.pause();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+
       const handlePlayPauseEvent = () => setIsPlaying(!audioEle.paused);
       audioEle.addEventListener("play", handlePlayPauseEvent);
       audioEle.addEventListener("pause", handlePlayPauseEvent);
       return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+
         audioEle.removeEventListener("play", handlePlayPauseEvent);
         audioEle.removeEventListener("pause", handlePlayPauseEvent);
       };
     }
-  }, [playerRef]);
+  }, [playerRef, playNextBtnRef, playPrevBtnRef]);
 
   return (
     <div className="mt-[10px] flex justify-center items-center w-full gap-[10px] cursor-pointer">
-      <PlayerPrevSvg
-        onClick={() => setPrevSong(playerRef)}
-        className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
-      />
+      <button ref={playPrevBtnRef} onClick={() => setPrevSong(playerRef)}>
+        <PlayerPrevSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+      </button>
       {loadingSongFromURI ? (
         <span className="w-6 h-6 loader border-[3px] rounded-full"></span>
       ) : (
-        <span onClick={handlePlayPause}>
+        <button onClick={handlePlayPause}>
           {isPlaying ? (
             <PauseSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
           ) : (
             <PlaySvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
           )}
-        </span>
+        </button>
       )}
-      <PlayerNextSvg
-        onClick={() => setNextSong(playerRef)}
-        className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
-      />
+      <button ref={playNextBtnRef} onClick={() => setNextSong(playerRef)}>
+        <PlayerNextSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+      </button>
     </div>
   );
 };
@@ -103,6 +120,7 @@ const Duration = ({ playerRef }) => {
 
 const VolumeControl = ({ playerRef }) => {
   const sliderRef = useRef(null);
+  const speakerRef = useRef(null);
   const prevVolume = useRef(null);
   const [volume, setVolume] = useState(1);
 
@@ -126,12 +144,22 @@ const VolumeControl = ({ playerRef }) => {
 
         localStorage.setItem("volume", audioElement.volume);
       };
+
+      const handleKeyDown = (event) => {
+        if (event.ctrlKey && event.key === "m") {
+          event.preventDefault();
+          speakerRef?.current?.click();
+        }
+      };
+
       sliderEl.addEventListener("input", handleInput);
+      window.addEventListener("keydown", handleKeyDown);
       return () => {
         sliderEl.removeEventListener("input", handleInput);
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }
-  }, [playerRef]);
+  }, [playerRef, speakerRef]);
 
   const toggle = (value) => {
     const audioElement = playerRef?.current?.audio?.current;
@@ -154,17 +182,13 @@ const VolumeControl = ({ playerRef }) => {
 
   return (
     <div className="flex items-center">
-      {volume ? (
-        <VolumeFullSvg
-          onClick={() => toggle(0)}
-          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
-        />
-      ) : (
-        <VolumeMuteSvg
-          onClick={() => toggle(1)}
-          className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300"
-        />
-      )}
+      <button ref={speakerRef} onClick={() => toggle(volume ? 0 : 1)}>
+        {volume ? (
+          <VolumeFullSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+        ) : (
+          <VolumeMuteSvg className="w-6 h-6 fill-white hover:fill-[#25a56a] transition-colors duration-300" />
+        )}
+      </button>
       <input
         ref={sliderRef}
         type="range"
@@ -208,38 +232,49 @@ const LikeSongButton = () => {
 const PlayOptions = () => {
   const playoption = playerStore((state) => state.playoption);
   const setPlayoption = playerStore((state) => state.setPlayoption);
+  const buttonRef = useRef(null);
 
   const Options = {
-    playlistonce: (
-      <PlaylistonceSvg
-        className="w-5 h-5 stroke-white"
-        onClick={() => setPlayoption("repeatplaylist")}
-      />
-    ),
-    repeatplaylist: (
-      <RepeatSvg
-        className="w-4 h-4 fill-[#25a56a]"
-        onClick={() => setPlayoption("repeat")}
-      />
-    ),
-    repeat: (
-      <RepeatoneSvg
-        className="w-4 h-4 fill-[#25a56a]"
-        onClick={() => setPlayoption("random")}
-      />
-    ),
-    random: (
-      <RandomSvg
-        className="w-4 h-4 fill-[#25a56a]"
-        onClick={() => setPlayoption("playlistonce")}
-      />
-    ),
+    playlistonce: <PlaylistonceSvg className="w-5 h-5 stroke-white" />,
+    repeatplaylist: <RepeatSvg className="w-4 h-4 fill-[#25a56a]" />,
+    repeat: <RepeatoneSvg className="w-4 h-4 fill-[#25a56a]" />,
+    random: <RandomSvg className="w-4 h-4 fill-[#25a56a]" />,
   };
 
+  const OptionsMap = {
+    playlistonce: "repeatplaylist",
+    repeatplaylist: "repeat",
+    repeat: "random",
+    random: "playlistonce",
+  };
+
+  const handleOnClick = () => {
+    setPlayoption(OptionsMap[playoption]);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === "o") {
+        event.preventDefault();
+        buttonRef?.current?.click();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [buttonRef]);
+
   return (
-    <div className="w-6 h-6 flex justify-center items-center cursor-pointer">
+    <button
+      ref={buttonRef}
+      onClick={handleOnClick}
+      className="w-6 h-6 flex justify-center items-center cursor-pointer"
+    >
       {Options[playoption]}
-    </div>
+    </button>
   );
 };
 
