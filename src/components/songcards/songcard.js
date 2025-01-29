@@ -110,6 +110,7 @@ export const SongCard2 = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
   const addToQueue = playerStore((state) => state.addSong);
   const user = authConfigStore((state) => state.user);
+  const setContextMenuData = contextMenuStore((state) => state.setData);
 
   const [addedToQueue, setAddedToQueue] = useState(false);
 
@@ -125,6 +126,13 @@ export const SongCard2 = ({ song, setCallback }) => {
     if (addedToQueue) return;
     addToQueue(song);
     setAddedToQueue(true);
+  };
+
+  const handleAddToPlaylist = () => {
+    setContextMenuData({
+      type: "addtoplaylist",
+      song: song,
+    });
   };
 
   useEffect(() => {
@@ -178,7 +186,10 @@ export const SongCard2 = ({ song, setCallback }) => {
       <div className="flex items-center gap-[15px]">
         {user ? (
           <>
-            <button className="w-8 h-8 bg-[#25a56a26] flex justify-center items-center rounded-lg">
+            <button
+              onClick={handleAddToPlaylist}
+              className="w-8 h-8 bg-[#25a56a26] flex justify-center items-center rounded-lg"
+            >
               <AddSvg className="w-[18px] h-[18px] fill-[#25a56a]" />
             </button>
             <button

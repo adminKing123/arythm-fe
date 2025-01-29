@@ -1,4 +1,5 @@
 import contextMenuStore from "../../zstore/contextMenuStore";
+import AddToPlaylistMenu from "./AddToPlaylistMenu";
 import AlbumContextMenu from "./AlbumContextMenu";
 import ArtistContextMenu from "./ArtistContextMenu";
 import SongContextMenu from "./SongContextMenu";
@@ -34,6 +35,8 @@ const ContextMenu = () => {
         handleClose={handleClose}
       />
     );
+  else if (contextMenuData.type === "addtoplaylist")
+    return <AddToPlaylistMenu contextMenuData={contextMenuData} />;
   else return null;
 };
 
