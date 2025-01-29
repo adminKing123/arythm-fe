@@ -64,10 +64,7 @@ export const LibraryPlaylists = () => {
     <>
       <div className="flex justify-between items-center flex-wrap">
         <h2 className="text-white text-[30px]">Playlists</h2>
-        <div className="flex items-center gap-2">
-          <Button varient="secondary">Add Playlist</Button>
-          <NextLink className="text-[16px] text-nowrap">See All</NextLink>
-        </div>
+        <NextLink className="text-[16px] text-nowrap">See All</NextLink>
       </div>
 
       {isLoading || isError ? (
@@ -104,7 +101,10 @@ export const GlobalSearchContainer = ({ q, handleClose }) => {
 
   return (
     <div className="bg-[#16151A] border border-[#222227] rounded-xl top-2 absolute min-w-[280px] w-full max-w-[740px] pt-[70px] px-6 pb-6">
-      <div id="global-search-container" className="max-h-[80vh] overflow-y-auto pr-8 custom2-scroller">
+      <div
+        id="global-search-container"
+        className="max-h-[80vh] overflow-y-auto pr-8 custom2-scroller"
+      >
         <ShowHistoryGR
           q={q}
           handleClose={handleClose}
