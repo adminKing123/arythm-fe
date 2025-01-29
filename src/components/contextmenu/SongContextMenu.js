@@ -8,6 +8,7 @@ import {
 } from "../../api/utils";
 import ContextMenuButton from "./components";
 import authConfigStore from "../../zstore/authConfigStore";
+import contextMenuStore from "../../zstore/contextMenuStore";
 
 const AddToQueueOption = ({ song }) => {
   const addToQueue = playerStore((state) => state.addSong);
@@ -30,6 +31,7 @@ const AddToQueueOption = ({ song }) => {
 const SongContextMenu = ({ contextMenuData, handleClose }) => {
   const ref = useRef(null);
   const user = authConfigStore((state) => state.user);
+  const setContextMenuData = contextMenuStore((state) => state.setData);
 
   useContextMenuCloseHandler(ref, handleClose);
   useContextPosition(ref, contextMenuData, (ele, x, y) => {
@@ -47,7 +49,16 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
       {user ? (
         <>
           <AddToQueueOption song={contextMenuData.song} />
-          <ContextMenuButton Icon={AddToQueueSvg} title={"Add To Playlist"} />
+          <ContextMenuButton
+            Icon={AddToQueueSvg}
+            title={"Add To Playlist"}
+            onClick={() =>
+              setContextMenuData({
+                type: "addtoplaylist",
+                song: contextMenuData.song,
+              })
+            }
+          />
         </>
       ) : null}
       <ContextMenuButton Icon={DetailsSvg} title={"Details"} />

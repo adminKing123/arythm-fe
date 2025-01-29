@@ -96,7 +96,7 @@ export const scrollTo = (id, props) => {
   }
 };
 
-export const useContextMenuCloseHandler = (ref, handleClose) => {
+export const useContextMenuCloseHandler = (ref, handleClose) =>
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -108,18 +108,17 @@ export const useContextMenuCloseHandler = (ref, handleClose) => {
       "global-search-container"
     );
     document.addEventListener("mousedown", handleOutsideClick);
-    window.addEventListener("resize", () => handleClose());
-    mainContent.addEventListener("scroll", () => handleClose());
-    globalSearchContainer?.addEventListener("scroll", () => handleClose());
+    window.addEventListener("resize", handleClose);
+    mainContent.addEventListener("scroll", handleClose);
+    globalSearchContainer?.addEventListener("scroll", handleClose);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
-      window.removeEventListener("resize", () => handleClose());
-      mainContent.removeEventListener("scroll", () => handleClose());
-      globalSearchContainer?.removeEventListener("scroll", () => handleClose());
+      window.removeEventListener("resize", handleClose);
+      mainContent.removeEventListener("scroll", handleClose);
+      globalSearchContainer?.removeEventListener("scroll", handleClose);
     };
   }, [handleClose, ref]);
-};
 
 export const useOutsideClick = (ref, handleClose) => {
   useEffect(() => {
