@@ -9,7 +9,7 @@ import "./css/musicplayer.css";
 
 import disableDevtool from "disable-devtool";
 
-if (process.env.REACT_APP_HIDE_INSPECTOR) {
+if (process.env.REACT_APP_HIDE_INSPECTOR === "true") {
   disableDevtool({
     ondevtoolopen: () => {
       window.location =

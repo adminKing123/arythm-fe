@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import Button from "../../components/buttons/buttons";
 import { NextSvg, PrevSvg } from "../../assets/svg";
 import { useGetSlides } from "../../api/songs/queryHooks";
+import { Autoplay } from "swiper/modules";
 
 const OwlCarouselCard = ({ slide }) => {
   return (
@@ -84,11 +85,16 @@ const HeroCarousel = () => {
   return (
     <div className="relative">
       <Swiper
+        modules={[Autoplay]}
         spaceBetween={30}
         slidesPerView={1}
         loop={true}
         onSwiper={(swiperInstance) => {
           swiperRef.current = swiperInstance;
+        }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
         }}
         className="h-fit sm:h-[360px] md:h-[460px] w-full rounded-xl"
       >
