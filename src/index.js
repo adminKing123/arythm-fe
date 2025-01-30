@@ -7,6 +7,18 @@ import ApiProvider from "./api/provider";
 import "./css/skeleton.css";
 import "./css/musicplayer.css";
 
+import disableDevtool from "disable-devtool";
+
+if (process.env.REACT_APP_HIDE_INSPECTOR === "true") {
+  disableDevtool({
+    ondevtoolopen: () => {
+      window.location =
+        process.env.REACT_APP_HIDE_INSPECTOR_REDIRECT_URL || "about:blank";
+    },
+    disableMenu: false,
+  });
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
