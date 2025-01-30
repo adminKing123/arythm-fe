@@ -93,7 +93,7 @@ const HeroCarousel = () => {
           swiperRef.current = swiperInstance;
         }}
         autoplay={{
-          delay: 5000,
+          delay: 10000,
           disableOnInteraction: false,
         }}
         className="h-fit sm:h-[360px] md:h-[460px] w-full rounded-xl"
