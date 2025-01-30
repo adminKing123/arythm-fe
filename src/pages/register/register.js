@@ -65,7 +65,7 @@ const Form = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="mt-8">
+    <form onSubmit={formik.handleSubmit} className="mt-8" autoComplete="off">
       <div className="flex justify-between gap-4 mxs:flex-wrap mxs:flex-col">
         <div>
           <Input
@@ -96,8 +96,8 @@ const Form = () => {
       <Input
         className="mt-4"
         placeholder="Username"
-        {...formik.getFieldProps("username")}
         autoComplete="off"
+        {...formik.getFieldProps("username")}
       />
       {formik.touched.username && formik.errors.username && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.username}</p>
@@ -105,8 +105,8 @@ const Form = () => {
       <Input
         className="mt-4"
         placeholder="Email"
-        {...formik.getFieldProps("email")}
         autoComplete="off"
+        {...formik.getFieldProps("email")}
       />
       {formik.touched.email && formik.errors.email && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
@@ -115,8 +115,8 @@ const Form = () => {
         className="mt-4"
         placeholder="Password"
         type="password"
+        autoComplete="new-password"
         {...formik.getFieldProps("password")}
-        autoComplete="off"
       />
       {formik.touched.password && formik.errors.password && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.password}</p>
