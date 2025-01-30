@@ -9,13 +9,12 @@ import "./css/musicplayer.css";
 
 import disableDevtool from "disable-devtool";
 
-if (process.env.REACT_APP_HIDE_INSPECTOR === "true") {
+if (process.env.REACT_APP_HIDE_INSPECTOR) {
   disableDevtool({
     ondevtoolopen: () => {
       window.location =
         process.env.REACT_APP_HIDE_INSPECTOR_REDIRECT_URL || "about:blank";
     },
-    disableMenu: false,
   });
 }
 
