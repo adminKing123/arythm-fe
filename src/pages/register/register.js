@@ -72,6 +72,7 @@ const Form = () => {
             placeholder="First Name"
             {...formik.getFieldProps("first_name")}
             autoFocus
+            autoComplete="off"
           />
           {formik.touched.first_name && formik.errors.first_name && (
             <p className="text-red-500 text-xs mt-1">
@@ -83,6 +84,7 @@ const Form = () => {
           <Input
             placeholder="Last Name"
             {...formik.getFieldProps("last_name")}
+            autoComplete="off"
           />
           {formik.touched.last_name && formik.errors.last_name && (
             <p className="text-red-500 text-xs mt-1">
@@ -95,6 +97,7 @@ const Form = () => {
         className="mt-4"
         placeholder="Username"
         {...formik.getFieldProps("username")}
+        autoComplete="off"
       />
       {formik.touched.username && formik.errors.username && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.username}</p>
@@ -103,6 +106,7 @@ const Form = () => {
         className="mt-4"
         placeholder="Email"
         {...formik.getFieldProps("email")}
+        autoComplete="off"
       />
       {formik.touched.email && formik.errors.email && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
@@ -112,6 +116,7 @@ const Form = () => {
         placeholder="Password"
         type="password"
         {...formik.getFieldProps("password")}
+        autoComplete="off"
       />
       {formik.touched.password && formik.errors.password && (
         <p className="text-red-500 text-xs mt-1">{formik.errors.password}</p>
@@ -142,7 +147,7 @@ const Form = () => {
 
 const Register = () => {
   document.title = "Create Your Account";
-  
+
   return (
     <CheckToken>
       <div className="w-screen h-screen bg-[#16151A] flex justify-center items-center">
