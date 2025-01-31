@@ -7,6 +7,7 @@ import { SongCard3 } from "../../components/songcards/songcard";
 import ROUTES from "../../router/routes";
 import authConfigStore from "../../zstore/authConfigStore";
 import playerStore from "../../zstore/playerStore";
+import contextMenuStore from "../../zstore/contextMenuStore";
 
 const CurrentSongImage = ({ song }) => {
   const imgRef = useRef(null);
@@ -92,7 +93,7 @@ const ShowCurrentPlayingSong = () => {
   );
 };
 
-const QueueHeader = () => {
+const QueueHeader = ({ onClickSave }) => {
   const clearQueue = playerStore((state) => state.clearQueue);
   return (
     <div className="flex justify-between items-center flex-wrap gap-4 relative">
@@ -102,6 +103,7 @@ const QueueHeader = () => {
           className={
             "flex items-center gap-2 bg-[#222227] px-4 py-2 rounded-lg group"
           }
+          onClick={onClickSave}
         >
           <BookmarkSvg className="w-4 h-4 fill-white group-hover:fill-[#25a564] transition-colors duration-300" />
           Save
@@ -118,9 +120,18 @@ const QueueList = () => {
   const queue = playerStore((state) => state.queue);
   const removeSong = playerStore((state) => state.removeSong);
 
+  const setContextMenuData = contextMenuStore((state) => state.setData);
+
+  const handleSaveQueue = () => {
+    setContextMenuData({
+      type: "addtoplaylist",
+      songs_id: queue.map((song) => song.id),
+    });
+  };
+
   return queue.length ? (
     <>
-      <QueueHeader />
+      <QueueHeader onClickSave={handleSaveQueue} />
       <div className="flex justify-between mt-8 gap-8 flex-wrap sm:flex-nowrap min-w-[260px]">
         <ShowCurrentPlayingSong />
         <div className="grid gap-[15px] grid-cols-1 flex-grow h-fit">
