@@ -15,7 +15,7 @@ const PlatlistListWithAddButton = ({ contextMenuData }) => {
   const limit = 5;
   const [offset, setOffset] = useState(0);
   const { data, isLoading, isFetching, isError } = usePlaylists(
-    contextMenuData.song.id,
+    contextMenuData?.song?.id || "",
     limit,
     offset
   );
@@ -33,9 +33,13 @@ const PlatlistListWithAddButton = ({ contextMenuData }) => {
   });
 
   const handleAddSongToPlaylist = (playlist) => {
+    let songs_id = [];
+
+    if (contextMenuData?.songs_id?.length) songs_id = contextMenuData.songs_id;
+    else songs_id = [contextMenuData.song.id];
     mutate({
       id: playlist.id,
-      songs_id: [contextMenuData.song.id],
+      songs_id,
     });
   };
   const handlePageChange = (url) => {
@@ -45,7 +49,7 @@ const PlatlistListWithAddButton = ({ contextMenuData }) => {
 
   if (isError || isErrorInAdding) return <div>Something went wrong</div>;
 
-  if (isLoading)
+  if (isLoading || isFetching)
     return (
       <div>
         {Array.from({ length: limit }, (_, i) => (
@@ -135,9 +139,13 @@ const CreatePlaylistnAddSong = ({ contextMenuData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let songs_id = [];
+
+    if (contextMenuData?.songs_id?.length) songs_id = contextMenuData.songs_id;
+    else songs_id = [contextMenuData.song.id];
     mutate({
       name: playlistName,
-      songs_id: [contextMenuData.song.id],
+      songs_id,
       privacy_type: "Public",
     });
   };
