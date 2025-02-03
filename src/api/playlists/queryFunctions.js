@@ -47,3 +47,13 @@ export const getPlaylistSongs = async (data) => {
 
   return response.data;
 };
+
+export const getRandomPlaylistSong = async (data) => {
+  console.log(data)
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_RANDOM_PLAYLIST_SONG(data.id),
+  });
+
+  return response.data;
+};

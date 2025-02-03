@@ -7,6 +7,7 @@ import {
   removeFromlikedSong,
 } from "../api/songs/queryFunctions";
 import { getRandomIndex, setSongMetaData } from "../api/utils";
+import { getRandomPlaylistSong } from "../api/playlists/queryFunctions";
 
 const already_selected_song = JSON.parse(localStorage.getItem("last_song"));
 if (already_selected_song) setSongMetaData(already_selected_song);
@@ -60,15 +61,24 @@ const playerStore = create((set, get) => ({
       playoption,
       repeatSong,
       getRandomSongFromAPI,
+      getNextFromPlaylist,
     } = get();
     if (playoption === "repeat") repeatSong(playerRef);
     else if (playby === "queue") getNextFromQueue();
+    else if (playby === "playlist") getNextFromPlaylist();
     else if (playby === null && playoption === "random") getRandomSongFromAPI();
   },
   setPrevSong: (playerRef) => {
-    const { playby, getPrevFromQueue, playoption, repeatSong } = get();
+    const {
+      playby,
+      getPrevFromQueue,
+      playoption,
+      repeatSong,
+      getPrevFromPlaylist,
+    } = get();
     if (playoption === "repeat") repeatSong(playerRef);
     else if (playby === "queue") getPrevFromQueue();
+    else if (playby === "playlist") getPrevFromPlaylist();
   },
   repeatSong: (playerRef) => {
     const audioElement = playerRef.current?.audio?.current;
@@ -95,6 +105,41 @@ const playerStore = create((set, get) => ({
       localStorage.setItem("last_song_liked", bool ? "1" : "0");
       set({ addingInLiked: false });
     }
+  },
+
+  // player playlist logics
+  currentPlaylist: null,
+  setSongFromPlaylist: (playlist_song_id, song, playlist) =>
+    set((state) => {
+      state.setSong(song);
+      return {
+        currentPlaylist: {
+          playlist,
+          playlist_song_id,
+        },
+        playby: "playlist",
+      };
+    }),
+  getRandomSongFromPlaylist: async () => {
+    const { setSong, currentPlaylist } = get();
+    set({ loadingSongFromURI: true });
+    const randomPlaylistSong = await getRandomPlaylistSong({
+      id: currentPlaylist.playlist.id,
+    });
+    setSong(randomPlaylistSong.song, false);
+    set({
+      currentPlaylist: {
+        playlist: currentPlaylist.playlist,
+        playlist_song_id: randomPlaylistSong.id,
+      },
+    });
+  },
+  getNextFromPlaylist: async () => {
+    const { playoption, getRandomSongFromPlaylist } = get();
+    if (playoption === "random") getRandomSongFromPlaylist();
+  },
+  getPrevFromPlaylist: async () => {
+    // const { playoption } = get();
   },
 
   // player queue logic
