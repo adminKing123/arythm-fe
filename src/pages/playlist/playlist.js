@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { usePlaylistSongsInfinite } from "../../api/playlists/queryHooks";
 import { useParams } from "react-router-dom";
 import { get_src_uri } from "../../api/utils";
-import SongCard from "../../components/songcards/songcard";
+import { SongCard4 } from "../../components/songcards/songcard";
+import { PlaySvg, RandomSvg } from "../../assets/svg";
+import playerStore from "../../zstore/playerStore";
 
 const PlaylistHeader = ({ playlist }) => {
   return (
@@ -24,18 +26,39 @@ const PlaylistHeader = ({ playlist }) => {
           <span className="text-white">@{playlist.author.username}</span> •{" "}
           {playlist.songs_count} songs
         </p>
+        <div className="mt-3 relative flex items-center gap-3">
+          <button className="bg-[#3be477] w-11 h-11 flex items-center justify-center rounded-full">
+            <PlaySvg className="fill-white ml-0.5 w-5 h-5" />
+            {/* <PauseSvg className="fill-white ml-0.5 w-6 h-6" /> */}
+          </button>
+          <button className="bg-transparent border h-11 px-3 flex items-center justify-center rounded-full">
+            <span className="text-white mr-2">Shuffle</span>
+            <RandomSvg className="fill-white w-3 h-3" />
+          </button>
+        </div>
       </div>
     </section>
   );
 };
 
-const SongsList = ({ data }) => {
+const SongsList = ({ data, playlist }) => {
+  const setSongFromPlaylist = playerStore((state) => state.setSongFromPlaylist);
   return (
     <div className="grid gap-[30px] mt-8 lg:grid-cols-8 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 px-5">
       {data.map((page, index) => (
         <React.Fragment key={index}>
           {page.results.map((playlist_song) => (
-            <SongCard key={playlist_song.id} song={playlist_song.song} />
+            <SongCard4
+              key={playlist_song.id}
+              song={playlist_song.song}
+              onClick={() =>
+                setSongFromPlaylist(
+                  playlist_song.id,
+                  playlist_song.song,
+                  playlist
+                )
+              }
+            />
           ))}
         </React.Fragment>
       ))}
@@ -84,7 +107,7 @@ const Playlist = () => {
     <>
       <PlaylistHeader playlist={data.pages[0].playlist} />
       <section>
-        <SongsList data={data.pages} />
+        <SongsList data={data.pages} playlist={data.pages[0].playlist} />
       </section>
     </>
   );
