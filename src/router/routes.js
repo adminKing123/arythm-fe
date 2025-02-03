@@ -11,6 +11,8 @@ const ROUTES = {
   QUEUE: "/queue",
   ARTISTS: "/artists",
   ALBUMS: "/albums",
+  PLAYLIST: "/playlist/:id",
+  GET_PLAYLIST_URI: (id) => `/playlist/${id}`,
 };
 
 export default ROUTES;

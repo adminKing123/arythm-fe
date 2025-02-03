@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
 import { get_src_uri, numeral } from "../../api/utils";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
-const PlaylistCardLibrary = ({ playlist }) => {
+const PlaylistCardLibrary = ({ playlist, onClick }) => {
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const imgEle = imgRef.current;
@@ -28,6 +31,10 @@ const PlaylistCardLibrary = ({ playlist }) => {
     <div
       key={playlist.id}
       className="relative rounded-xl overflow-hidden cursor-pointer group shadow-lg hover:shadow-xl transition-shadow"
+      onClick={(e) => {
+        onClick?.();
+        navigate(ROUTES.GET_PLAYLIST_URI(playlist.id));
+      }}
     >
       <div ref={imgContainerRef} className="skeleton w-full aspect-square">
         <img
