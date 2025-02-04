@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { usePlaylistSongsInfinite } from "../../api/playlists/queryHooks";
 import { useParams } from "react-router-dom";
-import { get_src_uri } from "../../api/utils";
+import { get_src_uri, scrollTo } from "../../api/utils";
 import {
   SongCard4,
   SongCardLoading,
@@ -74,8 +74,7 @@ const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
   );
 };
 
-const Playlist = () => {
-  document.title = "Playlist";
+const Listing = () => {
   const id = parseInt(useParams().id);
   const {
     isError,
@@ -127,6 +126,7 @@ const Playlist = () => {
       </>
     );
 
+  document.title = data.pages[0].playlist.name;
   return (
     <>
       <PlaylistHeader playlist={data.pages[0].playlist} />
@@ -140,6 +140,12 @@ const Playlist = () => {
       </section>
     </>
   );
+};
+
+const Playlist = () => {
+  document.title = "Playlist";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
+  return <Listing />;
 };
 
 export default Playlist;
