@@ -74,9 +74,7 @@ const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
   );
 };
 
-const Playlist = () => {
-  document.title = "Playlist";
-  scrollTo("main-content", { top: 0, behavior: "instant" });
+const Listing = () => {
   const id = parseInt(useParams().id);
   const {
     isError,
@@ -142,6 +140,12 @@ const Playlist = () => {
       </section>
     </>
   );
+};
+
+const Playlist = () => {
+  document.title = "Playlist";
+  scrollTo("main-content", { top: 0, behavior: "instant" });
+  return <Listing />;
 };
 
 export default Playlist;
