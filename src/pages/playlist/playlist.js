@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { usePlaylistSongsInfinite } from "../../api/playlists/queryHooks";
 import { useParams } from "react-router-dom";
 import { get_src_uri } from "../../api/utils";
-import { SongCard4 } from "../../components/songcards/songcard";
+import {
+  SongCard4,
+  SongCardLoading,
+} from "../../components/songcards/songcard";
 import { PlaySvg, RandomSvg } from "../../assets/svg";
 import playerStore from "../../zstore/playerStore";
 
@@ -14,7 +17,7 @@ const PlaylistHeader = ({ playlist }) => {
         src={get_src_uri(playlist.thumbnail)}
         className="object-cover w-full h-full absolute top-0 left-0 blur-3xl"
       />
-      <div className="w-64 rounded overflow-hidden relative">
+      <div className="w-64 aspect-square rounded overflow-hidden relative">
         <img alt="thumbnail" src={get_src_uri(playlist.thumbnail)} />
       </div>
       <div className="relative mb-2">
@@ -41,10 +44,10 @@ const PlaylistHeader = ({ playlist }) => {
   );
 };
 
-const SongsList = ({ data, playlist }) => {
+const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
   const setSongFromPlaylist = playerStore((state) => state.setSongFromPlaylist);
   return (
-    <div className="grid gap-[30px] mt-8 lg:grid-cols-8 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 px-5">
+    <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 px-5">
       {data.map((page, index) => (
         <React.Fragment key={index}>
           {page.results.map((playlist_song) => (
@@ -62,6 +65,11 @@ const SongsList = ({ data, playlist }) => {
           ))}
         </React.Fragment>
       ))}
+      {isFetchingNextPage && hasNextPage
+        ? Array.from({ length: 6 }).map((_, index) => (
+            <SongCardLoading key={index} />
+          ))
+        : null}
     </div>
   );
 };
@@ -83,10 +91,13 @@ const Playlist = () => {
   useEffect(() => {
     const handleScroll = (e) => {
       const bottom =
-        e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
+        e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - 10;
       if (bottom && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
+      console.log(
+        e.target.scrollTop + e.target.clientHeight > e.target.scrollHeight - 10
+      );
     };
 
     const mainContent = document.getElementById("main-content");
@@ -102,12 +113,30 @@ const Playlist = () => {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isError) return <div>Playlist not found</div>;
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <>
+        <div className="h-[290px] w-full skeleton mb-5"></div>
+        <section>
+          <div className="grid gap-[30px] mt-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 px-5">
+            {Array.from({ length: 24 }).map((_, index) => (
+              <SongCardLoading key={index} />
+            ))}
+          </div>
+        </section>
+      </>
+    );
+
   return (
     <>
       <PlaylistHeader playlist={data.pages[0].playlist} />
       <section>
-        <SongsList data={data.pages} playlist={data.pages[0].playlist} />
+        <SongsList
+          data={data.pages}
+          playlist={data.pages[0].playlist}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+        />
       </section>
     </>
   );
