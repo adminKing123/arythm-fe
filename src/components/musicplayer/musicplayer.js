@@ -352,6 +352,7 @@ const MusicPlayer = () => {
           <div
             ref={imgContainerRef}
             className="w-[90px] h-[90px] rounded-xl skeleton"
+            onContextMenu={(e) => e.preventDefault()}
           >
             <img
               ref={imgRef}
