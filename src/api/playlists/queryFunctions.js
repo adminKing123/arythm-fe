@@ -49,10 +49,22 @@ export const getPlaylistSongs = async (data) => {
 };
 
 export const getRandomPlaylistSong = async (data) => {
-  console.log(data)
   const response = await api({
     method: "GET",
     url: API_ENDPOINTS.GET_RANDOM_PLAYLIST_SONG(data.id),
+  });
+
+  return response.data;
+};
+
+export const getPlaylistSongsSeek = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_RANDOM_PLAYLIST_SONG_SEEK(data.id),
+    params: {
+      loop: data?.loop ?? "",
+      playlistsong_id: data?.playlistsong_id ?? "",
+    },
   });
 
   return response.data;
