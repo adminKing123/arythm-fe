@@ -7,7 +7,10 @@ import {
   removeFromlikedSong,
 } from "../api/songs/queryFunctions";
 import { getRandomIndex, setSongMetaData } from "../api/utils";
-import { getRandomPlaylistSong } from "../api/playlists/queryFunctions";
+import {
+  getPlaylistSongsSeek,
+  getRandomPlaylistSong,
+} from "../api/playlists/queryFunctions";
 
 const already_selected_song = JSON.parse(localStorage.getItem("last_song"));
 if (already_selected_song) setSongMetaData(already_selected_song);
@@ -134,12 +137,36 @@ const playerStore = create((set, get) => ({
       },
     });
   },
+  seekFromPlaylist: async (loop, getwhat) => {
+    const { setSong, currentPlaylist } = get();
+    set({ loadingSongFromURI: true });
+    const playlistSongs = await getPlaylistSongsSeek({
+      id: currentPlaylist.playlist.id,
+      loop: loop ? "true" : "",
+      playlistsong_id: currentPlaylist.playlist_song_id,
+    });
+    const playlistsong = playlistSongs?.[getwhat];
+    if (playlistsong) {
+      setSong(playlistsong.song);
+      set({
+        currentPlaylist: {
+          playlist: currentPlaylist.playlist,
+          playlist_song_id: playlistsong.id,
+        },
+      });
+    } else set({ loadingSongFromURI: false });
+  },
   getNextFromPlaylist: async () => {
-    const { playoption, getRandomSongFromPlaylist } = get();
+    const { playoption, getRandomSongFromPlaylist, seekFromPlaylist } = get();
+    if (playoption === "playlistonce") seekFromPlaylist(false, "next_song");
+    if (playoption === "repeatplaylist") seekFromPlaylist(true, "next_song");
     if (playoption === "random") getRandomSongFromPlaylist();
   },
   getPrevFromPlaylist: async () => {
-    // const { playoption } = get();
+    const { playoption, getRandomSongFromPlaylist, seekFromPlaylist } = get();
+    if (playoption === "repeatplaylist") seekFromPlaylist(true, "previous_song");
+    if (playoption === "playlistonce") seekFromPlaylist(false, "previous_song");
+    if (playoption === "random") getRandomSongFromPlaylist();
   },
 
   // player queue logic
