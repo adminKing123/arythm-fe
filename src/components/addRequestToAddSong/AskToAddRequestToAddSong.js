@@ -11,7 +11,7 @@ function AskToAddRequestToAddSong() {
         <h3 className="text-center text-xl mb-5">Couldn't Find Song</h3>
         <Button className="mb-2">Request Song</Button>
         <p>Your request will be processed and</p>
-        <p>our bots will the song for you!</p>
+        <p>our bots will add the song for you!</p>
       </div>
     );
   return <div className="text-center">No Result Found</div>;
