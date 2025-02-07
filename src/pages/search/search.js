@@ -10,6 +10,7 @@ import {
   SongCard2Loading,
 } from "../../components/songcards/songcard";
 import { getParamFromUrl, scrollTo } from "../../api/utils";
+import AskToAddRequestToAddSong from "../../components/addRequestToAddSong/AskToAddRequestToAddSong";
 
 const FilterSongsContainer = ({ songs }) => {
   return (
@@ -159,7 +160,7 @@ const SearchFilter = () => {
           ))}
         </div>
       ) : isError || data.results.length === 0 ? (
-        <div className="py-8 text-center text-xl">No result Found</div>
+        <AskToAddRequestToAddSong />
       ) : (
         <FilterSongsContainer songs={data.results} />
       )}
