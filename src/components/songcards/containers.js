@@ -3,6 +3,7 @@ import {
   useGetSongsLatestRelease,
   useGlobalSearch,
 } from "../../api/songs/queryHooks";
+import AskToAddRequestToAddSong from "../addRequestToAddSong/AskToAddRequestToAddSong";
 import Button from "../buttons/buttons";
 import { HeroArtistsCarousal } from "../carousals";
 import {
@@ -158,7 +159,7 @@ export const GlobalSearchContainer = ({ q, handleClose }) => {
         data.albums.length === 0 &&
         data.tags.length === 0 &&
         data.playlists.length === 0 ? (
-          <div className="text-center">No Result Found</div>
+          <AskToAddRequestToAddSong />
         ) : null}
       </div>
     </div>
