@@ -111,7 +111,8 @@ const Listing = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isError) return <div>Playlist not found</div>;
+  if (isError)
+    return <div className="text-center text-xl mt-4">No Result Found</div>;
   if (isLoading)
     return (
       <>
