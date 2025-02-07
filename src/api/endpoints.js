@@ -21,9 +21,9 @@ const API_ENDPOINTS = {
   CREATE_PLAYLIST: "/content/playlists/",
   GET_PLAYLISTS: "/content/playlists/",
   ADD_SONGS_IN_PLAYLIST: (id) => `/content/playlists/${id}/add_songs/`,
-  GET_PLAYLIST_SONGS: (id) => `/content/playlists/${id}/songs`,
-  GET_RANDOM_PLAYLIST_SONG: (id) => `/content/playlists/${id}/random`,
-  GET_RANDOM_PLAYLIST_SONG_SEEK: (id) => `/content/playlists/${id}/seek`,
+  GET_PLAYLIST_SONGS: (id) => `/content/playlistseeker/${id}/songs`,
+  GET_RANDOM_PLAYLIST_SONG: (id) => `/content/playlistseeker/${id}/random`,
+  GET_RANDOM_PLAYLIST_SONG_SEEK: (id) => `/content/playlistseeker/${id}/seek`,
 };
 
 export default API_ENDPOINTS;
