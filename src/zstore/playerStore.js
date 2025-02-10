@@ -55,6 +55,14 @@ const playerStore = create((set, get) => ({
       set({ isLiked: song?.liked ? true : false });
       localStorage.setItem("last_song_liked", song?.liked ? "1" : "0");
     }
+
+    if (prevSong?.id === song.id) {
+      set({ loadingSongFromURI: false });
+      const audioEle = document
+        .getElementById("audio-player-container")
+        ?.getElementsByTagName("audio")?.[0];
+      audioEle?.play();
+    }
   },
 
   setNextSong: (playerRef) => {
@@ -135,6 +143,8 @@ const playerStore = create((set, get) => ({
         playlist: currentPlaylist.playlist,
         playlist_song_id: randomPlaylistSong.id,
       },
+      playoption: "random",
+      playby: "playlist",
     });
   },
   seekFromPlaylist: async (loop, getwhat) => {
@@ -164,7 +174,8 @@ const playerStore = create((set, get) => ({
   },
   getPrevFromPlaylist: async () => {
     const { playoption, getRandomSongFromPlaylist, seekFromPlaylist } = get();
-    if (playoption === "repeatplaylist") seekFromPlaylist(true, "previous_song");
+    if (playoption === "repeatplaylist")
+      seekFromPlaylist(true, "previous_song");
     if (playoption === "playlistonce") seekFromPlaylist(false, "previous_song");
     if (playoption === "random") getRandomSongFromPlaylist();
   },

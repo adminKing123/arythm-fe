@@ -86,7 +86,13 @@ export const ShowPlaylistsGR = ({ q, data, isLoading, handleClose }) => {
       </div>
       <div className="grid gap-[30px] mt-4 sm:grid-cols-3 grid-cols-2">
         {data.map((playlist) => {
-          return <PlaylistCardLibrary key={playlist.id} playlist={playlist} />;
+          return (
+            <PlaylistCardLibrary
+              key={playlist.id}
+              onClick={handleClose}
+              playlist={playlist}
+            />
+          );
         })}
       </div>
     </>
