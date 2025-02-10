@@ -105,7 +105,7 @@ const AddedRequest = ({ setIsAdded }) => {
 };
 
 const AddRequestToAddSongMenu = () => {
-  const [isAdded, setIsAdded] = useState(true);
+  const [isAdded, setIsAdded] = useState(false);
   const setContextMenuData = contextMenuStore((state) => state.setData);
   return ReactDOM.createPortal(
     <div
