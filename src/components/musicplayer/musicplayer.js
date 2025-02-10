@@ -370,7 +370,7 @@ const MusicPlayer = () => {
         </div>
         <PlayerControls playerRef={playerRef} />
 
-        <div className="flex justify-center items-center mt-[10px]">
+        <div id="audio-player-container" className="flex justify-center items-center mt-[10px]">
           <AudioPlayer
             volume={parseFloat(localStorage.getItem("volume")) || 1}
             ref={playerRef}
