@@ -291,15 +291,8 @@ const ExtraOptions = ({ playerRef }) => {
   );
 };
 
-const MusicPlayer = () => {
+const MusicPlayerThumbnail = () => {
   const song = playerStore((state) => state.song);
-  const setNextSong = playerStore((state) => state.setNextSong);
-  const setLoadingSongFromURI = playerStore(
-    (state) => state.setLoadingSongFromURI
-  );
-
-  const musicPlayerContainerRef = useRef(null);
-  const playerRef = useRef(null);
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
 
@@ -325,6 +318,34 @@ const MusicPlayer = () => {
     }
   }, [imgRef, imgContainerRef, song]);
 
+  return (
+    <div className="w-full flex justify-center">
+      <div
+        ref={imgContainerRef}
+        className="w-[90px] h-[90px] rounded-xl skeleton"
+        onContextMenu={(e) => e.preventDefault()}
+      >
+        <img
+          ref={imgRef}
+          className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
+          src={get_src_uri(song.album.thumbnail1200x1200)}
+          alt="thumbnail"
+        />
+      </div>
+    </div>
+  );
+};
+
+const MusicPlayer = () => {
+  const song = playerStore((state) => state.song);
+  const setNextSong = playerStore((state) => state.setNextSong);
+  const setLoadingSongFromURI = playerStore(
+    (state) => state.setLoadingSongFromURI
+  );
+
+  const musicPlayerContainerRef = useRef(null);
+  const playerRef = useRef(null);
+
   const toggle = () => {
     if (musicPlayerContainerRef.current) {
       const bottom = musicPlayerContainerRef.current.style.bottom;
@@ -348,20 +369,7 @@ const MusicPlayer = () => {
           <ReleasesSvg className="w-[18px] h-[18px] fill-[#25a56a] mr-2" />{" "}
           Player
         </button>
-        <div className="w-full flex justify-center">
-          <div
-            ref={imgContainerRef}
-            className="w-[90px] h-[90px] rounded-xl skeleton"
-            onContextMenu={(e) => e.preventDefault()}
-          >
-            <img
-              ref={imgRef}
-              className="w-[90px] h-[90px] rounded-xl opacity-0 transition-opacity duration-500"
-              src={get_src_uri(song.album.thumbnail1200x1200)}
-              alt="thumbnail"
-            />
-          </div>
-        </div>
+        <MusicPlayerThumbnail />
         <div className="w-full flex justify-center mt-[10px]">
           <div className="max-w-64 truncate text-center">
             <span className="text-white font-medium">{song.original_name}</span>
@@ -370,7 +378,10 @@ const MusicPlayer = () => {
         </div>
         <PlayerControls playerRef={playerRef} />
 
-        <div id="audio-player-container" className="flex justify-center items-center mt-[10px]">
+        <div
+          id="audio-player-container"
+          className="flex justify-center items-center mt-[10px]"
+        >
           <AudioPlayer
             volume={parseFloat(localStorage.getItem("volume")) || 1}
             ref={playerRef}
