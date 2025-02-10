@@ -1,4 +1,5 @@
 import contextMenuStore from "../../zstore/contextMenuStore";
+import AddRequestToAddSongMenu from "./AddRequestToAddSongMenu";
 import AddToPlaylistMenu from "./AddToPlaylistMenu";
 import AlbumContextMenu from "./AlbumContextMenu";
 import ArtistContextMenu from "./ArtistContextMenu";
@@ -37,6 +38,8 @@ const ContextMenu = () => {
     );
   else if (contextMenuData.type === "addtoplaylist")
     return <AddToPlaylistMenu contextMenuData={contextMenuData} />;
+  else if (contextMenuData.type === "addrequesttoaddsong")
+    return <AddRequestToAddSongMenu contextMenuData={contextMenuData} />;
   else return null;
 };
 
