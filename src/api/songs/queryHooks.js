@@ -6,7 +6,9 @@ import {
   getFilteredSongs,
   getGlobalSearch,
   getLatestPlaylists,
+  getMoreRelatedSongs,
   getSlides,
+  getSong,
   getSongs,
   getSongsHistory,
 } from "./queryFunctions";
@@ -111,6 +113,33 @@ export const useFilteredAlbums = (q, limit = 24, offset = 0, config = {}) =>
         q,
         limit,
         offset,
+      }),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    ...config,
+  });
+
+export const useGetSong = (id, justget = false, config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.GET_SONG, id, justget],
+    queryFn: () =>
+      getSong({
+        id,
+        justget,
+      }),
+    retry: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    ...config,
+  });
+
+export const useMoreRelatedSongs = (id, config = {}) =>
+  useQuery({
+    queryKey: [QUERY_KEYS.GET_MORE_RELATED_SONGS, id],
+    queryFn: () =>
+      getMoreRelatedSongs({
+        id,
       }),
     retry: 1,
     refetchOnWindowFocus: false,

@@ -13,6 +13,7 @@ import Queue from "../pages/queue/queue";
 import Artists from "../pages/artists/artists";
 import Albums from "../pages/albums/albums";
 import Playlist from "../pages/playlist/playlist";
+import Song from "../pages/song/song";
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
             <Route path={ROUTES.ARTISTS} element={<Artists />}></Route>
             <Route path={ROUTES.ALBUMS} element={<Albums />}></Route>
             <Route path={ROUTES.PLAYLIST} element={<Playlist />}></Route>
+            <Route path={ROUTES.SONG} element={<Song />}></Route>
           </Route>
         </Route>
       </Routes>

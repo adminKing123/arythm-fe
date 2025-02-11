@@ -9,6 +9,8 @@ import {
 import ContextMenuButton from "./components";
 import authConfigStore from "../../zstore/authConfigStore";
 import contextMenuStore from "../../zstore/contextMenuStore";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
 const AddToQueueOption = ({ song }) => {
   const addToQueue = playerStore((state) => state.addSong);
@@ -32,6 +34,7 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
   const ref = useRef(null);
   const user = authConfigStore((state) => state.user);
   const setContextMenuData = contextMenuStore((state) => state.setData);
+  const navigate = useNavigate();
 
   useContextMenuCloseHandler(ref, handleClose);
   useContextPosition(ref, contextMenuData, (ele, x, y) => {
@@ -61,7 +64,14 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
           />
         </>
       ) : null}
-      <ContextMenuButton Icon={DetailsSvg} title={"Details"} />
+      <ContextMenuButton
+        Icon={DetailsSvg}
+        title={"Details"}
+        onClick={() => {
+          navigate(ROUTES.GET_SONG_URI(contextMenuData.song.id));
+          handleClose();
+        }}
+      />
     </div>,
     document.body
   );

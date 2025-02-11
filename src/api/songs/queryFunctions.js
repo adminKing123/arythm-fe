@@ -42,6 +42,9 @@ export const getSong = async (data) => {
   const response = await api({
     method: "GET",
     url: API_ENDPOINTS.GET_SONG(data.id),
+    params: {
+      justget: data?.justget ? "true" : "false",
+    },
   });
 
   return response.data;
@@ -139,6 +142,15 @@ export const getRandomSong = async () => {
   const response = await api({
     method: "GET",
     url: API_ENDPOINTS.GET_RANDOM_SONG,
+  });
+
+  return response.data;
+};
+
+export const getMoreRelatedSongs = async (data) => {
+  const response = await api({
+    method: "GET",
+    url: API_ENDPOINTS.GET_MORE_RELATED_SONGS(data.id),
   });
 
   return response.data;

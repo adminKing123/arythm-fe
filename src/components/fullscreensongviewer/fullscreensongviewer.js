@@ -181,6 +181,7 @@ const CurrentSongImage = ({ song }) => {
     <div
       ref={imgContainerRef}
       className="w-full aspect-square rounded-xl skeleton shadow-md"
+      onContextMenu={(e) => e.preventDefault()}
     >
       <img
         ref={imgRef}
