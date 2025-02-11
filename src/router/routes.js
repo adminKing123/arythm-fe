@@ -13,6 +13,8 @@ const ROUTES = {
   ALBUMS: "/albums",
   PLAYLIST: "/playlist/:id",
   GET_PLAYLIST_URI: (id) => `/playlist/${id}`,
+  SONG: "/song/:id",
+  GET_SONG_URI: (id) => `/song/${id}`,
 };
 
 export default ROUTES;

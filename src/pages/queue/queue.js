@@ -45,6 +45,7 @@ const CurrentSongImage = ({ song }) => {
         className="w-full aspect-square rounded-xl opacity-0 transition-opacity duration-500"
         src={get_src_uri(song.album.thumbnail1200x1200)}
         alt="thumbnail"
+        onContextMenu={(e) => e.preventDefault()}
       />
     </div>
   );

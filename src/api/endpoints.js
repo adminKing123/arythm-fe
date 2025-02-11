@@ -26,6 +26,7 @@ const API_ENDPOINTS = {
   GET_RANDOM_PLAYLIST_SONG_SEEK: (id) => `/content/playlistseeker/${id}/seek`,
 
   ADD_REQUEST_TO_ADD_SONG: `/song-requests/handle/`,
+  GET_MORE_RELATED_SONGS: (id) => `/content/songs/${id}/related_songs/`,
 };
 
 export default API_ENDPOINTS;

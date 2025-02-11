@@ -160,6 +160,7 @@ export const SongCard2 = ({ song, setCallback }) => {
       <div className="flex items-center truncate">
         <div
           ref={imgContainerRef}
+          onContextMenu={(e) => e.preventDefault()}
           className="skeleton overflow-hidden w-12 h-12 flex-shrink-0 rounded-lg relative flex flex-col items-center justify-center group"
         >
           <img
@@ -279,6 +280,7 @@ export const SongCard3 = ({ index, song, setCallback, onClickRemove }) => {
             className="w-12 h-12 opacity-0 transition-opacity duration-500 absolute top-0 left-0"
             src={get_src_uri(song.album.thumbnail300x300)}
             alt={song.album.id}
+            onContextMenu={(e) => e.preventDefault()}
           />
           <Link
             onClick={handleSelect}
