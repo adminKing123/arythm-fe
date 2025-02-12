@@ -3,11 +3,14 @@ import { get_src_uri } from "../../api/utils";
 import styles from "./css/artistcard.module.css";
 import { useEffect, useRef } from "react";
 import contextMenuStore from "../../zstore/contextMenuStore";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
 const ArtistCard = ({ artist }) => {
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
   const setContextMenuData = contextMenuStore((state) => state.setData);
+  const navigate = useNavigate();
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -44,6 +47,7 @@ const ArtistCard = ({ artist }) => {
         ref={imgContainerRef}
         className={`skeleton relative cursor-pointer flex flex-col items-center justify-center w-full aspect-square rounded-xl overflow-hidden bg-[#000] ${styles.artist_cover}`}
         onContextMenu={handleContextMenu}
+        onClick={() => navigate(ROUTES.GET_ARTIST_URI(artist.id))}
       >
         <img
           ref={imgRef}
@@ -54,7 +58,10 @@ const ArtistCard = ({ artist }) => {
         />
       </div>
       <p className="mt-2 text-center truncate">
-        <ALink className="text-white group-hover:text-[#25a56a]">
+        <ALink
+          href={ROUTES.GET_ARTIST_URI(artist.id)}
+          className="text-white group-hover:text-[#25a56a]"
+        >
           {artist.name}
         </ALink>
       </p>
