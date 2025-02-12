@@ -173,6 +173,8 @@ export const getRandomIndex = (maxvalue, prev) => {
 export const SHARE_APIS = {
   SONG: (id) => `${baseURL}/share/content/songs/${id}`,
   PLAYLIST: (id) => `${baseURL}/share/content/playlists/${id}`,
+  ALBUM: (id) => `${baseURL}/share/content/albums/${id}`,
+  ARTIST: (id) => `${baseURL}/share/content/artists/${id}`,
 };
 
 export default tokenManager;
