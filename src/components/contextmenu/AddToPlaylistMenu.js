@@ -8,7 +8,7 @@ import {
   useCreatePlaylistMutation,
   usePlaylists,
 } from "../../api/playlists/queryHooks";
-import { get_src_uri, getParamFromUrl } from "../../api/utils";
+import { get_src_uri, getParamFromUrl, numeral } from "../../api/utils";
 
 const PlatlistListWithAddButton = ({ contextMenuData }) => {
   const setContextMenuData = contextMenuStore((state) => state.setData);
@@ -86,7 +86,7 @@ const PlatlistListWithAddButton = ({ contextMenuData }) => {
                 <div className="flex-grow truncate">
                   <h3 className="truncate">{playlist.name}</h3>
                   <p className="text-xs truncate">
-                    {playlist.songs_count} songs • {playlist.privacy_type}
+                    {numeral(playlist.songs_count)} songs • {playlist.privacy_type}
                   </p>
                 </div>
               </li>

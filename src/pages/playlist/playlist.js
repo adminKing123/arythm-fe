@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { usePlaylistSongsInfinite } from "../../api/playlists/queryHooks";
 import { useParams } from "react-router-dom";
-import { get_src_uri, scrollTo } from "../../api/utils";
-import {
-  SongCard4,
-  SongCardLoading,
-} from "../../components/songcards/songcard";
+import { get_src_uri, numeral, scrollTo } from "../../api/utils";
+import SongCard, { SongCardLoading } from "../../components/songcards/songcard";
 import { PauseSvg, PlaySvg, RandomSvg } from "../../assets/svg";
 import playerStore from "../../zstore/playerStore";
 
@@ -137,7 +134,7 @@ const PlaylistHeader = ({ playlist }) => {
         <h3 className="text-6xl font-bold text-white">{playlist.name}</h3>
         <p className="text-white text-sm">
           <span className="text-white">@{playlist.author.username}</span> •{" "}
-          {playlist.songs_count} songs
+          {numeral(playlist.songs_count)} songs
         </p>
         <div className="mt-3 relative flex items-center gap-3">
           <PlaylistPlayButton playlist={playlist} />
@@ -155,10 +152,10 @@ const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
       {data.map((page, index) => (
         <React.Fragment key={index}>
           {page.results.map((playlist_song) => (
-            <SongCard4
+            <SongCard
               key={playlist_song.id}
               song={playlist_song.song}
-              onClick={() =>
+              setCallback={() =>
                 setSongFromPlaylist(
                   playlist_song.id,
                   playlist_song.song,

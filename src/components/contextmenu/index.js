@@ -3,6 +3,7 @@ import AddRequestToAddSongMenu from "./AddRequestToAddSongMenu";
 import AddToPlaylistMenu from "./AddToPlaylistMenu";
 import AlbumContextMenu from "./AlbumContextMenu";
 import ArtistContextMenu from "./ArtistContextMenu";
+import PlaylistContextMenu from "./PlaylistContextMenu";
 import SongContextMenu from "./SongContextMenu";
 
 const ContextMenu = () => {
@@ -11,7 +12,7 @@ const ContextMenu = () => {
 
   const handleClose = (callback) => {
     setContextMenuData(null);
-    callback?.();
+    if (typeof callback === "function") callback?.();
   };
 
   if (contextMenuData === null) return null;
@@ -32,6 +33,13 @@ const ContextMenu = () => {
   else if (contextMenuData.type === "album")
     return (
       <AlbumContextMenu
+        contextMenuData={contextMenuData}
+        handleClose={handleClose}
+      />
+    );
+  else if (contextMenuData.type === "playlist")
+    return (
+      <PlaylistContextMenu
         contextMenuData={contextMenuData}
         handleClose={handleClose}
       />

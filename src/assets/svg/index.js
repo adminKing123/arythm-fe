@@ -29,6 +29,7 @@ import { ReactComponent as RepeatSvg } from "./repeat.svg";
 import { ReactComponent as RepeatoneSvg } from "./repeatone.svg";
 import { ReactComponent as RandomSvg } from "./random.svg";
 import { ReactComponent as BookmarkSvg } from "./bookmark.svg";
+import { ReactComponent as ShareSvg } from "./share.svg";
 
 export {
   SignSvg,
@@ -62,4 +63,5 @@ export {
   RepeatoneSvg,
   RandomSvg,
   BookmarkSvg,
+  ShareSvg,
 };

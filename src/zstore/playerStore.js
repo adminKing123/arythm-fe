@@ -122,7 +122,7 @@ const playerStore = create((set, get) => ({
   currentPlaylist: null,
   setSongFromPlaylist: (playlist_song_id, song, playlist) =>
     set((state) => {
-      state.setSong(song);
+      // state.setSong(song);
       return {
         currentPlaylist: {
           playlist,

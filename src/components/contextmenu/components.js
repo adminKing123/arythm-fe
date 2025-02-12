@@ -13,7 +13,7 @@ export const ContextMenuButton = ({
       }`}
       {...props}
     >
-      <Icon className={iconClassName} />
+      {Icon ? <Icon className={iconClassName} /> : null}
       <span className={titleClassName}>{title}</span>
     </div>
   );

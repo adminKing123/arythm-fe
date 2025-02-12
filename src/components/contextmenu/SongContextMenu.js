@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { AddToQueueSvg, DetailsSvg } from "../../assets/svg";
+import { AddToQueueSvg, DetailsSvg, ShareSvg } from "../../assets/svg";
 import playerStore from "../../zstore/playerStore";
 import {
+  SHARE_APIS,
   useContextMenuCloseHandler,
   useContextPosition,
 } from "../../api/utils";
@@ -11,6 +12,31 @@ import authConfigStore from "../../zstore/authConfigStore";
 import contextMenuStore from "../../zstore/contextMenuStore";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
+
+const SongShareButton = ({ song, callback }) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(SHARE_APIS.SONG(song.id))
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+      })
+      .catch((err) => console.error("Failed to copy:", err));
+  };
+
+  return (
+    <ContextMenuButton
+      Icon={ShareSvg}
+      title={copied ? "Copied!" : "Share"}
+      onClick={() => {
+        callback?.();
+        copyToClipboard();
+      }}
+    />
+  );
+};
 
 const AddToQueueOption = ({ song }) => {
   const addToQueue = playerStore((state) => state.addSong);
@@ -72,6 +98,7 @@ const SongContextMenu = ({ contextMenuData, handleClose }) => {
           handleClose();
         }}
       />
+      <SongShareButton song={contextMenuData.song} />
     </div>,
     document.body
   );
