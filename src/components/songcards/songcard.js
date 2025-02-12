@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import playerStore from "../../zstore/playerStore";
 import authConfigStore from "../../zstore/authConfigStore";
 import contextMenuStore from "../../zstore/contextMenuStore";
+import ROUTES from "../../router/routes";
 
 const SongCard = ({ song, setCallback }) => {
   const setSong = playerStore((state) => state.setSong);
@@ -78,7 +79,7 @@ const SongCard = ({ song, setCallback }) => {
         <span className="absolute flex items-center justify-center w-full bottom-1 sm:bottom-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <Link className="text-white fill-white text-[13px] mr-[15px] flex items-center gap-1">
             <PlaylistsSvg className="w-[13px] h-[13px]" />
-            {song?.playlists_count || 0}
+            {numeral(song?.playlists_count) || 0}
           </Link>
           <Link className="text-white fill-white text-[13px] mr-[15px] flex items-center gap-1">
             <HeadphoneSvg className="w-[13px] h-[13px]" />
@@ -87,7 +88,7 @@ const SongCard = ({ song, setCallback }) => {
         </span>
       </div>
       <p className="mt-2 text-white truncate">
-        <ALink>{song.original_name}</ALink>
+        <ALink href={ROUTES.GET_SONG_URI(song.id)}>{song.original_name}</ALink>
       </p>
       <p className="text-sm truncate">
         <ArtistsLinks artists={song.artists} />
@@ -188,9 +189,12 @@ export const SongCard2 = ({ song, setCallback }) => {
           </Link>
         </div>
         <div className="ml-[15px] truncate">
-          <h3 className="text-base text-white truncate">
+          <ALink
+            href={ROUTES.GET_SONG_URI(song.id)}
+            className="block text-base text-white truncate"
+          >
             {song.original_name}
-          </h3>
+          </ALink>
           <ArtistsLinks className="text-sm truncate" artists={song.artists} />
         </div>
       </div>
@@ -304,9 +308,12 @@ export const SongCard3 = ({ index, song, setCallback, onClickRemove }) => {
           </Link>
         </div>
         <div className="ml-[15px] truncate">
-          <h3 className="text-base text-white truncate">
+          <ALink
+            href={ROUTES.GET_SONG_URI(song.id)}
+            className="block text-base text-white truncate"
+          >
             {song.original_name}
-          </h3>
+          </ALink>
           <ArtistsLinks className="text-sm truncate" artists={song.artists} />
         </div>
       </div>

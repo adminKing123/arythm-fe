@@ -1,5 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { formatPlayerTime, get_src_uri, scrollTo } from "../../api/utils";
+import {
+  formatPlayerTime,
+  get_src_uri,
+  numeral,
+  scrollTo,
+} from "../../api/utils";
 import { useGetSong, useMoreRelatedSongs } from "../../api/songs/queryHooks";
 import { Fragment, useEffect, useRef } from "react";
 import { PlaySvg } from "../../assets/svg";
@@ -154,8 +159,8 @@ const Details = () => {
           {song.album.title} • {song.album.year}
         </h6>
         <p className="text-xs text-white">
-          {formatPlayerTime(song.duration, "")} • {song.count} listeners •{" "}
-          {song.liked_count} likes
+          {formatPlayerTime(song.duration, "")} • {numeral(song.count)}{" "}
+          listeners • {numeral(song.liked_count)} likes
         </p>
         <p className="text-xs text-white">
           {song.tags.map((tag, index) => (
