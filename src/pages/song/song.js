@@ -84,6 +84,7 @@ const Thumbnail = ({ song }) => {
         alt="thumbnail"
         src={get_src_uri(song.album.thumbnail300x300)}
         className="object-cover w-full h-full absolute top-0 left-0 blur-3xl"
+        onContextMenu={(e) => e.preventDefault()}
       />
       <div
         ref={imgContainerRef}

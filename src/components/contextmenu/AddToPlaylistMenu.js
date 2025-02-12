@@ -82,6 +82,7 @@ const PlatlistListWithAddButton = ({ contextMenuData }) => {
                   src={get_src_uri(playlist.thumbnail)}
                   className="w-10 h-10 rounded"
                   alt="thumbnail"
+                  onContextMenu={(e) => e.preventDefault()}
                 ></img>
                 <div className="flex-grow truncate">
                   <h3 className="truncate">{playlist.name}</h3>
