@@ -2,11 +2,23 @@ import { useEffect, useRef } from "react";
 import { get_src_uri, numeral } from "../../api/utils";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
+import contextMenuStore from "../../zstore/contextMenuStore";
 
 const PlaylistCardLibrary = ({ playlist, onClick }) => {
   const imgRef = useRef(null);
   const imgContainerRef = useRef(null);
   const navigate = useNavigate();
+  const setContextMenuData = contextMenuStore((state) => state.setData);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenuData({
+      type: "playlist",
+      playlist,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
 
   useEffect(() => {
     const imgEle = imgRef.current;
@@ -35,6 +47,7 @@ const PlaylistCardLibrary = ({ playlist, onClick }) => {
         onClick?.();
         navigate(ROUTES.GET_PLAYLIST_URI(playlist.id));
       }}
+      onContextMenu={handleContextMenu}
     >
       <div ref={imgContainerRef} className="skeleton w-full aspect-square">
         <img
@@ -43,7 +56,6 @@ const PlaylistCardLibrary = ({ playlist, onClick }) => {
           src={get_src_uri(playlist.thumbnail)}
           alt={playlist.name}
           className="opacity-0 w-full aspect-square bg-cover bg-center group-hover:scale-[1.08] transition-transform duration-300"
-          onContextMenu={(e) => e.preventDefault()}
         ></img>
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">

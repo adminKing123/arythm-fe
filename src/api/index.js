@@ -1,7 +1,7 @@
 import axios from "axios";
 import tokenManager from "./utils";
 
-const baseURL = process.env.REACT_APP_API_URI;
+export const baseURL = process.env.REACT_APP_API_URI;
 
 const api = (config) => {
   const axiosInstance = axios.create({

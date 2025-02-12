@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import authConfigStore from "../zstore/authConfigStore";
+import { baseURL } from ".";
 
 const tokenManager = {
   getToken: () =>
@@ -167,6 +168,11 @@ export const getRandomIndex = (maxvalue, prev) => {
     else return maxvalue - 1;
   }
   return randomNum;
+};
+
+export const SHARE_APIS = {
+  SONG: (id) => `${baseURL}/share/content/songs/${id}`,
+  PLAYLIST: (id) => `${baseURL}/share/content/playlists/${id}`,
 };
 
 export default tokenManager;
