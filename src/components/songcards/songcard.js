@@ -79,7 +79,7 @@ const SongCard = ({ song, setCallback }) => {
         <span className="absolute flex items-center justify-center w-full bottom-1 sm:bottom-[20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <Link className="text-white fill-white text-[13px] mr-[15px] flex items-center gap-1">
             <PlaylistsSvg className="w-[13px] h-[13px]" />
-            {numeral(song?.playlists_count) || 0}
+            {numeral(song?.playlists_count || 0)}
           </Link>
           <Link className="text-white fill-white text-[13px] mr-[15px] flex items-center gap-1">
             <HeadphoneSvg className="w-[13px] h-[13px]" />
