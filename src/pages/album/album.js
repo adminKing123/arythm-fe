@@ -19,7 +19,7 @@ const AlbumHeader = ({ album, count }) => {
       <div className="relative mb-2">
         <h3 className="text-3xl font-bold text-white">{album.title}</h3>
         <p className="text-white text-sm">
-          {album.year} • {numeral(count)} songs
+          {album.year} • {numeral(count)} songs • Followers
         </p>
         <div className="relative mt-3">
           <Button>Follow</Button>
