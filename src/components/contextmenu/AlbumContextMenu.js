@@ -7,6 +7,8 @@ import {
   useContextPosition,
 } from "../../api/utils";
 import ContextMenuButton from "./components";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
 const AlbumShareButton = ({ album, callback }) => {
   const [copied, setCopied] = useState(false);
@@ -35,6 +37,7 @@ const AlbumShareButton = ({ album, callback }) => {
 
 const AlbumContextMenu = ({ contextMenuData, handleClose }) => {
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   useContextMenuCloseHandler(ref, handleClose);
   useContextPosition(ref, contextMenuData, (ele, x, y) => {
@@ -49,7 +52,14 @@ const AlbumContextMenu = ({ contextMenuData, handleClose }) => {
       ref={ref}
       className="bg-[#151515] absolute z-[60] w-[200px] rounded-md shadow-md overflow-hidden opacity-0 transition-opacity duration-200"
     >
-      <ContextMenuButton Icon={DetailsSvg} title={"Details"} />
+      <ContextMenuButton
+        Icon={DetailsSvg}
+        title={"Details"}
+        onClick={() => {
+          navigate(ROUTES.GET_ALBUM_URI(contextMenuData.album.id));
+          handleClose();
+        }}
+      />
       <AlbumShareButton album={contextMenuData.album} />
     </div>,
     document.body

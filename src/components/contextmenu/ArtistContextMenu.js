@@ -7,6 +7,8 @@ import {
   useContextPosition,
 } from "../../api/utils";
 import ContextMenuButton from "./components";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../router/routes";
 
 const ArtistShareButton = ({ artist, callback }) => {
   const [copied, setCopied] = useState(false);
@@ -35,6 +37,7 @@ const ArtistShareButton = ({ artist, callback }) => {
 
 const ArtistContextMenu = ({ contextMenuData, handleClose }) => {
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   useContextMenuCloseHandler(ref, handleClose);
   useContextPosition(ref, contextMenuData, (ele, x, y) => {
@@ -49,7 +52,14 @@ const ArtistContextMenu = ({ contextMenuData, handleClose }) => {
       ref={ref}
       className="bg-[#151515] absolute z-[60] w-[200px] rounded-md shadow-md overflow-hidden opacity-0 transition-opacity duration-200"
     >
-      <ContextMenuButton Icon={DetailsSvg} title={"Details"} />
+      <ContextMenuButton
+        Icon={DetailsSvg}
+        title={"Details"}
+        onClick={() => {
+          navigate(ROUTES.GET_ARTIST_URI(contextMenuData.artist.id));
+          handleClose();
+        }}
+      />
       <ArtistShareButton artist={contextMenuData.artist} />
     </div>,
     document.body
