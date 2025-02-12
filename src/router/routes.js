@@ -15,6 +15,10 @@ const ROUTES = {
   GET_PLAYLIST_URI: (id) => `/playlist/${id}`,
   SONG: "/song/:id",
   GET_SONG_URI: (id) => `/song/${id}`,
+  ARTIST: "/artist/:id",
+  GET_ARTIST_URI: (id) => `/artist/${id}`,
+  ALBUM: "/album/:id",
+  GET_ALBUM_URI: (id) => `/album/${id}`,
 };
 
 export default ROUTES;

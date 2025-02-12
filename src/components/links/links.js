@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { NextlinksSvg } from "../../assets/svg";
 import { Fragment } from "react";
+import ROUTES from "../../router/routes";
 
 const A = ({ href, className, ...props }) => {
   return (
@@ -46,7 +47,7 @@ export const ArtistsLinks = ({ artists, className = "" }) => {
         className={`hover:text-[#25a564] transition-colors duration-300 ${
           className ?? ""
         }`}
-        href={`#artist-${artist.id}`}
+        to={ROUTES.GET_ARTIST_URI(artist.id)}
       >
         {artist.name}
       </Link>
