@@ -123,9 +123,10 @@ const PlaylistHeader = ({ playlist }) => {
         alt="thumbnail"
         src={get_src_uri(thumbnail)}
         className="object-cover w-full h-full absolute top-0 left-0 blur-3xl"
+        onContextMenu={(e) => e.preventDefault()}
       />
       <div className="w-64 aspect-square rounded overflow-hidden relative">
-        <img alt="thumbnail" src={get_src_uri(thumbnail)} />
+        <img alt="thumbnail" src={get_src_uri(thumbnail)} onContextMenu={(e) => e.preventDefault()} />
       </div>
       <div className="relative mb-2">
         <p className="text-white text-xs ml-1">
