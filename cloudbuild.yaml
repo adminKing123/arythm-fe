@@ -4,7 +4,7 @@ steps:
   args:
     - 'build'
     - '-t'
-    - 'gcr.io/arhythm/arhythm-app'
+    - 'us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app'
     - '--build-arg'
     - 'REACT_APP_API_URI=$$REACT_APP_API_URI'
     - '--build-arg'
@@ -12,24 +12,29 @@ steps:
     - '--build-arg'
     - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
     - '.'
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/arhythm/arhythm-app']
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
-  - 'run'
-  - 'deploy'
-  - 'arhythm-app'
-  - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/arhythm/arhythm-app'
-  - '--port=80'
-  - '--platform=managed'
-  - '--allow-unauthenticated'
-  - '--max-instances=5'
-  - '--timeout=3600'
-  - '--memory=1024Mi'
+    - 'push'
+    - 'us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app'
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
+  args:
+    - 'run'
+    - 'deploy'
+    - 'arhythm-app'
+    - '--image=us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app'
+    - '--platform=managed'
+    - '--region=us-central1'
+    - '--port=80'
+    - '--allow-unauthenticated'
+    - '--max-instances=5'
+    - '--timeout=3600'
+    - '--memory=1024Mi'
 
 images:
-- us-central1-docker.pkg.dev/$PROJECT_ID/arhythm/arhythm-app
+- us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app
 
 availableSecrets:
   secretManager:
