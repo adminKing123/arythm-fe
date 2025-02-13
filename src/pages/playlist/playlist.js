@@ -151,7 +151,7 @@ const PlaylistHeader = ({ playlist }) => {
         </div>
       </section>
     );
-  else null;
+  else return null;
 };
 
 const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
