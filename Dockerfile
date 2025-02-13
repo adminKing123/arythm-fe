@@ -23,17 +23,13 @@ ENV REACT_APP_API_URI=$REACT_APP_API_URI
 ENV REACT_APP_HIDE_INSPECTOR=$REACT_APP_HIDE_INSPECTOR
 ENV REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL
 
-# Build the React app
 RUN npm run build
 
-# Use a lightweight web server to serve the app
-FROM nginx:stable-alpine AS production
+# Install serve globally to serve the build folder
+RUN npm install -g serve
 
-# Copy built files to nginx
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose the port
+# Expose the port that serve will use
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Command to run the application
+CMD ["serve", "-s", "build", "-l", "80"]
