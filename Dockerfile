@@ -1,29 +1,29 @@
-# Use an official Node.js image as the base image
+# Use Node.js for building the app
 FROM node:18 as build
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of the application
+# Copy the rest of the files
 COPY . .
 
+# Inject environment variables at build time
+ARG REACT_APP_API_URI
+ARG REACT_APP_HIDE_INSPECTOR
+ARG REACT_APP_HIDE_INSPECTOR_REDIRECT_URL
+
 # Build the React app
-RUN npm run build
+RUN REACT_APP_API_URI=$REACT_APP_API_URI \
+    REACT_APP_HIDE_INSPECTOR=$REACT_APP_HIDE_INSPECTOR \
+    REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL \
+    npm run build
 
-# Use an Nginx image to serve the build files
+# Serve using Nginx
 FROM nginx:alpine
-
-# Copy built React app to Nginx's default directory
 COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80
 EXPOSE 80
-
-# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
