@@ -21,3 +21,6 @@ availableSecrets:
       env: 'REACT_APP_HIDE_INSPECTOR'
     - versionName: projects/801284358444/secrets/arhythm-fe-dev/REACT_APP_HIDE_INSPECTOR_REDIRECT_URL/versions/latest
       env: 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
+
+options:
+  defaultLogsBucketBehavior: "REGIONAL_USER_OWNED_BUCKET"
