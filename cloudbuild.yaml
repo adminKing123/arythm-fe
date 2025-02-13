@@ -13,14 +13,14 @@ steps:
     - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
     - '.'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/arhythm/arhythm-app']
+  args: ['push', 'us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app']
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'run'
   - 'deploy'
   - 'arhythm-app'
-  - '--image=us-central1-docker.pkg.dev/arhythm/arhythm-app'
+  - '--image=us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app'
   - '--port=80'
   - '--platform=managed'
   - '--allow-unauthenticated'
@@ -29,7 +29,7 @@ steps:
   - '--memory=1024Mi'
 
 images:
-- us-central1-docker.pkg.dev/arhythm/arhythm-app
+- us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app
 
 availableSecrets:
   secretManager:
