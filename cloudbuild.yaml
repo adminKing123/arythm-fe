@@ -22,7 +22,6 @@ steps:
   - 'arhythm-app'
   - '--image=us-central1-docker.pkg.dev/arhythm/cloud-run-source-deploy/arhythm-app'
   - '--port=80'
-  - '--region=asia-south1'
   - '--platform=managed'
   - '--allow-unauthenticated'
   - '--max-instances=5'
