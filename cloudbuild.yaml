@@ -1,6 +1,6 @@
 steps:
-# - name: 'gcr.io/cloud-builders/docker'
-#   secretEnv: ['REACT_APP_API_URI', 'REACT_APP_HIDE_INSPECTOR', 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL']
+- name: 'gcr.io/cloud-builders/docker'
+  secretEnv: ['REACT_APP_API_URI', 'REACT_APP_HIDE_INSPECTOR', 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL']
 #   args:
 #     - 'build'
 #     - '-t'
