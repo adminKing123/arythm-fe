@@ -15,7 +15,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us-central1-docker.pkg.dev/arhythm/cloud-run-source-deploy/arhythm-app']
 
-- name: 'gcr.io/cloud-builders/gcloud'
+- name: 'gcr.io/cloud-builders/docker'
   args:
   - 'run'
   - 'deploy'
