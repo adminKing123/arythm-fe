@@ -118,40 +118,37 @@ const PlaylistHeader = ({ playlist }) => {
     }
   }, [playby, currentPlaylist, song, playlist?.id]);
 
-  if (song)
-    return (
-      <section className="p-5 flex items-end gap-6 relative bg-black">
+  return (
+    <section className="p-5 flex items-end gap-6 relative bg-black">
+      <img
+        alt="thumbnail"
+        src={get_src_uri(thumbnail)}
+        className="object-cover w-full h-full absolute top-0 left-0 blur-3xl"
+        onContextMenu={(e) => e.preventDefault()}
+      />
+      <div className="w-64 aspect-square rounded overflow-hidden relative">
         <img
           alt="thumbnail"
           src={get_src_uri(thumbnail)}
-          className="object-cover w-full h-full absolute top-0 left-0 blur-3xl"
           onContextMenu={(e) => e.preventDefault()}
         />
-        <div className="w-64 aspect-square rounded overflow-hidden relative">
-          <img
-            alt="thumbnail"
-            src={get_src_uri(thumbnail)}
-            onContextMenu={(e) => e.preventDefault()}
-          />
+      </div>
+      <div className="relative mb-2">
+        <p className="text-white text-xs ml-1">
+          Playlist • <span className="text-white">{playlist.privacy_type}</span>
+        </p>
+        <h3 className="text-6xl font-bold text-white">{playlist.name}</h3>
+        <p className="text-white text-sm">
+          <span className="text-white">@{playlist.author.username}</span> •{" "}
+          {numeral(playlist.songs_count)} songs
+        </p>
+        <div className="mt-3 relative flex items-center gap-3">
+          <PlaylistPlayButton playlist={playlist} />
+          <ShuffleToPlayPlaylist playlist={playlist} />
         </div>
-        <div className="relative mb-2">
-          <p className="text-white text-xs ml-1">
-            Playlist •{" "}
-            <span className="text-white">{playlist.privacy_type}</span>
-          </p>
-          <h3 className="text-6xl font-bold text-white">{playlist.name}</h3>
-          <p className="text-white text-sm">
-            <span className="text-white">@{playlist.author.username}</span> •{" "}
-            {numeral(playlist.songs_count)} songs
-          </p>
-          <div className="mt-3 relative flex items-center gap-3">
-            <PlaylistPlayButton playlist={playlist} />
-            <ShuffleToPlayPlaylist playlist={playlist} />
-          </div>
-        </div>
-      </section>
-    );
-  else return null;
+      </div>
+    </section>
+  );
 };
 
 const SongsList = ({ data, playlist, isFetchingNextPage, hasNextPage }) => {
