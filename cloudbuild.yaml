@@ -15,9 +15,9 @@ steps:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/arhythm/secrets/REACT_APP_API_URI/versions/latest
+    - versionName: projects/801284358444/secrets/arhythm-fe-dev/REACT_APP_API_URI/versions/latest
       env: 'REACT_APP_API_URI'
-    - versionName: projects/arhythm/secrets/REACT_APP_HIDE_INSPECTOR/versions/latest
+    - versionName: projects/801284358444/secrets/arhythm-fe-dev/REACT_APP_HIDE_INSPECTOR/versions/latest
       env: 'REACT_APP_HIDE_INSPECTOR'
-    - versionName: projects/arhythm/secrets/REACT_APP_HIDE_INSPECTOR_REDIRECT_URL/versions/latest
+    - versionName: projects/801284358444/secrets/arhythm-fe-dev/REACT_APP_HIDE_INSPECTOR_REDIRECT_URL/versions/latest
       env: 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
