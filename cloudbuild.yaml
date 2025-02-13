@@ -1,17 +1,36 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    secretEnv: ['REACT_APP_API_URI', 'REACT_APP_HIDE_INSPECTOR', 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL']
-    args:
-      - 'build'
-      - '-t'
-      - 'gcr.io/arhythm/arhythm-app'
-      - '--build-arg'
-      - 'REACT_APP_API_URI=$$REACT_APP_API_URI'
-      - '--build-arg'
-      - 'REACT_APP_HIDE_INSPECTOR=$$REACT_APP_HIDE_INSPECTOR'
-      - '--build-arg'
-      - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
-      - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  secretEnv: ['REACT_APP_API_URI', 'REACT_APP_HIDE_INSPECTOR', 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL']
+  args:
+    - 'build'
+    - '-t'
+    - 'gcr.io/arhythm/arhythm-app'
+    - '--build-arg'
+    - 'REACT_APP_API_URI=$$REACT_APP_API_URI'
+    - '--build-arg'
+    - 'REACT_APP_HIDE_INSPECTOR=$$REACT_APP_HIDE_INSPECTOR'
+    - '--build-arg'
+    - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
+    - '.'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/arhythm/cloud-run-source-deploy/arhythm-app']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'arhythm-app'
+  - '--image=us-central1-docker.pkg.dev/arhythm/cloud-run-source-deploy/arhythm-app'
+  - '--port=80'
+  - '--region=asia-south1'
+  - '--platform=managed'
+  - '--allow-unauthenticated'
+  - '--max-instances=5'
+  - '--timeout=3600'
+  - '--memory=1024Mi'
+
+images:
+- us-central1-docker.pkg.dev/arhythm/cloud-run-source-deploy/arhythm-app
 
 availableSecrets:
   secretManager:
@@ -23,4 +42,4 @@ availableSecrets:
       env: 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
 
 options:
-  defaultLogsBucketBehavior: "REGIONAL_USER_OWNED_BUCKET"
+  logging: CLOUD_LOGGING_ONLY
