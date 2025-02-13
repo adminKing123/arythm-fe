@@ -1,18 +1,4 @@
 steps:
-# - name: 'gcr.io/cloud-builders/docker'
-#   secretEnv: ['REACT_APP_API_URI', 'REACT_APP_HIDE_INSPECTOR', 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL']
-#   args:
-#     - 'build'
-#     - '-t'
-#     - 'us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app'
-#     - '--build-arg'
-#     - 'REACT_APP_API_URI=$REACT_APP_API_URI'
-#     - '--build-arg'
-#     - 'REACT_APP_HIDE_INSPECTOR=$REACT_APP_HIDE_INSPECTOR'
-#     - '--build-arg'
-#     - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=$REACT_APP_HIDE_INSPECTOR_REDIRECT_URL'
-#     - '.'
-
 - name: 'gcr.io/cloud-builders/docker'
   args:
     - 'push'
@@ -32,6 +18,10 @@ steps:
     - '--max-instances=5'
     - '--timeout=3600'
     - '--memory=1024Mi'
+  env:
+    - 'REACT_APP_API_URI=${REACT_APP_API_URI}'
+    - 'REACT_APP_HIDE_INSPECTOR=${REACT_APP_HIDE_INSPECTOR}'
+    - 'REACT_APP_HIDE_INSPECTOR_REDIRECT_URL=${REACT_APP_HIDE_INSPECTOR_REDIRECT_URL}'
 
 images:
 - us-central1-docker.pkg.dev/arhythm/arhythm/arhythm-app
